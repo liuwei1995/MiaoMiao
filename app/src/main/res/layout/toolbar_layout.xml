@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+                                   android:id="@+id/toolbar"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="?attr/colorPrimary"
+                                   android:minHeight="?attr/actionBarSize"
+                                   android:theme="?attr/actionBarTheme"
+                                   app:contentInsetEnd="0dp"
+                                   app:contentInsetLeft="0dp"
+                                   app:contentInsetRight="0dp"
+                                   app:contentInsetStart="0dp">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/ivLeft"
+            android:layout_marginLeft="9dp"
+            android:layout_marginStart="9dp"
+            android:maxHeight="24dp"
+            android:maxWidth="24dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arrow_return"/>
+
+        <TextView
+            android:id="@+id/tvLeftTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@+id/ivLeft"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="忘记密码"
+            android:textSize="14sp"
+            app:layout_marginLeftPercent="7.7%"
+            app:layout_marginStartPercent="7.7%"
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"
+            android:text="标题"
+            />
+
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.v7.widget.Toolbar>

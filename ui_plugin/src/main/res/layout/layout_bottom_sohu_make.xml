@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_player_gray_bg">
+
+    <LinearLayout
+        android:layout_marginTop="10dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_player_white_bg">
+
+        <!-- 专辑名字-->
+        <TextView
+            android:id="@+id/sohumake_album_name"
+            android:layout_marginTop="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dip"
+            android:textColor="@color/color_player_dark_text"
+            android:singleLine="true"/>
+
+        <!-- 播放次数-->
+        <LinearLayout
+            android:layout_marginTop="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/player_playcount"/>
+            <TextView
+                android:id="@+id/sohumake_play_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_player_light_text"
+                android:textSize="12dip"/>
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line"
+            />
+
+        <!-- 更新-->
+        <LinearLayout
+            android:id="@+id/sohumake_update_notification_layout"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更新:"
+                android:textSize="14dip"
+                android:textColor="@color/color_player_light_text"/>
+            <TextView
+                android:id="@+id/sohumake_update_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dip"
+                android:textColor="@color/color_player_dark_text"/>
+
+        </LinearLayout>
+
+        <!-- 主演-->
+        <LinearLayout
+            android:id="@+id/sohumake_actor_layout"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主演:"
+                android:textSize="14dip"
+                android:textColor="@color/color_player_light_text"/>
+            <TextView
+                android:id="@+id/sohumake_actor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dip"
+                android:singleLine="true"
+                android:textColor="@color/color_player_dark_text"/>
+
+        </LinearLayout>
+
+        <!-- 可以隐藏的内容-->
+        <LinearLayout
+            android:id="@+id/sohumake_more_album_info"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- 导演,年份-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!-- 导演-->
+                <LinearLayout
+                    android:id="@+id/sohumake_director_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="导演:"
+                        android:textSize="14dip"
+                        android:textColor="@color/color_player_light_text"/>
+                    <TextView
+                        android:id="@+id/sohumake_director"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dip"
+                        android:singleLine="true"
+                        android:textColor="@color/color_player_dark_text"
+                        />
+                </LinearLayout>
+                <!-- 年份-->
+                <LinearLayout
+                    android:id="@+id/sohumake_year_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="年份:"
+                        android:textSize="14dip"
+                        android:textColor="@color/color_player_light_text"/>
+                    <TextView
+                        android:id="@+id/sohumake_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dip"
+                        android:singleLine="true"
+                        android:textColor="@color/color_player_dark_text"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- 评分,类型-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!-- 评分-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="评分:"
+                        android:textSize="14dip"
+                        android:textColor="@color/color_player_light_text"/>
+                    <TextView
+                        android:id="@+id/sohumake_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dip"
+                        android:singleLine="true"
+                        android:textColor="@color/color_player_orange_text"
+                        />
+                </LinearLayout>
+                <!-- 类型-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="类型:"
+                        android:textSize="14dip"
+                        android:textColor="@color/color_player_light_text"/>
+                    <TextView
+                        android:id="@+id/sohumake_second_cate_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dip"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/color_player_dark_text"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 专辑简介-->
+            <TextView
+                android:layout_marginTop="5dip"
+                android:id="@+id/sohumake_album_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14dip"
+                android:textColor="@color/color_player_dark_text"/>
+
+        </LinearLayout>
+        <!-- 隐藏,显示详情的按钮-->
+        <LinearLayout
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/sohumake_album_info_puckup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:src="@drawable/player_icon_unfold"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line"
+            />
+    </LinearLayout>
+
+    <!--下半部分-->
+    <LinearLayout
+        android:layout_marginTop="5dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_player_white_bg">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line"
+            />
+        <RelativeLayout
+            android:layout_marginTop="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="20dip">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="剧集"
+                android:textSize="15dip"
+                android:textColor="@color/color_player_dark_text"/>
+
+        </RelativeLayout>
+        <View
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line"
+            />
+        <LinearLayout
+
+            android:id="@+id/sohumake_album_videos_layout"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

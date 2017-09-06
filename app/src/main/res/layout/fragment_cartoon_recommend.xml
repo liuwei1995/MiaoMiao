@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="0dp"
+            app:layout_widthPercent="85%"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:tabBackground="@color/background_navigationbar"
+            app:tabIndicatorColor="@color/background_navigationbar"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/color_navigationbar_selected_text"
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+            app:tabTextColor="@color/color_navigationbar_text"
+            >
+        </android.support.design.widget.TabLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            app:layout_widthPercent="15%"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:padding="4dp"
+            android:layout_centerVertical="true"
+            android:maxHeight="24dp"
+            android:maxWidth="24dp"
+            android:src="@mipmap/textview_search"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fontColor"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</LinearLayout>

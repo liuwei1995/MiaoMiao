@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.sohuvideo.ui_plugin">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name">
+
+        <!--SOHUVIDEO 渠道-->
+
+        <meta-data android:name="SOHUVIDEO_CHANNEL" android:value="18805">
+
+        </meta-data>
+        <meta-data android:name="SOHUVIDEO_KEY" android:value="bba5127600e8be6249044744ff93fc01">
+
+        </meta-data>
+    <!-- 自媒体列表Activity -->
+    <activity
+        android:name="com.sohuvideo.ui_plugin.ui.PGCListActivity"
+        android:screenOrientation="portrait">
+
+    </activity>
+
+        <!-- 播放详情页Activity -->
+        <activity
+            android:name="com.sohuvideo.ui_plugin.ui.PlayerActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|screenSize"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
+        </activity>
+
+
+        <activity
+            android:name="com.sohuvideo.ui_plugin.ui.SohuStreamActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|screenSize"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
+        </activity>
+
+
+        <!-- Push接收处理Service -->
+        <service
+            android:name=".MyPushService"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.sohu.push.action.REGISTERED" />
+                <action android:name="com.sohu.push.action.MESSAGE_RECEIVED" />
+                <action android:name="com.sohu.push.action.NOTIFICATION_CLICK" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".PushBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.sohuvideo.opensdk.demo.ACTION_JUMP" />
+            </intent-filter>
+        </receiver>
+
+        <!--<activity-->
+            <!--android:name=".PushTransparentActivity"-->
+            <!--android:exported="true"-->
+            <!--android:launchMode="singleInstance"-->
+            <!--android:theme="@android:style/Theme.NoDisplay" />-->
+
+        <!-- 应用统计服务 SDK-->
+        <service
+            android:name="com.sohuvideo.player.statistic.LogService"
+            android:exported="false"
+            android:label="CoreService">
+
+        </service>
+
+        <!-- 广告转跳页面 -->
+        <activity
+            android:name="com.sohu.commonadsdk.webview.SohuAdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+
+
+
+    </application>
+
+</manifest>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/id_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/id_back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="2dp"
+            android:src="@drawable/common_quit" />
+
+        <View
+            android:id="@+id/id_view"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/id_back_iv"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/id_pgc_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_toRightOf="@id/id_view"
+            android:singleLine="true"
+            android:textSize="@dimen/title_font_size" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/id_line"
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/id_title"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/line" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/id_line"
+        android:layout_marginTop="3dp">
+
+
+        <com.sohuvideo.ui_plugin.view.HeaderPullListView
+            android:id="@+id/id_home_lv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:listSelector="@drawable/transparent"
+            android:scrollbars="none">
+
+        </com.sohuvideo.ui_plugin.view.HeaderPullListView>
+
+        <include layout="@layout/layout_net_error" />
+
+        <include layout="@layout/layout_data_loading" />
+
+    </FrameLayout>
+
+</RelativeLayout>

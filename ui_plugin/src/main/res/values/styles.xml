@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <style name="Theme.PageIndicatorDefaults" parent="android:Theme.Holo.Light.NoActionBar">
+        <item name="TabPageIndicatorStyle">@style/TabPageIndicator</item>
+    </style>
+
+    <style name="TabPageIndicator" >
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/tab_indicator</item>
+        <item name="android:paddingLeft">5dip</item>
+        <item name="android:paddingRight">5dip</item>
+        <item name="android:paddingTop">5dp</item>
+        <!--<item name="android:paddingBottom">0dp</item>-->
+        <item name="android:textAppearance">@style/TabPageIndicator_Text</item>
+        <item name="android:textSize">@dimen/base_font_size_16</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="TabPageIndicator_Text" parent="TabPageIndicator">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/sohu_theme</item>
+    </style>
+
+
+
+    <!--漫画底部导航栏-->
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>

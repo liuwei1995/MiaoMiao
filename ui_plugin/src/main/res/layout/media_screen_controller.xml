@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/layout_advert_media_controller"
+        layout="@layout/media_advert_controller"
+        android:visibility="gone"
+        />
+
+    <include
+        android:id="@+id/layout_lite_media_controller"
+        layout="@layout/media_lite_controller"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/layout_fullscreen_media_controller"
+        layout="@layout/media_full_controller"
+        android:visibility="gone" />
+
+</RelativeLayout>

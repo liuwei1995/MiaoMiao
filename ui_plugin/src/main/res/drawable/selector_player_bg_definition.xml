@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/nplayer_bg_definition_disable" android:state_enabled="false"/>
+    <item android:drawable="@drawable/player_bg_definition_normal"/>
+
+</selector>

@@ -1,0 +1,22 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sohuvideo.ui_plugin.fragment.SohuStreamFragment">
+
+    <ListView
+        android:id="@+id/id_producer_lv"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/transparent"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+    </ListView>
+
+    <include layout="@layout/layout_net_error" />
+
+    <include layout="@layout/layout_data_loading" />
+
+</FrameLayout>

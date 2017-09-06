@@ -1,0 +1,17 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.sohuvideo.ui_plugin.view.HeaderPullListView
+        android:id="@+id/id_sohumake_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/transparent"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+
+    </com.sohuvideo.ui_plugin.view.HeaderPullListView>
+</FrameLayout>

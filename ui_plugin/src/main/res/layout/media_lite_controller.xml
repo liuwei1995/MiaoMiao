@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 顶部栏-->
+    <LinearLayout
+        android:id="@+id/lite_media_title_layout"
+        android:layout_width = "match_parent"
+        android:gravity = "center_vertical"
+        android:layout_height="33dp"
+        android:layout_alignParentTop= "true"
+        android:background="#CC242526"
+        android:orientation ="horizontal">
+
+        <ImageView
+            android:id="@+id/lite_media_title_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@drawable/player_bg_btn"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:src="@drawable/details_icon_back" />
+
+        <TextView
+            android:id="@+id/lite_media_title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="7dp"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            android:singleLine="true"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+
+    <!--&lt;!&ndash; 加载进度圈 &ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/lite_media_progress_layout"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:orientation="vertical"-->
+        <!--android:visibility="visible" >-->
+
+        <!--<ProgressBar-->
+            <!--style="@style/SohuProgressSmall"-->
+            <!--android:layout_gravity="center_horizontal" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/lite_media_progress_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/loading"-->
+            <!--android:textColor="@color/gray1"-->
+            <!--android:textSize="14sp" />-->
+    <!--</LinearLayout>-->
+
+    <!-- 重试按钮,居中-->
+    <!--<ImageView-->
+        <!--android:id="@+id/retry_play_icon"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:contentDescription="@string/app_name"-->
+        <!--android:src="@drawable/newstab_details_icon_windowplay"-->
+        <!--android:visibility="gone" />-->
+
+    <!-- 控制Video的底部控制条 -->
+    <RelativeLayout
+        android:id="@+id/lite_media_play_control_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="#CC242526"
+        android:gravity="center_horizontal">
+
+
+        <ImageView
+            android:id="@+id/lite_media_play_pause_img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:paddingLeft="5dp"
+            android:src="@drawable/player_icon_play" />
+
+        <SeekBar
+            android:id="@+id/lite_media_seekbar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/lite_media_fullscreen_imgview"
+            android:layout_toRightOf="@+id/lite_media_play_pause_img"
+            android:clickable="true"
+            android:max="100"
+            android:maxHeight="1dp"
+            android:minHeight="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:progressDrawable="@drawable/seekbar_style_drawable"
+            android:thumb="@drawable/seekbar_thumb_style"
+            android:thumbOffset="7dp"
+            android:indeterminate="false" />
+
+        <TextView
+            android:id="@+id/lite_media_total_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@id/lite_media_seekbar"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:text="00:00"
+            android:textColor="#b3b3b3"
+            android:textSize="11dip" />
+
+        <TextView
+            android:id="@+id/lite_media_current_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_toLeftOf="@id/lite_media_total_time_text"
+            android:text="00:00/"
+            android:textColor="#b3b3b3"
+            android:textSize="11dip" />
+
+        <ImageView
+            android:id="@+id/lite_media_fullscreen_imgview"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/bg_details_icon_fullscreen" />
+
+    </RelativeLayout>
+
+
+    <!-- 版本限制提醒 （因版权限制，请登录网页端播放该影片）or （由于版权原因，您所在区域无法收看该视频） -->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/play_limited_tips_container"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:background="@drawable/newstab_details_bg_vip_normal"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:visibility="visible" >-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/play_limited_tips"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textColor="@color/gray3"-->
+            <!--android:textSize="13dip" />-->
+    <!--</RelativeLayout>-->
+</RelativeLayout>

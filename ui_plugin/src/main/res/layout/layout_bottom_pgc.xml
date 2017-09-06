@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_player_gray_bg"
+    android:orientation="vertical">
+
+    <!-- 专辑信息-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@color/color_player_white_bg"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line" />
+        <!-- 专辑名字-->
+        <TextView
+            android:id="@+id/pgc_album_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:singleLine="true"
+            android:textColor="@color/color_player_dark_text"
+            android:textSize="16dip" />
+
+        <!-- 播放次数-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/player_playcount" />
+
+            <TextView
+                android:id="@+id/pgc_album_play_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_player_light_text"
+                android:textSize="12dip" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/pgc_album_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/color_player_dark_text"
+            android:textSize="14dip" />
+        <!-- 隐藏,显示详情的按钮-->
+        <LinearLayout
+            android:id="@+id/pgc_album_info_puckup_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/pgc_album_info_puckup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:src="@drawable/player_icon_unfold" />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line" />
+    </LinearLayout>
+
+    <!-- 剧集列表-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:background="@color/color_player_white_bg"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line" />
+        <!-- 剧集及总集数-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dip"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="剧集"
+                android:textColor="@color/color_player_dark_text"
+                android:textSize="15dip" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/pgc_video_count"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:text="全X集"-->
+                <!--android:textColor="@color/color_player_dark_text"-->
+                <!--android:textSize="14dip" />-->
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginTop="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:background="@color/color_player_line" />
+
+        <HorizontalScrollView
+            android:id="@+id/pgc_horizontal_scroll_view"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/pgc_video_title_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+        <View
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/color_player_line" />
+        <!-- Item-->
+        <LinearLayout
+            android:paddingBottom="5dip"
+            android:id="@+id/pgc_video_item_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <!--1-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/list_item_1_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dip"-->
+                <!--android:layout_marginLeft="5dip"-->
+                <!--android:layout_marginRight="5dip"-->
+                <!--android:layout_marginTop="5dip"-->
+                <!--android:background="@drawable/player_item_bg_played"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:visibility="visible">-->
+
+                <!--<TextView-->
+                    <!--android:paddingLeft="5dip"-->
+                    <!--android:layout_marginRight="30dip"-->
+                    <!--android:id="@+id/list_item_1_text"-->
+                    <!--android:layout_width="0dip"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textSize="14dip"-->
+                    <!--android:textColor="@color/color_player_dark_text" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/list_item_1_play"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginRight="10dip"-->
+                    <!--android:layout_weight="0"-->
+                    <!--android:src="@drawable/video_playing" />-->
+            <!--</LinearLayout>-->
+            <!--&lt;!&ndash;2&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/list_item_2_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dip"-->
+                <!--android:layout_marginLeft="5dip"-->
+                <!--android:layout_marginRight="5dip"-->
+                <!--android:layout_marginTop="5dip"-->
+                <!--android:background="@drawable/player_item_bg_played"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:visibility="visible">-->
+
+                <!--<TextView-->
+                    <!--android:paddingLeft="5dip"-->
+                    <!--android:layout_marginRight="30dip"-->
+                    <!--android:id="@+id/list_item_2_text"-->
+                    <!--android:layout_width="0dip"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textSize="14dip"-->
+                    <!--android:textColor="@color/color_player_dark_text" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/list_item_2_play"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginRight="10dip"-->
+                    <!--android:layout_weight="0"-->
+
+                    <!--android:src="@drawable/video_playing" />-->
+            <!--</LinearLayout>-->
+            <!--&lt;!&ndash;3&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/list_item_3_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dip"-->
+                <!--android:layout_marginLeft="5dip"-->
+                <!--android:layout_marginRight="5dip"-->
+                <!--android:layout_marginTop="5dip"-->
+                <!--android:background="@drawable/player_item_bg_played"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:visibility="visible">-->
+
+                <!--<TextView-->
+                    <!--android:paddingLeft="5dip"-->
+                    <!--android:layout_marginRight="30dip"-->
+                    <!--android:id="@+id/list_item_3_text"-->
+                    <!--android:layout_width="0dip"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textSize="14dip"-->
+                    <!--android:textColor="@color/color_player_dark_text" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/list_item_3_play"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginRight="10dip"-->
+                    <!--android:layout_weight="0"-->
+                    <!--android:src="@drawable/video_playing" />-->
+            <!--</LinearLayout>-->
+            <!--&lt;!&ndash;4&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/list_item_4_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dip"-->
+                <!--android:layout_marginLeft="5dip"-->
+                <!--android:layout_marginRight="5dip"-->
+                <!--android:layout_marginTop="5dip"-->
+                <!--android:background="@drawable/player_item_bg_played"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:visibility="visible">-->
+
+                <!--<TextView-->
+                    <!--android:paddingLeft="5dip"-->
+                    <!--android:layout_marginRight="30dip"-->
+                    <!--android:id="@+id/list_item_4_text"-->
+                    <!--android:layout_width="0dip"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textSize="14dip"-->
+                    <!--android:textColor="@color/color_player_dark_text" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/list_item_4_play"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginRight="10dip"-->
+                    <!--android:layout_weight="0"-->
+                    <!--android:src="@drawable/video_playing" />-->
+            <!--</LinearLayout>-->
+            <!--&lt;!&ndash;5&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/list_item_5_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dip"-->
+                <!--android:layout_marginLeft="5dip"-->
+                <!--android:layout_marginRight="5dip"-->
+                <!--android:layout_marginTop="5dip"-->
+                <!--android:background="@drawable/player_item_bg_played"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:visibility="visible">-->
+
+                <!--<TextView-->
+                    <!--android:paddingLeft="5dip"-->
+                    <!--android:layout_marginRight="30dip"-->
+                    <!--android:id="@+id/list_item_5_text"-->
+                    <!--android:layout_width="0dip"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textSize="14dip"-->
+                    <!--android:textColor="@color/color_player_dark_text" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/list_item_5_play"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginRight="10dip"-->
+                    <!--android:layout_weight="0"-->
+                    <!--android:src="@drawable/video_playing" />-->
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

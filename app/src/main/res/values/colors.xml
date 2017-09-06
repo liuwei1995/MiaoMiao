@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="fontColor">#ffffff</color>
+
+    <!--导航栏的线-->
+    <color name="color_navigation_line">#ff7a61</color>
+    <!--导航栏背景-->
+    <color name="background_navigationbar">#f6f5f4</color>
+    <!--导航栏灰色字-->
+    <color name="color_navigationbar_text">#222222</color>
+    <!--导航栏字体选中颜色-->
+    <color name="color_navigationbar_selected_text">#ff7a61</color>
+
+    <color name="dark_grey">#808080</color>
+
+    <!-- 亮灰色 -->
+    <color name="bright_grey">#c0c0c0</color>
+
+    <!--红色-->
+    <color name="text_red">#ff3333</color>
+
+    <!--白色-->
+    <color name="text_white">#ffffff</color>
+
+</resources>

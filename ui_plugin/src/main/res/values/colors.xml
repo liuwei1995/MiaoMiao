@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <color name="background_holo_dark">#ff000000</color>
+    <!--标题字颜色-->
+    <color name="background_holo_light">#ff000000</color>
+    <color name="bright_foreground_holo_dark">@color/background_holo_light</color>
+    <color name="bright_foreground_holo_light">@color/background_holo_dark</color>
+    <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+    <color name="bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="bright_foreground_inverse_holo_dark">@color/bright_foreground_holo_light</color>
+    <color name="bright_foreground_inverse_holo_light">@color/bright_foreground_holo_dark</color>
+
+    <!--下拉刷新-->
+    <color name="hint_textview_color">#999999</color>
+    <!--line color-->
+    <color name="line">#d5d5d5</color>
+    <color name="ver_line">#DCE0E3</color>
+    <color name="pgc_listview_background">#E7EBEE</color>
+    <color name="base_color_black1">#1d1e1f</color>
+    <dimen name="emotion_pic_180_90">180dp</dimen>
+    <dimen name="emotion_pic_120_60">120dp</dimen>
+    <color name="white2_30_percent_opacity">#777777</color>
+    <color name="white_10_percent_opacity">#10eeeeee</color>
+    <color name="base_color_white2">#eeeeee</color>
+    <color name="gray">#787878</color>
+
+    <color name="gray1_color">#75767B</color>
+    <color name="transparent">#00000000</color>
+    <color name="col_album_detail_50">#80666666</color>
+    <color name="black">#000000</color>
+    <color name="red">#D70500</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="color_player_gray_bg">#DEE2E5</color>
+    <color name="color_player_white_bg">#F0F3F5</color>
+    <color name="color_player_dark_text">#525659</color>
+    <color name="color_player_light_text">#9CA0A3</color>
+    <color name="color_player_line">#D9DDE0</color>
+    <color name="color_player_orange_text">#E7BFA4</color>
+
+    <color name="dark">#FF222222</color>
+    <color name="light">#FFEEEEEE</color>
+    <!--广告-->
+    <color name="color_advert_bg">#80000000</color>
+    <color name="color_advert_text">#ffffff</color>
+
+    <!--导航栏背景-->
+    <color name="background_navigationbar">#f6f5f4</color>
+
+
+    <!--导航栏字体选中颜色-->
+    <color name="color_navigationbar_selected_text">#ff7a61</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <!--导航栏灰色字-->
+    <color name="color_navigationbar_text">#222222</color>
+
+    <color name="dark_grey">#808080</color>
+
+    <!--红色-->
+    <color name="text_red">#ff3333</color>
+
+    <!--白色-->
+    <color name="text_white">#ffffff</color>
+
+</resources>

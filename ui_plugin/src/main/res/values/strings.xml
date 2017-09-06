@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">UI_PlugIn</string>
+    <string name="load_title_error">获取标题失败</string>
+
+    <string name="netError">网络连接错误</string>
+    <string name="button_text_try_again">再试一次</string>
+    <string name="homepage_end">已经到达结尾了</string>
+    <string name="loading">加载中....</string>
+    <string name="pull_dwon">下拉刷新</string>
+    <string name="last_update_time">上次更新</string>
+    <string name="item_title_ex">恶搞吐槽</string>
+    <string name="pull_release_to_refresh">松开刷新</string>
+    <string name="pull_down_refresh">下拉刷新</string>
+    <string name="pull_refreshing">正在刷新...</string>
+    <string name="titleModeMore">更多</string>
+    <string name="loadDataError">数据请求失败,请重试.</string>
+
+    <string name="detail">了解详情</string>
+
+    <string name="remain_time_text">%02d</string>
+
+</resources>

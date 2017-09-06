@@ -1,0 +1,711 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="流量联盟,网盟,cpm,cpc,搜狐视频,搜狐视频开放平台,搜狐视频SDK">
+<title>开放平台-搜狐视频开放平台</title>
+<link href="//css.tv.itc.cn/alliance/global.css" rel="stylesheet" type="text/css">
+<link href="//css.tv.itc.cn/alliance/backForm.css" rel="stylesheet" type="text/css">
+<script src="//hm.baidu.com/hm.js?3659a4e1f6285a668d9c019f83fb917c"></script><script type="text/javascript" src="//js.tv.itc.cn/kao.js"></script>
+<script type="text/javascript" src="//js.tv.itc.cn/gg.seed.js"></script>
+<script type="text/javascript" src="//js.tv.itc.cn/dict.js"></script>
+<script type="text/javascript" src="//js.tv.itc.cn/site/alliance/openPlatformDoc/inc.js"></script>
+</head>
+<body>
+	<!--head start-->
+	
+
+
+
+<!--head start-->
+<div class="fu-headWrap">
+	<div class="fuBox cfix">
+		<div class="fu_logo l">
+			<a href="//tv.sohu.com/" target="_blank" title="搜狐视频"><img src="//css.tv.itc.cn/alliance/images/logo_1.png" alt="搜狐视频"></a>
+			<span class="logo_u"><img src="//css.tv.itc.cn/alliance/images/logo_2.png" alt=""></span>
+		</div>
+		<ul class="fu-nav r">
+			<li> <a href="/">首页</a></li>
+			<li class="on"> <a href="/union/open_platform.do">开放平台</a><div class="rel"><img src="//css.tv.itc.cn/alliance/images/new.png" class="RUCorner"></div></li> 
+			<li> <a href="/union/hot_video.do">热推视频</a></li>
+			<li> <a href="/union/intro.do">产品介绍</a></li>
+			<li> <a href="/union/notice.do">新闻公告</a></li>
+			<li> <a href="/union/help.do">帮助中心</a></li>
+			<li> <a href="/union/about.do">关于我们</a></li>
+		</ul>
+	</div>
+</div>
+<!--head end-->
+
+
+	<!--head end-->
+	<!--register start-->
+	<div class="regBox">
+		<!-- <div class="fuBox cfix"> -->
+		<div class="tfBox cfix">
+			<div class="tmenu">
+				
+					<dl class="mn-dl">
+						<dt class="mn-dt">平台介绍</dt>
+							
+								 
+									<dd><a href="#" mid="170" level="2">SDK播放器</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="180" level="2">H5播放器</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="181" level="2">跳转搜狐H5</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="182" level="2">APP下载推广</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="176" level="2">开发者协议</a></dd>
+								
+								
+							
+					</dl>
+				
+				
+					<dl class="mn-dl">
+						<dt class="mn-dt">搜狐OpenAPI文档</dt>
+							
+								 
+									<dd><a href="#" mid="174" level="2">分类列表获取</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="149" level="2">分类内容获取</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="183" level="2">视频详细信息</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="177" level="2">专辑详情信息</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="178" level="2">分集列表获取</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="150" level="2">关键词搜索</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="175" level="2">错误代码定义</a></dd>
+								
+								
+							
+					</dl>
+				
+				
+					<dl class="mn-dl">
+						<dt class="mn-dt">搜狐SDK文档</dt>
+							
+								 
+									<dd class="ton"><a href="#" mid="165" level="2">Android SDK集成说明</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="179" level="2">Android SDK UI插件</a></dd>
+								
+								
+							
+								 
+									<dd><a href="#" mid="172" level="2">iOS SDK集成说明</a></dd>
+								
+								
+							
+					</dl>
+				
+				
+					<dl class="mn-dl">
+						<dt class="mn-dt">常见问题</dt>
+							
+								 
+									<dd><a href="#" mid="167" level="2">常见问题</a></dd>
+								
+								
+							
+					</dl>
+				
+				
+			</div>
+		
+			
+			<div class="tcontent">
+				<div class="t-tit">Android SDK集成说明</div>
+				<div class="t-txt"><p>
+	<span style="font-size:14px;font-family:'Microsoft YaHei';line-height:2;"><strong>1</strong></span><span style="font-size:12pt;font-family:'';"><span style="font-family:'Microsoft YaHei';font-size:14px;line-height:2;"><strong>、添加</strong></span><span style="font-family:'Microsoft YaHei';font-size:14px;line-height:2;"><strong>SDK库文件</strong></span></span> 
+</p>
+<p style="text-indent:0px;font-family:'Open Sans';font-size:31.5px;">
+	<span style="font-family:'Microsoft YaHei';font-size:14px;"><b>&nbsp; &nbsp;&nbsp;</b>创建一个Android项目，把rawso放置到assets目录下，so动态库文件放置到jniLibs目录下，jar包放置到libs目录下，且gradle文件配置依赖该jar包。</span><span style="font-weight:300;font-family:'Microsoft YaHei';font-size:14px;"></span> 
+</p>
+<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;">
+	<span style="font-size:12pt;font-family:'';"></span> 
+</p>
+<p class="MsoNormal" style="font-family:'Open Sans';font-size:13.3333px;text-indent:21pt;">
+	<img src="http://union.bjcnc.scs.sohucs.com/20170712164101_113.png" alt=""> 
+</p>
+<p style="font-family:'Open Sans';font-weight:300;font-size:31.5px;">
+	<span style="font-size:14px;font-family:'Microsoft YaHei';line-height:2;"><strong>2</strong></span><span style="font-size:12pt;font-family:'';"><span style="font-family:'Microsoft YaHei';font-size:14px;line-height:2;"><strong>、添加</strong></span><span style="font-family:'Microsoft YaHei';font-size:14px;line-height:2;"><strong>android&nbsp;</strong></span><span style="font-family:'Microsoft YaHei';font-size:14px;line-height:2;"><strong>权限声明</strong></span></span> 
+</p>
+<p class="MsoListParagraph" style="margin-left:18pt;font-family:'Open Sans';font-size:13.3333px;text-indent:0cm;">
+	<span style="font-family:'';"><span style="font-family:'Microsoft YaHei';font-size:14px;">在工程中的</span><span style="font-family:'Microsoft YaHei';font-size:14px;">AndroidManifest.xml</span><span style="font-family:'Microsoft YaHei';font-size:14px;">文件中添加以下必要权限：</span></span> 
+</p>
+<p class="MsoListParagraph" style="margin-left:18pt;font-family:'Open Sans';font-size:13.3333px;text-indent:0cm;">
+	<br>
+</p>
+<p>
+	</p><table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" style="color:#000000;font-family:'Open Sans';font-size:13.3333px;border:none;">
+		<tbody>
+			<tr>
+				<td width="568" valign="top" style="vertical-align:top;border:1pt solid black;">
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span><span style="font-family:'Microsoft YaHei';font-size:12px;line-height:1.5;"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span><span></span> 
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<span><span style="line-height:normal;">
+	<p class="tension">
+		&lt;uses-permission
+android:name="android.permission.INTERNET" /&gt;
+	</p>
+	<p class="tension">
+		&lt;uses-permission
+android:name="android.permission.WAKE_LOCK" /&gt;
+	</p>
+	<p class="tension">
+		&lt;uses-permission
+android:name="android.permission.ACCESS_WIFI_STATE"/&gt;
+	</p>
+	<p class="tension">
+		&lt;uses-permission
+android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
+	</p>
+	<p class="tension">
+		&lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+/&gt;
+	</p>
+&lt;uses-permission
+android:name="android.permission.READ_PHONE_STATE" /&gt;<br>
+</span></span> 
+<p></p>
+<p>
+	<span><span style="line-height:normal;"><br>
+</span></span>
+</p>
+<p>
+	<span><span style="line-height:normal;"><br>
+</span></span>
+</p>
+<p style="font-family:'Open Sans';font-weight:300;font-size:31.5px;">
+	<span style="font-size:14px;font-family:'Microsoft YaHei';"><strong>3</strong></span><span style="font-size:14px;font-family:'Microsoft YaHei';"><strong>、添加必要组件声明</strong></span> 
+</p>
+<p class="MsoListParagraph" style="margin-left:18pt;font-family:'Open Sans';font-size:13.3333px;text-indent:0cm;">
+	<span style="font-family:'';"><span style="font-family:'Microsoft YaHei';font-size:14px;">为支持相应功能，在</span><span style="font-family:'Microsoft YaHei';font-size:14px;">AndroidManifest.xml</span><span style="font-family:'Microsoft YaHei';font-size:14px;">文件相应位置添加以下必要声明：</span><span></span></span> 
+</p>
+<p>
+	</p><table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" style="color:#000000;font-family:'Open Sans';font-size:13.3333px;border:none;">
+		<tbody>
+			<tr>
+				<td width="568" valign="top" style="vertical-align:top;border:1pt solid black;">
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-family:'Microsoft YaHei';font-size:12px;"><!--&nbsp;</span><span style="font-family:'Microsoft YaHei';font-size:12px;">内置广告跳转页面</span><span style="font-family:'Microsoft YaHei';font-size:12px;">&nbsp;--></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span><span style="font-family:'Microsoft YaHei';font-size:12px;line-height:1.5;"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-family:'Microsoft YaHei';font-size:12px;"><!--&nbsp;</span><span style="font-family:'Microsoft YaHei';font-size:12px;">内置广告跳转页面</span><span style="font-family:'Microsoft YaHei';font-size:12px;">&nbsp;--></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left" style="font-family:'Open Sans';font-size:13.3333px;background-color:#FCFCFC;">
+						<span style="font-size:12px;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span> 
+					</p>
+					<p class="MsoNormal" align="left">
+						<span style="font-size:10pt;font-family:'Microsoft YaHei';"></span><span style="font-family:'color:#3F5FBF;"></span> 
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:0cm;">
+		在工程清单文件内声明以下组件
+	</p>
+	<table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="404" style="width:404pt;border:none;">
+		<tbody>
+			<tr>
+				<td width="404" valign="top" style="border:solid windowtext 1.0pt;">
+					<p class="MsoNormal" align="left" style="text-align:left;">
+						<span style="font-family:&quot;">&lt;!-- </span><span style="font-family:宋体;">广告转跳页面</span><span style="font-family:&quot;"> --&gt;</span>
+					</p>
+					<p class="tension">
+						<span style="color:#7F7F7F;">&lt;activity<br>
+&nbsp;&nbsp;&nbsp;
+  android:name="com.sohu.commonadsdk.webview.SohuAdActivity"<br>
+&nbsp;&nbsp;&nbsp;
+  android:configChanges="orientation|keyboardHidden|screenSize"
+  /&gt;</span><span></span>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:0cm;">
+		&nbsp;
+	</p>
+	<table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="404" style="width:404pt;border:none;">
+		<tbody>
+			<tr>
+				<td width="404" valign="top" style="border:solid windowtext 1.0pt;">
+					<p class="MsoNormal" align="left" style="text-align:left;">
+						<span style="font-family:&quot;">&lt;!-- </span><span style="font-family:宋体;">应用统计服务</span><span style="font-family:&quot;"> --&gt;</span>
+					</p>
+					<p class="tension">
+						<span style="color:#7F7F7F;">&lt;service<br>
+&nbsp;&nbsp;&nbsp;
+  android:name="com.sohuvideo.player.statistic.LogService"<br>
+&nbsp;&nbsp;&nbsp; android:exported="false"<br>
+&nbsp;&nbsp;&nbsp;
+  android:label="CoreService" /&gt;</span><span></span>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p class="MsoListParagraph" style="margin-left:18.0pt;text-indent:0cm;">
+		&nbsp;
+	</p>
+<p></p>
+<p>
+	<span><span style="line-height:normal;"><br>
+</span></span> 
+</p>
+<p style="font-family:'Open Sans';font-weight:300;font-size:31.5px;">
+	<span style="font-size:14px;font-family:'Microsoft YaHei';"><strong>4&nbsp;</strong></span><span style="font-size:12pt;font-family:'';"><span style="font-family:'Microsoft YaHei';font-size:14px;"><strong>、</strong></span><span style="font-family:'Microsoft YaHei';font-size:14px;"><strong>PARTNER和API_KEY&nbsp;</strong></span><span style="font-family:'Microsoft YaHei';font-size:14px;"><strong>填写</strong></span></span> 
+</p>
+<h2 style="font-family:'Open Sans';font-weight:300;font-size:31.5px;">
+	<span style="font-size:14px;line-height:1.5;font-family:'Microsoft YaHei';">第一种方式</span><span style="font-size:14px;line-height:1.5;font-family:'Microsoft YaHei';">:</span><span style="font-size:14px;line-height:1.5;font-family:'Microsoft YaHei';">在</span><span style="font-size:14px;line-height:1.5;font-family:'Microsoft YaHei';">AndroidManifest.xml</span><span style="font-size:14px;line-height:1.5;font-family:'Microsoft YaHei';">配置</span> 
+</h2>
+<p>
+	<span style="font-size:13.3333px;line-height:1.5;font-family:'Microsoft YaHei';"><img src="https://union.bjcnc.scs.sohucs.com/20150923103140_897.png" alt=""><br>
+</span> 
+</p>
+<p class="MsoNormal" style="font-family:'Open Sans';font-size:13.3333px;">
+	<span><img width="596" height="175" src="file://C:/Users/KONGZH~1/AppData/Local/Temp/msohtmlclip1/01/clip_image003.jpg" alt="AndroidManifest.png" style="height:auto;"></span> 
+</p>
+<p class="MsoNormal" style="font-family:'Open Sans';font-size:13.3333px;">
+	<span style="font-family:'';"><span style="font-family:'Microsoft YaHei';font-size:14px;">第二种方式</span><span style="font-family:'Microsoft YaHei';font-size:14px;">:</span><span style="font-family:'Microsoft YaHei';font-size:14px;">直接调用如下代码初始化</span><span></span></span> 
+</p>
+<p class="MsoNormal" style="font-family:'Open Sans';font-size:13.3333px;">
+	<span><img width="596" height="158" src="file://C:/Users/KONGZH~1/AppData/Local/Temp/msohtmlclip1/01/clip_image004.png" alt="setPartner.png" style="height:auto;"></span><span></span> 
+</p>
+<p class="MsoNormal" style="font-family:'Open Sans';font-size:13.3333px;">
+	<span style="font-family:'Microsoft YaHei';">&nbsp;<img src="https://union.bjcnc.scs.sohucs.com/20150923103152_470.png" alt=""></span> 
+</p>
+<p style="font-family:'Open Sans';font-weight:300;font-size:31.5px;">
+	<span style="font-size:14px;font-family:'Microsoft YaHei';"><strong>5</strong></span><span style="font-size:12pt;font-family:'';"><span style="font-family:'Microsoft YaHei';font-size:14px;"><strong>、对外</strong></span><span style="font-family:'Microsoft YaHei';font-size:14px;"><strong>API</strong></span><span style="font-family:'Microsoft YaHei';font-size:14px;"><strong>的类表</strong></span></span> 
+</p>
+<table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" style="color:#000000;font-family:'Open Sans';font-size:13.3333px;border:none;">
+	<tbody>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<b><span style="font-family:'Microsoft YaHei';">类名</span></b><b><span style="font-family:Consolas;"></span></b> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<b><span style="font-family:'Microsoft YaHei';">类型</span></b><b><span></span></b> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<b><span style="font-family:'Microsoft YaHei';">备注</span></b><b><span></span></b> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerAPI</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">方法</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">额外的</span><span style="font-family:'Microsoft YaHei';">api</span><span style="font-family:'Microsoft YaHei';">漏出方法</span><span style="font-family:'Microsoft YaHei';">:</span><span style="font-family:'Microsoft YaHei';">获取视频清晰度接口以及获取</span><span style="font-family:'Microsoft YaHei';">APK</span><span style="font-family:'Microsoft YaHei';">下载地址；</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerDecoderType</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">常量</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">当前</span><span style="font-family:'Microsoft YaHei';">player</span><span style="font-family:'Microsoft YaHei';">的解码类型</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerDefinition</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">常量</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">视频清洗浮常量</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerError</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">常量</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">视频播放返回</span><span style="font-family:'Microsoft YaHei';">error</span><span style="font-family:'Microsoft YaHei';">类型</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerItemBuilder</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">构造</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">视频播放资源</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerLibLoadListener</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">监听</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">解码器</span><span style="font-family:'Microsoft YaHei';">so</span><span style="font-family:'Microsoft YaHei';">文件下载监听</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerLibManager</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">方法</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">处理解码器</span><span style="font-family:'Microsoft YaHei';">so</span><span style="font-family:'Microsoft YaHei';">的外置功能</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerLoadFailure</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">常量</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">加载视频失败类型</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerMonitor</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">监听</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">播放器过程监视器</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;background-color:#F5F5F5;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerSDK</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;background-color:#F5F5F5;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">方法</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;background-color:#F5F5F5;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">播放器初始化以及结束方法</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerSetting</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">方法</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">播放器相关设置</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuPlayerStatCallback</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">监听</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">做统计统计相关</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuScreenView</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">构造</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">播放</span><span style="font-family:'Microsoft YaHei';">view</span><span style="font-family:'Microsoft YaHei';">构造类</span><span></span> 
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="198" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="left">
+					<span style="font-family:'Microsoft YaHei';">SohuVideoPlayer</span> 
+				</p>
+			</td>
+			<td width="48" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal" align="center" style="text-align:center;">
+					<span style="font-family:'Microsoft YaHei';">方法</span><span></span> 
+				</p>
+			</td>
+			<td width="296" valign="top" style="vertical-align:top;border:1pt solid black;">
+				<p class="MsoNormal">
+					<span style="font-family:'Microsoft YaHei';">播放器</span><span style="font-family:'Microsoft YaHei';">player</span> 
+				</p>
+				<div>
+					<span><br>
+</span> 
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<br>
+</p>
+<p>
+	<strong>SDK其他文档，请在开放平台下载SDK包，内含完整说明文档。</strong> 
+</p></div>
+				
+			</div>
+		</div>
+	</div>
+	<!--register end-->
+	<!--coparator start-->
+	
+<div class="fu-foot">
+	<a href="/union/contact.do">联系我们</a>| <a href="/union/help.do">规则说明</a>| <a href="/user/register_agreement.do">法律声明</a>
+</div>
+<script>
+var _hmt = _hmt || [];
+(function() {
+         var hm = document.createElement("script");
+         hm.src = "//hm.baidu.com/hm.js?3659a4e1f6285a668d9c019f83fb917c";
+         var s = document.getElementsByTagName("script")[0];
+         s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+	<!--foot end-->
+
+
+</body></html>

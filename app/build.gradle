@@ -1,0 +1,155 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // 默认是umeng的渠道
+        manifestPlaceholders = [CHANNEL_VALUE: "Tencent"]
+        jackOptions {
+            enabled false
+        }
+
+    }
+
+
+    signingConfigs {
+        release {
+            storeFile file(STORE_FILE)
+            storePassword KEYSTORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    buildTypes {
+        release {
+// 开启混淆
+            minifyEnabled true
+//            收缩资源文件
+            shrinkResources true
+
+            // 对齐zip
+            zipAlignEnabled true
+            // 删除无用资源
+            shrinkResources false
+            // 是否debug
+            debuggable false
+            // 命名后缀
+            versionNameSuffix "_release"
+            // 签名
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为koku_v1.0_2015-01-15_wandoujia.apk
+                        def fileName = "${defaultConfig.applicationId}_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
+            zipAlignEnabled false
+            shrinkResources false
+            minifyEnabled false
+            versionNameSuffix "_debug"
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+//忽略Lint
+    lintOptions {
+        abortOnError false
+    }
+    productFlavors {
+
+        kuan {
+            manifestPlaceholders = [CHANNEL_VALUE: "kuan"]
+        }
+        xiaomi {
+            manifestPlaceholders = [CHANNEL_VALUE: "xiaomi"]
+        }
+        qh360 {
+            manifestPlaceholders = [CHANNEL_VALUE: "qh360"]
+        }
+        baidu {
+            manifestPlaceholders = [CHANNEL_VALUE: "baidu"]
+        }
+        wandoujia {
+            manifestPlaceholders = [CHANNEL_VALUE: "wandoujia"]
+        }
+        huawei {
+            manifestPlaceholders = [CHANNEL_VALUE: "huawei"]
+        }
+        tencent {
+            manifestPlaceholders = [CHANNEL_VALUE: "tencent"]
+        }
+    }
+    //针对很多渠道
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
+    }
+
+//    ----------------------------------------------------
+//app打包 - 进阶 分割apk
+    splits {
+        density {
+            enable true
+            exclude 'ldpi', 'mdpi'
+            compatibleScreens 'normal', 'large', 'xlarge'
+        }
+    }
+//    生成结果：
+//    app-hdpi-release.apk
+//    app-universal-release.apk
+//    app-xhdpi-release.apk
+//    app-xxhdpi-release.apk
+//    app-xxxhdpi-release.apk
+
+
+}
+
+dependencies {
+        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        })
+        testCompile 'junit:junit:4.12'
+    compile files('libs/fastjson-1.2.31.jar')
+    compile files('libs/universal-image-loader-1.9.5.jar')
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    compile rootProject.ext.dependencies["design"]
+    compile rootProject.ext.dependencies["percent"]
+    compile rootProject.ext.dependencies["okhttp"]
+    compile rootProject.ext.dependencies["constraint-layout"]
+    compile rootProject.ext.dependencies["glide"]
+    compile project(":ui_plugin");
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+}
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd HH-mm-ss", TimeZone.getTimeZone("GMT+8"))
+}

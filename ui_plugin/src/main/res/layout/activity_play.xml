@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--播放窗口-->
+    <com.sohuvideo.ui_plugin.view.FinalVideoLayout
+        android:id="@+id/videoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:clickable="true">
+
+        <com.sohuvideo.api.SohuScreenView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+
+
+        <FrameLayout
+            android:id="@+id/mediaControllerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/windowPic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/player_window_bg"
+            android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/btn_start_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_start_play" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progress_bar_fox_tail" />
+
+    </com.sohuvideo.ui_plugin.view.FinalVideoLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_player_gray_bg">
+
+        <RelativeLayout
+            android:id="@+id/layout_bottom_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progress_bar_fox_tail" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_bottom_fail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_network" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/netError"
+                android:textColor="@color/base_color_black1"
+                android:textSize="@dimen/base_font_size" />
+
+            <Button
+                android:id="@+id/fail_try_btn"
+                android:layout_width="@dimen/my_common_button_width"
+                android:layout_height="@dimen/my_common_button_height"
+                android:layout_marginTop="20dp"
+                android:alpha="0.6"
+                android:gravity="center"
+                android:text="@string/button_text_try_again"
+                android:textColor="@color/base_color_black1"
+                android:textSize="@dimen/base_font_size" />
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/layout_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <!--底部专辑信息及专辑分集信息-->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/layout_bottom_sohu_make"
+                    layout="@layout/layout_bottom_sohu_make"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/layout_bottom_pgc"
+                    layout="@layout/layout_bottom_pgc"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</LinearLayout>

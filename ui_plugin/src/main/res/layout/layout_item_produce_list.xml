@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <com.sohuvideo.ui_plugin.view.FinalVideoLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/id_produce_videoview_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"/>
+
+        <RelativeLayout
+            android:id="@+id/id_produce_control_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="#CC242526"
+            android:gravity="center_horizontal"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/id_produce_play_pause_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:paddingLeft="5dp"
+                android:src="@drawable/player_icon_play" />
+
+            <SeekBar
+                android:id="@+id/id_produce_seekbar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_produce_play_pause_img"
+                android:clickable="true"
+                android:max="100"
+                android:maxHeight="1dp"
+                android:minHeight="1dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:progressDrawable="@drawable/seekbar_style_drawable"
+                android:thumb="@drawable/seekbar_thumb_style"
+                android:thumbOffset="7dp"
+                android:indeterminate="false" />
+
+            <TextView
+                android:id="@+id/id_produce_total_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@id/id_produce_seekbar"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:text="00:00"
+                android:textColor="#b3b3b3"
+                android:textSize="11dip" />
+
+            <TextView
+                android:id="@+id/id_produce_current_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_toLeftOf="@id/id_produce_total_time_text"
+                android:text="00:00/"
+                android:textColor="#b3b3b3"
+                android:textSize="11dip" />
+        </RelativeLayout>
+
+        <com.sohu.lib.net.util.SohuImageView
+            android:id="@+id/id_produce_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/id_produce_start_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_start_play" />
+
+        <ProgressBar
+            android:id="@+id/id_produce_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progress_bar_fox_tail"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:background="@drawable/item_produce_background"
+            android:paddingTop="5dp">
+            <TextView
+                android:id="@+id/id_produce_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:textColor="@color/base_color_white2"
+                android:textSize="@dimen/base_font_size" />
+
+            <TextView
+                android:id="@+id/id_produce_tip_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/id_produce_time_tv"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@color/base_color_white2"
+                android:textSize="@dimen/base_font_size" />
+
+        </RelativeLayout>
+
+    </com.sohuvideo.ui_plugin.view.FinalVideoLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/id_produce_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/item_produce_indicator"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/base_font_size" />
+
+        <TextView
+            android:id="@+id/id_produce_playcount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:drawableLeft="@drawable/item_produce_video"
+            android:drawablePadding="5dp"
+            android:textSize="@dimen/base_font_size" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pgc_listview_background">
+
+    <com.sohuvideo.ui_plugin.view.HeaderPullListView
+        android:id="@+id/id_lv"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/transparent"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+
+    </com.sohuvideo.ui_plugin.view.HeaderPullListView>
+
+    <include layout="@layout/layout_net_error" />
+    <include layout="@layout/layout_data_loading" />
+
+</FrameLayout>

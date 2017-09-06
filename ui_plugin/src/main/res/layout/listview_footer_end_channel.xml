@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/more_loading"
+        layout="@layout/listview_footer_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/more_end"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/tail_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/search_hotword_10_5"
+            android:background="@drawable/tail" />
+
+
+        <TextView
+            android:id="@+id/id_end_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tail_end"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/homepage_end_margin_top"
+            android:gravity="center"
+            android:paddingLeft="@dimen/homepage_end_margin"
+            android:paddingRight="@dimen/homepage_end_margin"
+            android:text="@string/homepage_end"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/base_font_size" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dip"
+            android:layout_below="@id/id_end_tv"
+            android:layout_marginLeft="@dimen/navigation_channel_button_padding"
+            android:layout_marginRight="@dimen/navigation_channel_button_padding"
+            android:layout_marginTop="@dimen/search_hotword_10_5"
+            android:layout_marginBottom="@dimen/search_hotword_10_5"
+            android:background="@color/col_album_detail_50" />
+    </RelativeLayout>
+
+</LinearLayout> 
