@@ -177,7 +177,59 @@ public static <fields>;
 
 
 #start--------------------------------------- com.sohuvideo.ui_plugin----------------------------------------------start
+
+
+-libraryjars ../ui_plugin/libs/androidcommon-toolbox.jar
+-libraryjars ../ui_plugin/libs/gson-2.2.2.jar
+-libraryjars ../ui_plugin/libs/sohu_net.jar
+-libraryjars ../ui_plugin/libs/SohuPlayer_V5.6.0__2017_07_04_16_16_release.jar
+
+
 -dontwarn com.sohuvideo.ui_plugin.**
 -keep class com.sohuvideo.ui_plugin.**{*;}
+
+-dontwarn com.sohuvideo.player.**
+-keep class com.sohuvideo.player.**{*;}
+
+-dontwarn com.sohuvideo.api.**
+-keep class com.sohuvideo.api.**{*;}
+
+-dontwarn com.sohu.**
+-keep class com.sohu.**{*;}
+
+-dontwarn com.google.gson.**
+-keep class com.google.gson.**{*;}
+
+-dontwarn com.google.gson.**
+-keep class com.google.gson.**{*;}
+
+-dontwarn com.android.sohu.**
+-keep class com.android.sohu.**{*;}
+
+-dontwarn com.android.sohu.**
+-keep class com.android.sohu.**{*;}
+
+-dontwarn com.sohu.lib.**
+-keep class com.sohu.lib.**{*;}
+
+-dontwarn org.apache.**
+-keep class org.apache.**{*;}
+
+-dontskipnonpubliclibraryclassmembers
+
+
+#Warning:com.android.sohu.sdk.common.toolbox.RSAUtils:
+# can't find referenced method 'byte[] decodeBase64(java.lang.String)' in library class org.apache.commons.codec.binary.Base64
+
 #end----------------------------------------- com.sohuvideo.ui_plugin----------------------------------------------end
 
+#
+#-libraryjars libs/androidcommon-toolbox.jar
+#-libraryjars libs/gson-2.2.2.jar
+#-libraryjars libs/SohuPlayer_V5.6.0__2017_07_04_16_16_release.jar
+#
+#
+#-keep public class * com.google.gson.**{*;}
+#-keep public class * com.android.sohu.sdk.common.**{*;}
+#-keep public class * com.sohu.**{*;}
+#-keep public class * com.sohu.lib.**{*;}

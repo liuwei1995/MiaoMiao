@@ -4,7 +4,9 @@
 
 package com.sohuvideo.ui_plugin.control;
 
-public class V4APIResponse<T> {
+import java.io.Serializable;
+
+public class V4APIResponse<T> implements Serializable{
 
     private int status;
     private String statusText;

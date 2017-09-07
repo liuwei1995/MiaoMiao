@@ -30,3 +30,8 @@
   **[] $VALUES;
   public *;
 }
+
+#-libraryjars libs/androidcommon-toolbox.jar
+#-libraryjars libs/gson-2.2.2.jar
+#-libraryjars libs/SohuPlayer_V5.6.0__2017_07_04_16_16_release.jar
+
