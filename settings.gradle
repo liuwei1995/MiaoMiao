@@ -1,1 +1,1 @@
-include ':app', ':ui_plugin'
+include ':app', ':ui_plugin', ':bdintegrationsdk_libproject'

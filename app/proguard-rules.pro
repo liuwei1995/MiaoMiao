@@ -233,3 +233,17 @@ public static <fields>;
 #-keep public class * com.android.sohu.sdk.common.**{*;}
 #-keep public class * com.sohu.**{*;}
 #-keep public class * com.sohu.lib.**{*;}
+
+
+# 嵌入广点通sdk时必须添加
+-keep class com.qq.e.** {
+    public protected *;
+}
+
+# 嵌入广点通sdk时必须添加
+-keep class android.support.v4.**{ *;}
+
+# Demo工程里用到了AQuery库，因此需要添加下面的配置
+# 请开发者根据自己实际情况给第三方库的添加相应的混淆设置
+-dontwarn com.androidquery.**
+-keep class com.androidquery.** { *;}

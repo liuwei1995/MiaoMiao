@@ -51,8 +51,8 @@ android {
             shrinkResources false
             // 是否debug
             debuggable false
-            // 命名后缀
-            versionNameSuffix "_release"
+//            // 命名后缀
+//            versionNameSuffix "_release"
             // 签名
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -134,11 +134,12 @@ android {
 }
 
 dependencies {
-        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-            exclude group: 'com.android.support', module: 'support-annotations'
-        })
-        testCompile 'junit:junit:4.12'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
     compile files('libs/fastjson-1.2.31.jar')
+    compile files('libs/GDTUnionSDK.4.11.551.min.jar')
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["design"]
@@ -146,7 +147,7 @@ dependencies {
     compile rootProject.ext.dependencies["okhttp"]
     compile rootProject.ext.dependencies["constraint-layout"]
     compile rootProject.ext.dependencies["glide"]
-    compile project(":ui_plugin");
+    compile project(':ui_plugin')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
