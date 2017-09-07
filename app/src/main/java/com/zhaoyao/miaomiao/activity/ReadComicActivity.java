@@ -18,11 +18,17 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.banner.BannerView;
+import com.qq.e.comm.util.AdError;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.adapter.ReadComicActivityAdapter;
 import com.zhaoyao.miaomiao.entity.ComicChapterDetailsEntity;
+import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.NetWorkUtils;
 import com.zhaoyao.miaomiao.util.image.GlideUtils;
@@ -137,10 +143,46 @@ public class ReadComicActivity extends BaseNewActivity {
         ReadComicActivityAdapter readComicActivityAdapter = new ReadComicActivityAdapter(list, R.layout.item_activity_read_comic);
         mRecyclerView.setAdapter(readComicActivityAdapter);
     }
-
+    LinearLayout llAd = null;
+    private BannerView mBannerView;
     private void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.rlv_ReadComicActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        llAd = (LinearLayout) findViewById(R.id.ll_ad);
+        doRefreshBanner();
+    }
+
+    private void initBanner() {
+        mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, Constants.BannerPosID);
+        mBannerView.setRefresh(30);
+        llAd.removeAllViews();
+        mBannerView.setADListener(new AbstractBannerADListener() {
+            @Override
+            public void onNoAD(AdError adError) {
+                LogUtils.a(adError);
+            }
+
+            @Override
+            public void onADReceiv() {
+                LogUtils.a("onADReceiv");
+            }
+        });
+        llAd.addView(mBannerView);
+    }
+
+    private void doRefreshBanner() {
+        if (mBannerView == null) {
+            initBanner();
+        }
+        mBannerView.loadAD();
+    }
+
+    private void doCloseBanner() {
+        llAd.removeAllViews();
+        if (mBannerView != null) {
+            mBannerView.destroy();
+            mBannerView = null;
+        }
     }
 
     @Override
@@ -212,6 +254,7 @@ public class ReadComicActivity extends BaseNewActivity {
 
     @Override
     protected void onDestroy() {
+        doCloseBanner();
         GlideUtils.newInstance().resume();
         if (mDialog != null)mDialog.dismiss();
         if (mNetworkConnectChangedReceiver != null)

@@ -4,6 +4,13 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/ll_ad"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_activity_cartoon_list"
         android:layout_width="match_parent"

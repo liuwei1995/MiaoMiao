@@ -109,7 +109,7 @@ public class CartoonRecommendFragment extends BaseNewFragment implements Cartoon
 
     @Override
     public void getRecommendStartRequest() {
-        ToastUtil.toastSome(mContext,"开始请求");
+//        ToastUtil.toastSome(mContext,"开始请求");
     }
 
     @Override
