@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:id="@+id/layout"
+    android:background="@drawable/bg">
+
+    <Button
+        android:id="@+id/bannerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:text="Adwo广告条" />
+    <Button
+        android:id="@+id/intersitialAdButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/bannerButton"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:text="Adwo插屏全屏广告" />
+     <Button
+        android:id="@+id/entryAdButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/intersitialAdButton"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:text="Adwo开机全屏广告" />
+      
+      
+      <Button
+        android:id="@+id/nativeAdButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/entryAdButton"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:text="Adwo焦点图原生广告" />
+    
+      
+      <Button
+        android:id="@+id/feedsAdButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/nativeAdButton"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:text="Adwo信息流原生广告" />
+            
+</RelativeLayout>

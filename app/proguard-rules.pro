@@ -175,6 +175,11 @@ public static <fields>;
 #-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 #end----------------------------------------- Glide----------------------------------------------end
 
+#start 广点通
+-dontwarn com.qq.e.**
+-keep class com.qq.e.**{*;}
+#end    广点通
+
 
 #start--------------------------------------- com.sohuvideo.ui_plugin----------------------------------------------start
 
@@ -223,10 +228,6 @@ public static <fields>;
 
 #end----------------------------------------- com.sohuvideo.ui_plugin----------------------------------------------end
 
-#
-#-libraryjars libs/androidcommon-toolbox.jar
-#-libraryjars libs/gson-2.2.2.jar
-#-libraryjars libs/SohuPlayer_V5.6.0__2017_07_04_16_16_release.jar
 #
 #
 #-keep public class * com.google.gson.**{*;}

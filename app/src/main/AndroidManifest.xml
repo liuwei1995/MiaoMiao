@@ -52,6 +52,17 @@
             </intent-filter>
         </activity>
 
+        <!--<activity-->
+            <!--android:name="com.adwo.sample.EntryActivity"-->
+            <!--android:label="@string/app_name" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+
         <activity
             android:name=".activity.ComicChapterDetailsActivity"
             android:exported="false"

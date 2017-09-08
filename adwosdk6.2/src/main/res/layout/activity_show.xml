@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:id="@+id/layout"    
+    >
+
+    <TextView
+        android:id="@+id/adCount"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Adwo Sample"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/adBeaconCount"
+        android:text="广告检测链接计数"
+        android:layout_below="@+id/adCount"
+        android:layout_marginTop="20dp"
+        />
+    <!-- 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="请求广告" />
+     -->
+</RelativeLayout>

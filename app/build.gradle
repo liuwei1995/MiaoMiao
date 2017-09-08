@@ -150,6 +150,8 @@ dependencies {
     compile project(':ui_plugin')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':bdintegrationsdk_libproject')
+    compile files('libs/domob_android_sdk.jar')
+    compile project(':adwosdk6.2')
 }
 
 def releaseTime() {
