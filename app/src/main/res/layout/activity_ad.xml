@@ -43,14 +43,31 @@
                     android:orientation="vertical">
 
                 </LinearLayout>
+
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-2850046637182646/8523467219">
+                </com.google.android.gms.ads.AdView>
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-2850046637182646/4838025532">
+                </com.google.android.gms.ads.AdView>
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="ca-app-pub-2850046637182646/5844819595">
+                </com.google.android.gms.ads.AdView>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

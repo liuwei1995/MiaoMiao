@@ -1,1 +1,1 @@
-include ':app', ':ui_plugin', ':bdintegrationsdk_libproject', ':adwosdk6.2'
+include ':app', ':ui_plugin', ':bdintegrationsdk_libproject'

@@ -17,6 +17,7 @@ android {
         jackOptions {
             enabled false
         }
+        multiDexEnabled true
 
     }
 
@@ -29,14 +30,6 @@ android {
             keyPassword KEY_PASSWORD
         }
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
 
     buildTypes {
         release {
@@ -67,7 +60,6 @@ android {
                 }
             }
 
-            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -149,8 +141,11 @@ dependencies {
     compile project(':ui_plugin')
     compile project(':bdintegrationsdk_libproject')
     compile files('libs/domob_android_sdk.jar')
-    compile project(':adwosdk6.2')
+
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.google.android.gms:play-services-ads:11.0.0'
     testCompile 'junit:junit:4.12'
 }
 

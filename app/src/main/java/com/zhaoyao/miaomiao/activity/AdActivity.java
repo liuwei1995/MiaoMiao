@@ -4,11 +4,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
@@ -33,6 +38,10 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
+        RecyclerView recyclerView = new RecyclerView(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
         initView();
 //        showAD();
         showAsPopup();
@@ -40,6 +49,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
 
     private void initView() {
         list.clear();
+        listAdView.clear();
         mLl = (LinearLayout) findViewById(R.id.ll);
         int childCount = mLl.getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -61,13 +71,21 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                     view.addView(bannerView);
                     list.add(bannerView);
                 }
+            }else if (childAt instanceof AdView){
+                listAdView.add((AdView)childAt);
             }
         }
         for (BannerView bannerView : list) {
             bannerView.loadAD();
         }
+        MobileAds.initialize(this, "ca-app-pub-2850046637182646~7046734019");
+        for (AdView adView : listAdView) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+        }
     }
     private List<BannerView> list = new ArrayList<>();
+    private List<AdView> listAdView = new ArrayList<>();
 
     private BannerView initBanner(String BannerPosID) {
         BannerView mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, BannerPosID);
@@ -123,9 +141,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         getIAD().setADListener(new AbstractInterstitialADListener() {
             @Override
             public void onNoAD(AdError error) {
-                Log.i(
-                        "AD_DEMO",
-                        String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
+                Log.i("AD_DEMO",String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
                                 error.getErrorCode(), error.getErrorMsg()));
             }
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.sohuvideo.ui_plugin.fragment.SohuVideoFragment;
 import com.zhaoyao.miaomiao.activity.AdActivity;
 import com.zhaoyao.miaomiao.activity.BaseNewActivity;
+import com.zhaoyao.miaomiao.activity.GoogleAdActivity;
 import com.zhaoyao.miaomiao.adapter.TabFragmentAdapter;
 import com.zhaoyao.miaomiao.fragment.CartoonRecommendFragment;
 
@@ -69,6 +70,7 @@ public class MainActivity extends BaseNewActivity implements NavigationView.OnNa
 
         mTvAd = (TextView) findViewById(R.id.tv_ad);
         mTvAd.setOnClickListener(this);
+        findViewById(R.id.tv_google_ad).setOnClickListener(this);
     }
 
     @Override
@@ -128,6 +130,9 @@ public class MainActivity extends BaseNewActivity implements NavigationView.OnNa
         switch (v.getId()) {
             case R.id.tv_ad:
                 startActivity(new Intent(this,AdActivity.class));
+                break;
+            case R.id.tv_google_ad:
+                startActivity(new Intent(this,GoogleAdActivity.class));
                 break;
         }
     }

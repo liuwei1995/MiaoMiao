@@ -1,7 +1,9 @@
 package com.zhaoyao.miaomiao;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Build;
+import android.support.multidex.MultiDex;
 
 import com.sohuvideo.ui_plugin.api.UiPluginInit;
 import com.zhaoyao.miaomiao.http.OkHttpPresenterImpl;
@@ -58,6 +60,12 @@ public class BaseApplication extends Application{
 //        }
 
     }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this) ;
+    }
+
     public void setCertificates(InputStream... certificates)
     {
         try
