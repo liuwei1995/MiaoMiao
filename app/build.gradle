@@ -64,7 +64,6 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-            signingConfig signingConfigs.release
             zipAlignEnabled false
             shrinkResources false
             minifyEnabled false
