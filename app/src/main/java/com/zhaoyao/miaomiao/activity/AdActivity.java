@@ -23,6 +23,7 @@ import com.qq.e.comm.util.AdError;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
+import com.zhaoyao.miaomiao.listener.GoogleAdListener;
 import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.LogUtils;
 
@@ -63,8 +64,10 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                      bannerView = initBanner(Constants.BannerPosID4);
                 }else if (i == 2){
                     bannerView = initBanner(Constants.BannerPosID2);
-                }else if (i ==3){
+                }else if (i == 3){
                     bannerView = initBanner(Constants.BannerPosID);
+                }else if (i == 4){
+                    bannerView = initBanner(Constants.BannerPosID5);
                 }
                 if (bannerView != null){
                     view.removeAllViews();
@@ -78,9 +81,10 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         for (BannerView bannerView : list) {
             bannerView.loadAD();
         }
-        MobileAds.initialize(this, "ca-app-pub-2850046637182646~7046734019");
+        MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
         for (AdView adView : listAdView) {
             AdRequest adRequest = new AdRequest.Builder().build();
+            adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
             adView.loadAd(adRequest);
         }
     }

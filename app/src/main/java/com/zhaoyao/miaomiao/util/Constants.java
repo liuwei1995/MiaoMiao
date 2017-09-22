@@ -11,11 +11,11 @@ public class Constants {
     public static final String SplashPosID = "8020016750211064";
 
     public static final String BannerPosID = "6040408907256221";
-
-
     public static final String BannerPosID2 = "7030408988698037";//
     public static final String BannerPosID3 = "9030106948391123";//
     public static final String BannerPosID4 = "9050408978992164";//
+    public static final String BannerPosID5 = "6030829642629377";//
+
 
     public static final String APPWallPosID = "7000208917055259";//应用墙
     public static final String InterteristalPosID = "9070203977656264";//插屏广告
