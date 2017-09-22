@@ -23,12 +23,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!-- 如果需要精确定位的话请加上此权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-
-    <!---->
+    <!--  -->
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
 
     <meta-data
         android:name="CHANNEL"
@@ -105,9 +103,15 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
         <!-- ==============================gdt===================================== -->
 
-        <activity android:name=".activity.AdActivity">
+        <activity
+            android:name=".activity.AdActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".activity.GoogleAdActivity">
+        </activity>
+        <activity android:name=".activity.BrushInterstitialActivity"
+            android:launchMode="singleTask"
+            >
         </activity>
     </application>
 
