@@ -44,6 +44,15 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name=".util.permission.PermissionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"
+            >
+        </activity>
+
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -109,10 +118,16 @@
         </activity>
         <activity android:name=".activity.GoogleAdActivity">
         </activity>
-        <activity android:name=".activity.BrushInterstitialActivity"
-            android:launchMode="singleTask"
-            >
+        <activity
+            android:name=".activity.BrushInterstitialActivity"
+            android:launchMode="singleTask">
         </activity>
+        <activity android:name=".activity.ImageRecognitionActivity">
+        </activity>
+
+
+
+
     </application>
 
 </manifest>

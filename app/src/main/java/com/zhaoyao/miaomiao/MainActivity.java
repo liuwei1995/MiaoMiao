@@ -2,13 +2,11 @@ package com.zhaoyao.miaomiao;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,13 +14,14 @@ import com.sohuvideo.ui_plugin.fragment.SohuVideoFragment;
 import com.zhaoyao.miaomiao.activity.AdActivity;
 import com.zhaoyao.miaomiao.activity.BaseNewActivity;
 import com.zhaoyao.miaomiao.activity.GoogleAdActivity;
+import com.zhaoyao.miaomiao.activity.ImageRecognitionActivity;
 import com.zhaoyao.miaomiao.adapter.TabFragmentAdapter;
 import com.zhaoyao.miaomiao.fragment.CartoonRecommendFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseNewActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends BaseNewActivity implements View.OnClickListener {
 
     private CartoonRecommendFragment mContent;
     /**
@@ -71,6 +70,7 @@ public class MainActivity extends BaseNewActivity implements NavigationView.OnNa
         mTvAd = (TextView) findViewById(R.id.tv_ad);
         mTvAd.setOnClickListener(this);
         findViewById(R.id.tv_google_ad).setOnClickListener(this);
+        findViewById(R.id.tv_image_recognition).setOnClickListener(this);
     }
 
     @Override
@@ -100,31 +100,6 @@ public class MainActivity extends BaseNewActivity implements NavigationView.OnNa
 //                .replace(R.id.content_frame, mContent).commit();
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -133,6 +108,9 @@ public class MainActivity extends BaseNewActivity implements NavigationView.OnNa
                 break;
             case R.id.tv_google_ad:
                 startActivity(new Intent(this,GoogleAdActivity.class));
+                break;
+            case R.id.tv_image_recognition:
+                startActivity(new Intent(this,ImageRecognitionActivity.class));
                 break;
         }
     }

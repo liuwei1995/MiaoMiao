@@ -39,13 +39,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/rl" >
+        android:layout_below="@+id/rl">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:background="@mipmap/biz_news_local_weather_bg_big"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvToday"
@@ -58,12 +58,13 @@
                 android:paddingRight="10.0dip"
                 android:text="搜索"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"/>
+
             <TextView
                 android:id="@+id/tvJoke"
                 android:layout_width="match_parent"
@@ -75,12 +76,12 @@
                 android:paddingRight="10.0dip"
                 android:text="笑话"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"/>
 
             <TextView
                 android:id="@+id/tv_ad"
@@ -93,11 +94,13 @@
                 android:paddingRight="10.0dip"
                 android:text="广告"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"/>
+
             <TextView
                 android:id="@+id/tv_google_ad"
                 android:layout_width="match_parent"
@@ -109,11 +112,30 @@
                 android:paddingRight="10.0dip"
                 android:text="Google广告"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"/>
+
+            <TextView
+                android:id="@+id/tv_image_recognition"
+                android:layout_width="match_parent"
+                android:layout_height="50.0dip"
+                android:clickable="true"
+                android:drawablePadding="1.0dip"
+                android:gravity="center_vertical"
+                android:paddingLeft="15.0dip"
+                android:paddingRight="10.0dip"
+                android:text="图像识别"
+                android:textColor="@color/white"
+                android:textSize="16.0sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.0dip"
+                android:background="@mipmap/biz_pc_account_line"/>
 
             <TextView
                 android:id="@+id/tvMobile_address_book"
@@ -122,17 +144,17 @@
                 android:clickable="true"
                 android:drawablePadding="1.0dip"
                 android:gravity="center_vertical"
-                android:visibility="invisible"
                 android:paddingLeft="15.0dip"
                 android:paddingRight="10.0dip"
                 android:text="积分墙"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"
+                android:visibility="invisible"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"/>
 
             <TextView
                 android:id="@+id/tvDrug_query"
@@ -143,16 +165,16 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="15.0dip"
                 android:paddingRight="10.0dip"
-                android:visibility="gone"
                 android:text="药品查询"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:visibility="gone"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvMyFavorites"
@@ -166,13 +188,13 @@
                 android:text="物流查询"
                 android:textColor="@color/white"
                 android:textSize="16.0sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
                 android:background="@mipmap/biz_pc_account_line"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvMyComments"
@@ -186,13 +208,13 @@
                 android:text="实时新闻"
                 android:textColor="@color/white"
                 android:textSize="16.0sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
                 android:background="@mipmap/biz_pc_account_line"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvIdCard"
@@ -206,12 +228,12 @@
                 android:text="身份证查询"
                 android:textColor="@color/white"
                 android:textSize="16.0sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"/>
 
             <TextView
                 android:id="@+id/tvDating_interface"
@@ -225,13 +247,13 @@
                 android:text="交友"
                 android:textColor="@color/white"
                 android:textSize="16.0sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
                 android:background="@mipmap/biz_pc_account_line"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvMobile_game"
@@ -242,16 +264,16 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="15.0dip"
                 android:paddingRight="10.0dip"
-                android:visibility="gone"
                 android:text="手游"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:visibility="gone"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvTranslation"
@@ -265,16 +287,15 @@
                 android:text="翻译"
                 android:textColor="@color/white"
                 android:textSize="16.0sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
                 android:background="@mipmap/biz_pc_account_line"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
-                android:visibility="invisible"
                 android:id="@+id/tvGuang_gao"
                 android:layout_width="match_parent"
                 android:layout_height="50.0dip"
@@ -286,13 +307,14 @@
                 android:text="设置收入账号"
                 android:textColor="@color/white"
                 android:textSize="16.0sp"
+                android:visibility="invisible"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
                 android:background="@mipmap/biz_pc_account_line"
-                 />
+                />
 
             <TextView
                 android:id="@+id/tvMusic"
@@ -306,13 +328,13 @@
                 android:text="音乐"
                 android:textColor="@color/white"
                 android:textSize="16.0sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
                 android:background="@mipmap/biz_pc_account_line"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvMySettings"
@@ -325,12 +347,12 @@
                 android:paddingRight="10.0dip"
                 android:text="拼图"
                 android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textSize="16.0sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2.0dip"
-                android:background="@mipmap/biz_pc_account_line" />
+                android:background="@mipmap/biz_pc_account_line"/>
         </LinearLayout>
     </ScrollView>
 
