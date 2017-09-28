@@ -79,6 +79,7 @@
                     android:background="@color/base_color_white2"
                     android:orientation="vertical">
 
+
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
@@ -86,7 +87,6 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/8523467219">
                     </com.google.android.gms.ads.AdView>
-
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
@@ -94,7 +94,6 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/4838025532">
                     </com.google.android.gms.ads.AdView>
-
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
@@ -102,7 +101,6 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/5844819595">
                     </com.google.android.gms.ads.AdView>
-
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
@@ -110,7 +108,6 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/5851901915">
                     </com.google.android.gms.ads.AdView>
-
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
@@ -118,7 +115,6 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/6448288978">
                     </com.google.android.gms.ads.AdView>
-
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
@@ -126,7 +122,6 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/4646631451">
                     </com.google.android.gms.ads.AdView>
-
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
@@ -134,13 +129,26 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/4698602346">
                     </com.google.android.gms.ads.AdView>
-
                     <com.google.android.gms.ads.AdView
                         xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-2850046637182646/5628540632">
+                    </com.google.android.gms.ads.AdView>
+                    <com.google.android.gms.ads.AdView
+                        xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        ads:adSize="BANNER"
+                        ads:adUnitId="ca-app-pub-2850046637182646/2212528473">
+                    </com.google.android.gms.ads.AdView>
+                    <com.google.android.gms.ads.AdView
+                        xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        ads:adSize="BANNER"
+                        ads:adUnitId="ca-app-pub-2850046637182646/7851867969">
                     </com.google.android.gms.ads.AdView>
                 </LinearLayout>
 
