@@ -9,16 +9,27 @@ import com.zhaoyao.miaomiao.util.LogUtils;
 
 public class GoogleAdListener extends AdListener {
 
+    public interface OnAdListener{
+        void onAdLoaded();
+    }
+
     private String adUnitId;
 
     public GoogleAdListener(String adUnitId) {
         this.adUnitId = adUnitId;
+    }
+    private OnAdListener mOnAdListener;
+
+    public GoogleAdListener(String adUnitId,OnAdListener mOnAdListener) {
+        this.adUnitId = adUnitId;
+        this.mOnAdListener = mOnAdListener;
     }
 
     @Override
     public void onAdLoaded() {
         // Code to be executed when an ad finishes loading.
         LogUtils.i("Ads", "onAdLoaded:\t"+adUnitId);
+        if (mOnAdListener != null)mOnAdListener.onAdLoaded();
     }
 
     @Override

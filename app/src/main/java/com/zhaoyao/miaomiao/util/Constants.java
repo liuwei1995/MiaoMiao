@@ -15,6 +15,12 @@ public class Constants {
     public static final String BannerPosID3 = "9030106948391123";//
     public static final String BannerPosID4 = "9050408978992164";//
     public static final String BannerPosID5 = "6030829642629377";//
+    public static final String BannerPosID6 = "8010125674400792";//
+    public static final String BannerPosID7 = "6010928654407713";//
+    public static final String BannerPosID8 = "5060225614504704";//
+    public static final String BannerPosID9 = "2020511720119085";//
+    public static final String BannerPosID10 = "9090821614401705";//
+
 
 
     public static final String APPWallPosID = "7000208917055259";//应用墙

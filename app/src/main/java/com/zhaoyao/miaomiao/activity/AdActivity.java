@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,14 +31,14 @@ import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
 import com.zhaoyao.miaomiao.listener.GoogleAdListener;
 import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.util.ToastUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdActivity extends AppCompatActivity implements TaskHandler<AdActivity>, View.OnClickListener {
+public class AdActivity extends AppCompatActivity implements TaskHandler<AdActivity>, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private LinearLayout mLl;
     /**
      * 开
      */
@@ -57,23 +60,33 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     private void initView() {
         list.clear();
         listAdView.clear();
-        mLl = (LinearLayout) findViewById(R.id.ll);
-        int childCount = mLl.getChildCount();
+        LinearLayout  ll_gdt = (LinearLayout) findViewById(R.id.ll_gdt);
+        int childCount = ll_gdt.getChildCount();
         for (int i = 0; i < childCount; i++) {
-            View childAt = mLl.getChildAt(i);
+            View childAt = ll_gdt.getChildAt(i);
             if (childAt instanceof LinearLayout) {
                 LinearLayout view = (LinearLayout) childAt;
                 BannerView bannerView = null;
                 if (i == 0) {
-                    bannerView = initBanner(Constants.BannerPosID3);
-                } else if (i == 1) {
-                    bannerView = initBanner(Constants.BannerPosID4);
-                } else if (i == 2) {
-                    bannerView = initBanner(Constants.BannerPosID2);
-                } else if (i == 3) {
                     bannerView = initBanner(Constants.BannerPosID);
+                } else if (i == 1) {
+                    bannerView = initBanner(Constants.BannerPosID2);
+                } else if (i == 2) {
+                    bannerView = initBanner(Constants.BannerPosID3);
+                } else if (i == 3) {
+                    bannerView = initBanner(Constants.BannerPosID4);
                 } else if (i == 4) {
                     bannerView = initBanner(Constants.BannerPosID5);
+                } else if (i == 5) {
+                    bannerView = initBanner(Constants.BannerPosID6);
+                } else if (i == 6) {
+                    bannerView = initBanner(Constants.BannerPosID7);
+                } else if (i == 7) {
+                    bannerView = initBanner(Constants.BannerPosID8);
+                } else if (i == 8) {
+                    bannerView = initBanner(Constants.BannerPosID9);
+                } else if (i == 9) {
+                    bannerView = initBanner(Constants.BannerPosID10);
                 }
                 if (bannerView != null) {
                     view.removeAllViews();
@@ -88,6 +101,14 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             bannerView.loadAD();
         }
         MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
+
+        LinearLayout ll_google = (LinearLayout) findViewById(R.id.ll_google);
+        for (int i = 0; i < ll_google.getChildCount(); i++) {
+            View childAt = ll_google.getChildAt(i);
+            if (childAt instanceof AdView) {
+                listAdView.add((AdView) childAt);
+            }
+        }
         for (AdView adView : listAdView) {
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
@@ -95,6 +116,10 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         }
         mTvBrushInterstitialSwitch = (TextView) findViewById(R.id.tvBrushInterstitialSwitch);
         mTvBrushInterstitialSwitch.setOnClickListener(this);
+        AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spinner);
+        spinner.setSelection(0);
+        spinner.setOnItemSelectedListener(this);
+
     }
 
     private List<BannerView> list = new ArrayList<>();
@@ -181,13 +206,13 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             public void onADReceive() {
                 iad.showAsPopupWindow();
                 removeCloseShow();
-                mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 60 * 1000);
+                mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 50 * 1000);
             }
 
             @Override
             public void onADClosed() {
                 removeCloseShow();
-                mHandler.sendEmptyMessageDelayed(SHOW_IAD, 30 * 1000);
+                mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
             }
         });
         iad.loadAD();
@@ -291,5 +316,48 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             removeStartActivity();
             mHandler.sendEmptyMessageDelayed(START_ACTIVITY,60*1000);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (parent instanceof AppCompatSpinner){
+            FrameLayout fl_ad = (FrameLayout) findViewById(R.id.fl_ad);
+            View[] views = new View[3];
+            for (int i = 0; i < fl_ad.getChildCount(); i++) {
+                View childAt = fl_ad.getChildAt(i);
+                if (childAt.getId() == R.id.ll_gdt){
+                    views[0] = childAt;
+                }else if (childAt.getId() == R.id.ll_google){
+                    views[1] = childAt;
+                }else if (childAt.getId() == R.id.ll_360){
+                    views[2] = childAt;
+                }
+            }
+
+            String item = (String) parent.getItemAtPosition(position);
+            if ("广点通".equals(item)){
+                fl_ad.removeAllViews();
+                fl_ad.addView(views[2]);
+                fl_ad.addView(views[1]);
+                fl_ad.addView(views[0]);
+            }else if("AdMob".equals(item)){
+                fl_ad.removeAllViews();
+                fl_ad.addView(views[0]);
+                fl_ad.addView(views[2]);
+                fl_ad.addView(views[1]);
+            }else if("360".equals(item)){
+                fl_ad.removeAllViews();
+                fl_ad.addView(views[0]);
+                fl_ad.addView(views[1]);
+                fl_ad.addView(views[2]);
+            }else
+                ToastUtil.toastSome(this,"onItemSelected:\t"+position+"\t"+id+"\t"+item);
+            fl_ad.invalidate();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        ToastUtil.toastSome(this,"onNothingSelected");
     }
 }

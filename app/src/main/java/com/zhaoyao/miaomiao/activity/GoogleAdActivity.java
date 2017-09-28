@@ -13,7 +13,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.listener.GoogleAdListener;
 
-public class GoogleAdActivity extends AppCompatActivity {
+public class GoogleAdActivity extends AppCompatActivity implements GoogleAdListener.OnAdListener {
 
     private InterstitialAd mInterstitialAd;
 
@@ -43,15 +43,29 @@ public class GoogleAdActivity extends AppCompatActivity {
 //        adView.setAdUnitId("ca-app-pub-2850046637182646/4838025532");
 
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-2850046637182646/7096700823");
-        mInterstitialAd.setAdListener(new GoogleAdListener(mInterstitialAd.getAdUnitId()));
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
-        }
+//        mInterstitialAd = new InterstitialAd(this);
+//        mInterstitialAd.setAdUnitId("ca-app-pub-2850046637182646/7096700823");
+//        mInterstitialAd.setAdListener(new GoogleAdListener(mInterstitialAd.getAdUnitId(),this));
+//        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+//        if (mInterstitialAd.isLoaded()) {
+//            mInterstitialAd.show();
+//        } else {
+//            Log.d("TAG", "The interstitial wasn't loaded yet.");
+//        }
     }
 
+    @Override
+    public void onAdLoaded() {
+        if (mInterstitialAd != null)
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            }else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+            }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
