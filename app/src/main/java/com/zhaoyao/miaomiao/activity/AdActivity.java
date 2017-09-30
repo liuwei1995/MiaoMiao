@@ -61,8 +61,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         list.clear();
         listAdView.clear();
         LinearLayout  ll_gdt = (LinearLayout) findViewById(R.id.ll_gdt);
-        int childCount = ll_gdt.getChildCount();
-        for (int i = 0; i < childCount; i++) {
+        for (int i = 0; i < ll_gdt.getChildCount(); i++) {
             View childAt = ll_gdt.getChildAt(i);
             if (childAt instanceof LinearLayout) {
                 LinearLayout view = (LinearLayout) childAt;
@@ -87,6 +86,42 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                     bannerView = initBanner(Constants.BannerPosID9);
                 } else if (i == 9) {
                     bannerView = initBanner(Constants.BannerPosID10);
+                }
+                if (bannerView != null) {
+                    view.removeAllViews();
+                    view.addView(bannerView);
+                    list.add(bannerView);
+                }
+            } else if (childAt instanceof AdView) {
+                listAdView.add((AdView) childAt);
+            }
+        }
+        LinearLayout  ll_gdt2 = (LinearLayout) findViewById(R.id.ll_gdt2);
+        for (int i = 0; i < ll_gdt2.getChildCount(); i++) {
+            View childAt = ll_gdt2.getChildAt(i);
+            if (childAt instanceof LinearLayout) {
+                LinearLayout view = (LinearLayout) childAt;
+                BannerView bannerView = null;
+                if (i == 0) {
+                    bannerView = initBanner(Constants.BannerPosID11);
+                } else if (i == 1) {
+                    bannerView = initBanner(Constants.BannerPosID12);
+                } else if (i == 2) {
+                    bannerView = initBanner(Constants.BannerPosID13);
+                } else if (i == 3) {
+                    bannerView = initBanner(Constants.BannerPosID14);
+                } else if (i == 4) {
+                    bannerView = initBanner(Constants.BannerPosID15);
+                } else if (i == 5) {
+                    bannerView = initBanner(Constants.BannerPosID16);
+                } else if (i == 6) {
+                    bannerView = initBanner(Constants.BannerPosID17);
+                } else if (i == 7) {
+                    bannerView = initBanner(Constants.BannerPosID18);
+                } else if (i == 8) {
+                    bannerView = initBanner(Constants.BannerPosID19);
+                } else if (i == 9) {
+                    bannerView = initBanner(Constants.BannerPosID20);
                 }
                 if (bannerView != null) {
                     view.removeAllViews();
@@ -321,38 +356,42 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (parent instanceof AppCompatSpinner){
+
             FrameLayout fl_ad = (FrameLayout) findViewById(R.id.fl_ad);
-            View[] views = new View[3];
+            String[] stringArray = getResources().getStringArray(R.array.ad_spinner);
+            if (stringArray.length == 0)return;
+            View[] views = new View[stringArray.length];
             for (int i = 0; i < fl_ad.getChildCount(); i++) {
                 View childAt = fl_ad.getChildAt(i);
                 if (childAt.getId() == R.id.ll_gdt){
                     views[0] = childAt;
-                }else if (childAt.getId() == R.id.ll_google){
+                }else if (childAt.getId() == R.id.ll_gdt2){
                     views[1] = childAt;
-                }else if (childAt.getId() == R.id.ll_360){
+                }else if (childAt.getId() == R.id.ll_google){
                     views[2] = childAt;
+                }else if (childAt.getId() == R.id.ll_google2){
+                    views[3] = childAt;
+                }else if (childAt.getId() == R.id.ll_360){
+                    views[4] = childAt;
                 }
             }
-
-            String item = (String) parent.getItemAtPosition(position);
-            if ("广点通".equals(item)){
-                fl_ad.removeAllViews();
-                fl_ad.addView(views[2]);
-                fl_ad.addView(views[1]);
-                fl_ad.addView(views[0]);
-            }else if("AdMob".equals(item)){
-                fl_ad.removeAllViews();
-                fl_ad.addView(views[0]);
-                fl_ad.addView(views[2]);
-                fl_ad.addView(views[1]);
-            }else if("360".equals(item)){
-                fl_ad.removeAllViews();
-                fl_ad.addView(views[0]);
-                fl_ad.addView(views[1]);
-                fl_ad.addView(views[2]);
-            }else
-                ToastUtil.toastSome(this,"onItemSelected:\t"+position+"\t"+id+"\t"+item);
+            fl_ad.removeViewInLayout(views[position]);
+            fl_ad.addView(views[position]);
             fl_ad.invalidate();
+
+            /*
+             * ca-app-pub-2850046637182646/4173451175
+             * ca-app-pub-2850046637182646/5458612680
+             * ca-app-pub-2850046637182646/4037719802
+             * ca-app-pub-2850046637182646/5159229789
+             * ca-app-pub-2850046637182646/3427523322
+             * ca-app-pub-2850046637182646/7370637764
+             *
+             * ca-app-pub-2850046637182646/6792053265
+             * ca-app-pub-2850046637182646/6803306334
+             * ca-app-pub-2850046637182646/3208031471
+             * ca-app-pub-2850046637182646/9198724758
+             */
         }
     }
 

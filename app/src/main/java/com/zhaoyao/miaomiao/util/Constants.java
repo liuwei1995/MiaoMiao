@@ -21,6 +21,16 @@ public class Constants {
     public static final String BannerPosID9 = "2020511720119085";//
     public static final String BannerPosID10 = "9090821614401705";//
 
+    public static final String BannerPosID11 = "1030927695804132";//
+    public static final String BannerPosID12 = "7010228685900183";//
+    public static final String BannerPosID13 = "5010329615202194";//
+    public static final String BannerPosID14 = "6000629675704175";//
+    public static final String BannerPosID15 = "7020328605801126";//
+    public static final String BannerPosID16 = "7050125605302197";//
+    public static final String BannerPosID17 = "8090728645103128";//
+    public static final String BannerPosID18 = "4050221605505149";//
+    public static final String BannerPosID19 = "4080026665701260";//
+    public static final String BannerPosID20 = "4060428645102201";//
 
 
     public static final String APPWallPosID = "7000208917055259";//应用墙

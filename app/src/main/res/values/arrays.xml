@@ -2,7 +2,9 @@
 <resources>
     <string-array name="ad_spinner">
         <item>广点通</item>
+        <item>广点通2</item>
         <item>AdMob</item>
+        <item>AdMob2</item>
         <item>360</item>
     </string-array>
 </resources>
