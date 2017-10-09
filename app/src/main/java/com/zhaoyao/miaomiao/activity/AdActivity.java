@@ -144,6 +144,13 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                 listAdView.add((AdView) childAt);
             }
         }
+        LinearLayout ll_google2 = (LinearLayout) findViewById(R.id.ll_google2);
+        for (int i = 0; i < ll_google2.getChildCount(); i++) {
+            View childAt = ll_google2.getChildAt(i);
+            if (childAt instanceof AdView) {
+                listAdView.add((AdView) childAt);
+            }
+        }
         for (AdView adView : listAdView) {
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
