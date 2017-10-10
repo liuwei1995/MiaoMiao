@@ -134,6 +134,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile files('libs/fastjson-1.2.31.jar')
+    compile files('libs/adsdk_0.1.7.0.jar')
     compile files('libs/GDTUnionSDK.4.11.551.min.jar')
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile files('libs/aip-java-sdk-3.1.0.jar')
@@ -146,16 +147,11 @@ dependencies {
     compile project(':ui_plugin')
     compile project(':bdintegrationsdk_libproject')
     compile files('libs/domob_android_sdk.jar')
-
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.android.gms:play-services-ads:11.0.0'
     testCompile 'junit:junit:4.12'
-
     compile name: 'YoumiSdk_v7.5.0_2017-07-18', ext: 'aar'
-
-
 }
 
 
