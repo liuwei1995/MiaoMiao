@@ -48,4 +48,18 @@ public class Constants {
     public static final String GridAppWallPosID = "1040800918683140";//橱窗式
     public static final String NativePosID  =   "7000208917055259";//应用墙
 
+
+
+    public static final String Banner360ID = "PuPRbwyUCA";//360
+    public static final String Banner360ID2 = "PFa7b790iF";//360
+    public static final String Banner360ID3 = "5aawv7yBle";//360
+    public static final String Banner360ID4 = "aPuHlmegbU";//360
+    public static final String Banner360ID5 = "Pa5RlwJVoF";//360
+    public static final String Banner360ID6 = "ukPwlR9LyG";//360
+    public static final String Banner360ID7 = "PkuwbwJg9I";//360
+    public static final String Banner360ID8 = "PaamvHeLyT";//360
+    public static final String Banner360ID9 = "uPPcGwTVTf";//360
+    public static final String Banner360ID10 = "uka6gIM0YB";//ad360_1046838249.xml
+
+
 }

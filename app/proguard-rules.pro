@@ -220,6 +220,9 @@ public static <fields>;
 -dontwarn org.apache.**
 -keep class org.apache.**{*;}
 
+-dontwarn com.mediav.ads.sdk.**
+-keep class com.mediav.ads.sdk.**{*;}
+
 -dontskipnonpubliclibraryclassmembers
 
 

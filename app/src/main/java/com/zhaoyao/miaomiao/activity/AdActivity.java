@@ -6,10 +6,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -19,6 +18,9 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.mediav.ads.sdk.adcore.Mvad;
+import com.mediav.ads.sdk.interfaces.IMvAdEventListener;
+import com.mediav.ads.sdk.interfaces.IMvBannerAd;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
@@ -48,9 +50,6 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
-        RecyclerView recyclerView = new RecyclerView(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         initView();
 //        showAD();
@@ -60,7 +59,86 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     private void initView() {
         list.clear();
         listAdView.clear();
-        LinearLayout  ll_gdt = (LinearLayout) findViewById(R.id.ll_gdt);
+        addAdView1();
+        addAdView2();
+        for (BannerView bannerView : list) {
+            bannerView.loadAD();
+        }
+        MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
+
+        LinearLayout ll_google = (LinearLayout) findViewById(R.id.ll_google);
+        for (int i = 0; i < ll_google.getChildCount(); i++) {
+            View childAt = ll_google.getChildAt(i);
+            if (childAt instanceof AdView) {
+                listAdView.add((AdView) childAt);
+            }
+        }
+        LinearLayout ll_google2 = (LinearLayout) findViewById(R.id.ll_google2);
+        for (int i = 0; i < ll_google2.getChildCount(); i++) {
+            View childAt = ll_google2.getChildAt(i);
+            if (childAt instanceof AdView) {
+                listAdView.add((AdView) childAt);
+            }
+        }
+
+        for (AdView adView : listAdView) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
+            adView.loadAd(adRequest);
+        }
+
+        Add360Ad1();
+        for (IMvBannerAd iMvBannerAd : listIMvBannerAd) {
+            iMvBannerAd.setAdEventListener(new IMvAdEventListener() {
+                @Override
+                public void onAdviewGotAdSucceed() {
+                    LogUtils.d("IMvBannerAd\tonAdviewGotAdSucceed");
+                }
+
+                @Override
+                public void onAdviewGotAdFail() {
+                    LogUtils.d("IMvBannerAd\tonAdviewGotAdFail");
+                }
+
+                @Override
+                public void onAdviewIntoLandpage() {
+                    LogUtils.d("IMvBannerAd\tonAdviewIntoLandpage");
+                }
+
+                @Override
+                public void onAdviewDismissedLandpage() {
+                    LogUtils.d("IMvBannerAd\tonAdviewDismissedLandpage");
+                }
+
+                @Override
+                public void onAdviewClicked() {
+                    LogUtils.d("IMvBannerAd\tonAdviewClicked");
+                }
+
+                @Override
+                public void onAdviewClosed() {
+                    LogUtils.d("IMvBannerAd\tonAdviewClosed");
+                }
+
+                @Override
+                public void onAdviewDestroyed() {
+                    LogUtils.d("IMvBannerAd\tonAdviewDestroyed");
+                }
+            });
+            iMvBannerAd.showAds(this);
+        }
+
+
+        mTvBrushInterstitialSwitch = (TextView) findViewById(R.id.tvBrushInterstitialSwitch);
+        mTvBrushInterstitialSwitch.setOnClickListener(this);
+        AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spinner);
+        spinner.setSelection(0);
+        spinner.setOnItemSelectedListener(this);
+
+    }
+
+    private void addAdView1() {
+        LinearLayout ll_gdt = (LinearLayout) findViewById(R.id.ll_gdt);
         for (int i = 0; i < ll_gdt.getChildCount(); i++) {
             View childAt = ll_gdt.getChildAt(i);
             if (childAt instanceof LinearLayout) {
@@ -96,7 +174,9 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                 listAdView.add((AdView) childAt);
             }
         }
-        LinearLayout  ll_gdt2 = (LinearLayout) findViewById(R.id.ll_gdt2);
+    }
+    private void addAdView2() {
+        LinearLayout ll_gdt2 = (LinearLayout) findViewById(R.id.ll_gdt2);
         for (int i = 0; i < ll_gdt2.getChildCount(); i++) {
             View childAt = ll_gdt2.getChildAt(i);
             if (childAt instanceof LinearLayout) {
@@ -132,40 +212,53 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                 listAdView.add((AdView) childAt);
             }
         }
-        for (BannerView bannerView : list) {
-            bannerView.loadAD();
-        }
-        MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
+    }
 
-        LinearLayout ll_google = (LinearLayout) findViewById(R.id.ll_google);
-        for (int i = 0; i < ll_google.getChildCount(); i++) {
-            View childAt = ll_google.getChildAt(i);
-            if (childAt instanceof AdView) {
-                listAdView.add((AdView) childAt);
+    private void Add360Ad1() {
+        LinearLayout ll_360 = (LinearLayout) findViewById(R.id.ll_360);
+        for (int i = 0; i < ll_360.getChildCount(); i++) {
+            View childAt = ll_360.getChildAt(i);
+            if (childAt instanceof ViewGroup) {
+                IMvBannerAd bannerad = null;
+                if (i == 0){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID, false);
+                }
+                else if (i == 1){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID2, false);
+                }
+                else if (i == 2){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID3, false);
+                }
+                else if (i == 3){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID4, false);
+                }
+                else if (i == 4){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID5, false);
+                }
+                else if (i == 5){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID6, false);
+                }
+                else if (i == 6){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID7, false);
+                }
+                else if (i == 7){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID8, false);
+                }
+                else if (i == 8){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID9, false);
+                }
+                else if (i == 9){
+                    bannerad = Mvad.showBanner((ViewGroup) childAt,this, Constants.Banner360ID10, false);
+                }
+                if (bannerad != null)
+                listIMvBannerAd.add(bannerad);
             }
         }
-        LinearLayout ll_google2 = (LinearLayout) findViewById(R.id.ll_google2);
-        for (int i = 0; i < ll_google2.getChildCount(); i++) {
-            View childAt = ll_google2.getChildAt(i);
-            if (childAt instanceof AdView) {
-                listAdView.add((AdView) childAt);
-            }
-        }
-        for (AdView adView : listAdView) {
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
-            adView.loadAd(adRequest);
-        }
-        mTvBrushInterstitialSwitch = (TextView) findViewById(R.id.tvBrushInterstitialSwitch);
-        mTvBrushInterstitialSwitch.setOnClickListener(this);
-        AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spinner);
-        spinner.setSelection(0);
-        spinner.setOnItemSelectedListener(this);
-
     }
 
     private List<BannerView> list = new ArrayList<>();
     private List<AdView> listAdView = new ArrayList<>();
+    private List<IMvBannerAd> listIMvBannerAd = new ArrayList<>();
 
     private BannerView initBanner(String BannerPosID) {
         BannerView mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, BannerPosID);
@@ -196,15 +289,26 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         }
     }
 
+    /**
+     * 360横幅关闭
+     */
+    private void doCloseIMvBannerAdBanner() {
+        for (IMvBannerAd bannerView : listIMvBannerAd) {
+            bannerView.closeAds();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         doCloseBanner();
+        doCloseIMvBannerAdBanner();
         list.clear();
         if (iad != null) {
             iad.destroy();
             closeAsPopup();
         }
         mHandler.removeCallbacksAndMessages(null);
+        Mvad.activityDestroy(this);
         super.onDestroy();
     }
 
@@ -385,20 +489,6 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             fl_ad.removeViewInLayout(views[position]);
             fl_ad.addView(views[position]);
             fl_ad.invalidate();
-
-            /*
-             * ca-app-pub-2850046637182646/4173451175
-             * ca-app-pub-2850046637182646/5458612680
-             * ca-app-pub-2850046637182646/4037719802
-             * ca-app-pub-2850046637182646/5159229789
-             * ca-app-pub-2850046637182646/3427523322
-             * ca-app-pub-2850046637182646/7370637764
-             *
-             * ca-app-pub-2850046637182646/6792053265
-             * ca-app-pub-2850046637182646/6803306334
-             * ca-app-pub-2850046637182646/3208031471
-             * ca-app-pub-2850046637182646/9198724758
-             */
         }
     }
 
