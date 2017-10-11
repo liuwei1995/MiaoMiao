@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -39,7 +41,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdActivity extends AppCompatActivity implements TaskHandler<AdActivity>, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AdActivity extends AppCompatActivity implements TaskHandler<AdActivity>, View.OnClickListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
 
     /**
      * 开
@@ -54,11 +56,26 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         initView();
 //        showAD();
         showAsPopup();
+        RadioGroup rg_ = (RadioGroup)findViewById(R.id.rg);
+
+        isBrush = getIntent().getBooleanExtra(START_AD_ACTIVITY_KEY, false);
+        if (isBrush){
+            rg_.check(R.id.rbOpen);
+            synchronized (this){
+                if (isBrush && !mHandler.hasMessages(START_AD_ACTIVITY)){
+                    mHandler.removeMessages(START_AD_ACTIVITY);
+                    mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, START_AD_ACTIVITY_TIME);
+                }
+            }
+        }
+        rg_.setOnCheckedChangeListener(this);
     }
 
     private void initView() {
         list.clear();
         listAdView.clear();
+
+
         addAdView1();
         addAdView2();
         for (BannerView bannerView : list) {
@@ -303,20 +320,21 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         doCloseBanner();
         doCloseIMvBannerAdBanner();
         list.clear();
-        if (iad != null) {
-            iad.destroy();
-            closeAsPopup();
-        }
+        closeAsPopup();
         mHandler.removeCallbacksAndMessages(null);
         Mvad.activityDestroy(this);
         super.onDestroy();
     }
 
-    InterstitialAD iad;
+    private InterstitialAD iad;
 
     private synchronized InterstitialAD getIAD() {
         if (iad == null) {
-            iad = new InterstitialAD(this, Constants.APPID, Constants.InterteristalPosID);
+            synchronized (this){
+                if (iad == null) {
+                    iad = new InterstitialAD(this, Constants.APPID, Constants.InterteristalPosID);
+                }
+            }
         }
         return iad;
     }
@@ -340,25 +358,37 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
 
     private synchronized void showAsPopup() {
         getIAD().setADListener(new AbstractInterstitialADListener() {
-
             @Override
             public void onNoAD(AdError error) {
-                Log.i("AD_DEMO",
-                        String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
+                Log.i("AD_DEMO",String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
                                 error.getErrorCode(), error.getErrorMsg()));
+                removeCloseShow();
+                if (!isBrush){
+                    mHandler.sendEmptyMessageDelayed(SHOW_IAD, 30 * 1000);
+                }else {
+                    mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
+                }
             }
 
             @Override
             public void onADReceive() {
                 iad.showAsPopupWindow();
                 removeCloseShow();
-                mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 50 * 1000);
+                if (!isBrush){
+                    mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 50 * 1000);
+                }else {
+                    mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 10 * 1000);
+                }
             }
 
             @Override
             public void onADClosed() {
                 removeCloseShow();
-                mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
+                if (!isBrush){
+                    mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
+                }else {
+                    mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
+                }
             }
         });
         iad.loadAD();
@@ -367,8 +397,10 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     private void closeAsPopup() {
         if (iad != null) {
             iad.closePopupWindow();
+            iad.destroy();
         }
     }
+
 
     private Handler mHandler = new TaskHandlerImpl<>(this);
 
@@ -381,12 +413,17 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         mHandler.removeMessages(START_ACTIVITY);
     }
 
-    public static final int ZERO = 0;
 
     public static final int CLOSE_IAD = 1;
     public static final int SHOW_IAD = 2;
 
+
     public static final int START_ACTIVITY = 3;
+
+    public static final int START_AD_ACTIVITY = 4;
+
+//    public static final int START_AD_ACTIVITY_TIME = 60 * 1000;
+    public static final int START_AD_ACTIVITY_TIME = 6 * 60 * 1000;
 
     @Override
     protected void onResume() {
@@ -425,8 +462,19 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             }else {
                 removeStartActivity();
             }
+        }else if (START_AD_ACTIVITY == msg.what){
+            if (isOnPause){
+                mHandler.removeMessages(START_AD_ACTIVITY);
+                mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, 10 * 1000);
+            }else {
+                Intent intent = new Intent(this, AdActivity.class);
+                intent.putExtra(START_AD_ACTIVITY_KEY,true);
+                startActivity(intent);
+                finish();
+            }
         }
     }
+    private final String START_AD_ACTIVITY_KEY = "START_AD_ACTIVITY_KEY";
 
     private boolean isOpenSwitch = false;
 
@@ -495,5 +543,34 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         ToastUtil.toastSome(this,"onNothingSelected");
+    }
+
+    private boolean isBrush = false;
+    @Override
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        if (checkedId == R.id.rbOpen){
+            isBrush = true;
+            ToastUtil.toastSome(this,"刷插屏缩短至10秒");
+            if (mHandler.hasMessages(SHOW_IAD)){
+                removeCloseShow();
+                mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
+            }
+            if (!mHandler.hasMessages(START_AD_ACTIVITY)){
+                synchronized (this){
+                    if (!mHandler.hasMessages(START_AD_ACTIVITY)){
+                        mHandler.removeMessages(START_AD_ACTIVITY);
+                        mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, START_AD_ACTIVITY_TIME);
+                    }
+                }
+            }
+        }else if (checkedId == R.id.rbClose){
+            ToastUtil.toastSome(this,"刷插屏关闭");
+            isBrush = false;
+            if (mHandler.hasMessages(CLOSE_IAD)){
+                removeCloseShow();
+                mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 50 * 1000);
+            }
+            mHandler.removeMessages(START_AD_ACTIVITY);
+        }
     }
 }

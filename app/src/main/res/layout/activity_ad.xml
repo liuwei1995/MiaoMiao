@@ -24,15 +24,33 @@
             android:gravity="center"
             android:spinnerMode="dialog"/>
 
-        <TextView
-            android:id="@+id/tvBrushInterstitialHint"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_weight="3"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="刷开插屏广告"/>
+            android:orientation="horizontal"
+            >
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbOpen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开"/>
+
+                <RadioButton
+                    android:id="@+id/rbClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="关"/>
+            </RadioGroup>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvBrushInterstitialSwitch"
@@ -42,7 +60,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:padding="5dp"
-            android:text="启动"
+            android:text="启动开屏"
             android:textColor="@color/red"
             android:textSize="18sp"/>
 
@@ -75,54 +93,64 @@
                         android:orientation="vertical">
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -219,6 +247,7 @@
                         ads:adUnitId="ca-app-pub-2850046637182646/7851867969">
                     </com.google.android.gms.ads.AdView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_google2"
                     android:layout_width="match_parent"
