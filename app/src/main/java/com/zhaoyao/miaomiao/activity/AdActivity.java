@@ -423,7 +423,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     public static final int START_AD_ACTIVITY = 4;
 
 //    public static final int START_AD_ACTIVITY_TIME = 60 * 1000;
-    public static final int START_AD_ACTIVITY_TIME = 6 * 60 * 1000;
+    public static final int START_AD_ACTIVITY_TIME = 10 * 60 * 1000;
 
     @Override
     protected void onResume() {
@@ -467,14 +467,15 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                 mHandler.removeMessages(START_AD_ACTIVITY);
                 mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, 10 * 1000);
             }else {
-                Intent intent = new Intent(this, AdActivity.class);
-                intent.putExtra(START_AD_ACTIVITY_KEY,true);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(this, AdActivity.class);
+//                intent.putExtra(START_AD_ACTIVITY_KEY,true);
+//                startActivity(intent);
+                setResult(100);
+                onBackPressed();
             }
         }
     }
-    private final String START_AD_ACTIVITY_KEY = "START_AD_ACTIVITY_KEY";
+    public static final String START_AD_ACTIVITY_KEY = "START_AD_ACTIVITY_KEY";
 
     private boolean isOpenSwitch = false;
 

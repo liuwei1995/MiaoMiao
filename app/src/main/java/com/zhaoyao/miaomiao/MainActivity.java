@@ -2,6 +2,8 @@ package com.zhaoyao.miaomiao;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -17,11 +19,14 @@ import com.zhaoyao.miaomiao.activity.GoogleAdActivity;
 import com.zhaoyao.miaomiao.activity.ImageRecognitionActivity;
 import com.zhaoyao.miaomiao.adapter.TabFragmentAdapter;
 import com.zhaoyao.miaomiao.fragment.CartoonRecommendFragment;
+import com.zhaoyao.miaomiao.handler.TaskHandler;
+import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseNewActivity implements View.OnClickListener {
+public class MainActivity extends BaseNewActivity implements View.OnClickListener,TaskHandler<MainActivity> {
 
     private CartoonRecommendFragment mContent;
     /**
@@ -104,7 +109,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_ad:
-                startActivity(new Intent(this,AdActivity.class));
+                startActivityForResult(new Intent(this,AdActivity.class),100);
                 break;
             case R.id.tv_google_ad:
                 startActivity(new Intent(this,GoogleAdActivity.class));
@@ -113,5 +118,30 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
                 startActivity(new Intent(this,ImageRecognitionActivity.class));
                 break;
         }
+    }
+
+    private Handler mHandler = new TaskHandlerImpl<>(this);
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100 && resultCode == 100){
+            mHandler.removeMessages(100);
+            mHandler.sendEmptyMessageDelayed(100,2*1000);
+        }
+    }
+
+    @Override
+    public void handleMessage(WeakReference<MainActivity> weakReference, Message msg) {
+        if(msg.what == 100){
+            Intent intent = new Intent(this, AdActivity.class);
+            intent.putExtra(AdActivity.START_AD_ACTIVITY_KEY,true);
+            startActivityForResult(intent,100);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }
