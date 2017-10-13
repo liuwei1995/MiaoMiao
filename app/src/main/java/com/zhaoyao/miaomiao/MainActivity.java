@@ -39,6 +39,8 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        DrawerLayout mDrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 //        initSlidingMenu(savedInstanceState);
     }
 

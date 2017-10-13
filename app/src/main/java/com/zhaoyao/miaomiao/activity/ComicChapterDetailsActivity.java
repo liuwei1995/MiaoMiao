@@ -10,6 +10,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.chance.ads.AdRequest;
+import com.chance.ads.AdView;
+import com.chance.exception.PBException;
+import com.chance.listener.AdListener;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
@@ -68,8 +72,50 @@ public class ComicChapterDetailsActivity extends BaseNewActivity implements
         mRecyclerView = (RecyclerView) findViewById(R.id.rlv_activity_cartoon_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         llAd = (LinearLayout) findViewById(R.id.ll_ad);
-        doRefreshBanner();
+        //        TODO  畅思
+        Chang();
+        //        TODO  广点通
+//        doRefreshBanner();
     }
+
+
+    private AdView adView;
+    private void Chang(){
+        // 创建 adView, 如果不传入placementID，可以用另一个构造函数AdView(context)
+        adView = new AdView(this, "878620156oxqprz");
+        llAd.removeAllViews();
+        // 在其中添加 adView
+        llAd.addView(adView);
+//    addContentView(adView, params);
+        // 启动一般性请求并在其中加载广告
+        adView.loadAd(new AdRequest());
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onReceiveAd() {
+                LogUtils.d("com.chance.ads.AdView   onReceiveAd");
+                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onReceiveAd");
+            }
+
+            @Override
+            public void onFailedToReceiveAd(PBException e) {
+                LogUtils.d("com.chance.ads.AdView   onFailedToReceiveAd\n"+e.toString());
+                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onFailedToReceiveAd\n"+e.toString());
+            }
+
+            @Override
+            public void onPresentScreen() {
+                LogUtils.d("com.chance.ads.AdView   onPresentScreen");
+                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onPresentScreen");
+            }
+
+            @Override
+            public void onDismissScreen() {
+                LogUtils.d("com.chance.ads.AdView   onDismissScreen");
+                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onDismissScreen");
+            }
+        });
+    }
+
 
     private void initBanner() {
         mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, Constants.BannerPosID);
@@ -137,5 +183,12 @@ public class ComicChapterDetailsActivity extends BaseNewActivity implements
     @Override
     public void resultError(int code, String errorMessge) {
         ToastUtil.toastSome(this,errorMessge);
+    }
+
+    @Override
+    protected void onDestroy() {
+//        TODO  畅思
+        if (adView != null)adView.destroy();
+        super.onDestroy();
     }
 }

@@ -52,6 +52,9 @@ public class GoogleAdActivity extends AppCompatActivity implements GoogleAdListe
 //        } else {
 //            Log.d("TAG", "The interstitial wasn't loaded yet.");
 //        }
+//        IMvInterstitialAd mediavAdView = Mvad.showInterstitial(this, "", true);
+//
+//        mediavAdView.showAds(this);
     }
 
     @Override

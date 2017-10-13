@@ -21,6 +21,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chance.ads.AdRequest;
+import com.chance.ads.AdView;
+import com.chance.exception.PBException;
+import com.chance.listener.AdListener;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
@@ -124,7 +128,11 @@ public class ReadComicActivity extends BaseNewActivity {
         if ("zymkcdn.com".equals(chapter_domain)){
             suffix = "-mht.middle";
         }else if ("samanlehua.com".equals(chapter_domain)){
-            suffix += "";
+            suffix += "";//
+        }else if ("manhualang.com".equals(chapter_domain)){
+            suffix = "-mht.middle";
+        }else {
+            suffix = "-mht.middle";
         }
         LogUtils.d(TAG, chapter_source.toString());
         List<String> list = new ArrayList<>(end_num);
@@ -149,8 +157,45 @@ public class ReadComicActivity extends BaseNewActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rlv_ReadComicActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         llAd = (LinearLayout) findViewById(R.id.ll_ad);
-        doRefreshBanner();
+
+        //        TODO  畅思
+        Chang();
+//        TODO  广点通
+//        doRefreshBanner();
     }
+    private AdView adView;
+    private void Chang(){
+        // 创建 adView, 如果不传入placementID，可以用另一个构造函数AdView(context)
+        adView = new AdView(this, "878620156oxqpvu");
+        llAd.removeAllViews();
+        // 在其中添加 adView
+        llAd.addView(adView);
+//    addContentView(adView, params);
+        // 启动一般性请求并在其中加载广告
+        adView.loadAd(new AdRequest());
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onReceiveAd() {
+
+            }
+
+            @Override
+            public void onFailedToReceiveAd(PBException e) {
+
+            }
+
+            @Override
+            public void onPresentScreen() {
+
+            }
+
+            @Override
+            public void onDismissScreen() {
+
+            }
+        });
+    }
+
 
     private void initBanner() {
         mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, Constants.BannerPosID);
@@ -254,6 +299,9 @@ public class ReadComicActivity extends BaseNewActivity {
 
     @Override
     protected void onDestroy() {
+//        TODO  畅思
+        if (adView != null)adView.destroy();
+
         doCloseBanner();
         GlideUtils.newInstance().resume();
         if (mDialog != null)mDialog.dismiss();

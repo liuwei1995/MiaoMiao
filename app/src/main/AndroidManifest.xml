@@ -129,6 +129,22 @@
         <service android:name="com.mediav.ads.sdk.service.MvService" android:enabled="true" android:exported="false" >
         </service>
 
+        <!---->
+
+        <service android:name="com.chance.engine.AdService"
+                 android:process="com.chance.AdService"
+                 android:exported="true">
+            <intent-filter>
+                <action android:name="com.chance.service"/>
+            </intent-filter>
+        </service>
+        <meta-data android:name="chukong_publisherid" android:value="878620156-A01A9F-D3E8-D523-5FC09D3BC"/>
+        <meta-data android:name="chance_publisherid" android:value="878620156-A01A9F-D3E8-D523-5FC09D3BC"/>
+        <activity android:name="com.chance.ads.AdActivity">
+
+        </activity>
+
+
     </application>
 
     <!--=========================================360======================================-->
