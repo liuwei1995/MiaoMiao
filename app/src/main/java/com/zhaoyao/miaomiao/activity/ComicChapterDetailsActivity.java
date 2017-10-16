@@ -10,14 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.chance.ads.AdRequest;
-import com.chance.ads.AdView;
-import com.chance.exception.PBException;
-import com.chance.listener.AdListener;
-import com.qq.e.ads.banner.ADSize;
-import com.qq.e.ads.banner.AbstractBannerADListener;
-import com.qq.e.ads.banner.BannerView;
-import com.qq.e.comm.util.AdError;
 import com.zhaoyao.miaomiao.IView.activity.ComicChapterDetailsActivityView;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.adapter.ComicChapterDetailsActivityAdapter;
@@ -25,8 +17,8 @@ import com.zhaoyao.miaomiao.adapter.base.HealthyMultipleAdapter;
 import com.zhaoyao.miaomiao.entity.ComicChapterDetailsEntity;
 import com.zhaoyao.miaomiao.persenter.activity.ComicChapterDetailsActivityPersenter;
 import com.zhaoyao.miaomiao.persenter.activity.impl.ComicChapterDetailsActivityPersenterImpl;
-import com.zhaoyao.miaomiao.util.Constants;
-import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.persenter.ad.AdPersenter;
+import com.zhaoyao.miaomiao.persenter.ad.impl.ComicChapterDetailsActivityAdPersenterImpl;
 import com.zhaoyao.miaomiao.util.ToastUtil;
 
 import java.util.List;
@@ -64,91 +56,26 @@ public class ComicChapterDetailsActivity extends BaseNewActivity implements
         mComicChapterDetailsActivityPersenter.getComicInfo(comic_id);
     }
 
-    LinearLayout llAd = null;
-    private BannerView mBannerView;
+
 
     private RecyclerView mRecyclerView;
+
+    private AdPersenter<LinearLayout> mAdPersenter;
+
     private void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.rlv_activity_cartoon_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        llAd = (LinearLayout) findViewById(R.id.ll_ad);
-        //        TODO  畅思
-        Chang();
+        LinearLayout  llAd = (LinearLayout) findViewById(R.id.ll_ad);
+        mAdPersenter = new ComicChapterDetailsActivityAdPersenterImpl(this, ComicChapterDetailsActivityAdPersenterImpl.AdType.GDT);
+        mAdPersenter.initAd(llAd);
+        mAdPersenter.showAd();
         //        TODO  广点通
 //        doRefreshBanner();
     }
 
 
-    private AdView adView;
-    private void Chang(){
-        // 创建 adView, 如果不传入placementID，可以用另一个构造函数AdView(context)
-        adView = new AdView(this, "878620156oxqprz");
-        llAd.removeAllViews();
-        // 在其中添加 adView
-        llAd.addView(adView);
-//    addContentView(adView, params);
-        // 启动一般性请求并在其中加载广告
-        adView.loadAd(new AdRequest());
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onReceiveAd() {
-                LogUtils.d("com.chance.ads.AdView   onReceiveAd");
-                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onReceiveAd");
-            }
-
-            @Override
-            public void onFailedToReceiveAd(PBException e) {
-                LogUtils.d("com.chance.ads.AdView   onFailedToReceiveAd\n"+e.toString());
-                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onFailedToReceiveAd\n"+e.toString());
-            }
-
-            @Override
-            public void onPresentScreen() {
-                LogUtils.d("com.chance.ads.AdView   onPresentScreen");
-                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onPresentScreen");
-            }
-
-            @Override
-            public void onDismissScreen() {
-                LogUtils.d("com.chance.ads.AdView   onDismissScreen");
-                ToastUtil.toastSome(ComicChapterDetailsActivity.this,"com.chance.ads.AdView   onDismissScreen");
-            }
-        });
-    }
 
 
-    private void initBanner() {
-        mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, Constants.BannerPosID);
-        mBannerView.setRefresh(30);
-        llAd.removeAllViews();
-        mBannerView.setADListener(new AbstractBannerADListener() {
-            @Override
-            public void onNoAD(AdError adError) {
-                LogUtils.a(adError);
-            }
-
-            @Override
-            public void onADReceiv() {
-                LogUtils.a("onADReceiv");
-            }
-        });
-        llAd.addView(mBannerView);
-    }
-
-    private void doRefreshBanner() {
-        if (mBannerView == null) {
-            initBanner();
-        }
-        mBannerView.loadAD();
-    }
-
-    private void doCloseBanner() {
-        llAd.removeAllViews();
-        if (mBannerView != null) {
-            mBannerView.destroy();
-            mBannerView = null;
-        }
-    }
 
 
     @Override
@@ -187,8 +114,7 @@ public class ComicChapterDetailsActivity extends BaseNewActivity implements
 
     @Override
     protected void onDestroy() {
-//        TODO  畅思
-        if (adView != null)adView.destroy();
+        mAdPersenter.onDestroy();
         super.onDestroy();
     }
 }

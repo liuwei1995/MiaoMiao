@@ -106,6 +106,9 @@ android {
         tencent {
             manifestPlaceholders = [CHANNEL_VALUE: "tencent"]
         }
+        chance {
+            manifestPlaceholders = [CHANNEL_VALUE: "chance"]
+        }
     }
     //针对很多渠道
     productFlavors.all {
