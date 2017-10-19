@@ -129,16 +129,23 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100 && resultCode == 100){
             mHandler.removeMessages(100);
-            mHandler.sendEmptyMessageDelayed(100,2*1000);
+            Message message = mHandler.obtainMessage();
+            message.what = 100;
+            message.obj = data;
+            mHandler.sendMessageDelayed(message,2*1000);
         }
     }
 
     @Override
     public void handleMessage(WeakReference<MainActivity> weakReference, Message msg) {
         if(msg.what == 100){
-            Intent intent = new Intent(this, AdActivity.class);
-            intent.putExtra(AdActivity.START_AD_ACTIVITY_KEY,true);
-            startActivityForResult(intent,100);
+            if (msg.obj != null && msg.obj instanceof Intent){
+                Intent o = (Intent) msg.obj;
+                Intent intent = new Intent(this, AdActivity.class);
+                intent.putExtra(AdActivity.IS_START_ACTIVITY_KEY,o.getBooleanExtra(AdActivity.IS_START_ACTIVITY_KEY,false));
+                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
+                startActivityForResult(intent,100);
+            }
         }
     }
 
