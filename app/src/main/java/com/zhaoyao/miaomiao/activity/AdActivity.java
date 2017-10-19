@@ -74,7 +74,6 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         mCbOpen = (CheckBox) findViewById(R.id.cb_open);
         if (isStartActivity){
             mCbOpen.setChecked(true);
-            mCbOpen.setOnCheckedChangeListener(this);
             synchronized (this) {
                 if (isStartActivity && !mHandler.hasMessages(START_AD_ACTIVITY)) {
                     mHandler.removeMessages(START_AD_ACTIVITY);
@@ -82,6 +81,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                 }
             }
         }
+        mCbOpen.setOnCheckedChangeListener(this);
         rg_.setOnCheckedChangeListener(this);
     }
 
