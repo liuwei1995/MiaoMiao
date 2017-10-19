@@ -371,9 +371,9 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                         error.getErrorCode(), error.getErrorMsg()));
                 removeCloseShow();
                 if (!isBrush) {
-                    mHandler.sendEmptyMessageDelayed(SHOW_IAD, 30 * 1000);
+                    mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
                 } else {
-                    mHandler.sendEmptyMessageDelayed(SHOW_IAD,1000);
+                    mHandler.sendEmptyMessageDelayed(SHOW_IAD,5*1000);
                 }
             }
 
@@ -394,7 +394,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                 if (!isBrush) {
                     mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
                 } else {
-                    mHandler.sendEmptyMessageDelayed(SHOW_IAD,1000);
+                    mHandler.sendEmptyMessageDelayed(SHOW_IAD,5*1000);
                 }
             }
         });
