@@ -38,10 +38,13 @@ import com.zhaoyao.miaomiao.listener.GoogleAdListener;
 import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.ToastUtil;
+import com.zhaoyao.miaomiao.util.ad.gdt.GDTInterstitialAD;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdActivity extends AppCompatActivity implements TaskHandler<AdActivity>, View.OnClickListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener, CompoundButton
         .OnCheckedChangeListener {
@@ -363,7 +366,15 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         iad.loadAD();
     }
 
+    private Map<String,GDTInterstitialAD> mapGDTInterstitialAD = null;
+
     private synchronized void showAsPopup() {
+        if (mapGDTInterstitialAD == null){
+            mapGDTInterstitialAD = new HashMap<>();
+            GDTInterstitialAD gdtInterstitialAD = new GDTInterstitialAD(this, Constants.InterteristalPosID);
+            mapGDTInterstitialAD.put(gdtInterstitialAD.getInterteristalPosID(),gdtInterstitialAD);
+        }
+
         getIAD().setADListener(new AbstractInterstitialADListener() {
             @Override
             public void onNoAD(AdError error) {
