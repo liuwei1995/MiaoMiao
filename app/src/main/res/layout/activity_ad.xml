@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4.5"
+            android:layout_weight="6"
             android:orientation="horizontal"
             android:weightSum="10"
             >
@@ -36,7 +36,7 @@
                 android:id="@+id/rg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6.8"
+                android:layout_weight="4.8"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -57,8 +57,14 @@
                 android:id="@+id/cb_open"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.2"
+                android:layout_weight="2.1"
                 android:text="启"/>
+            <CheckBox
+                android:id="@+id/cb_more"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.1"
+                android:text="多"/>
 
         </LinearLayout>
 
@@ -67,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:visibility="gone"
             android:layout_weight="1.5"
             android:gravity="center"
             android:padding="5dp"

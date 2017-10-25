@@ -7,7 +7,7 @@ import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -46,8 +46,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdActivity extends AppCompatActivity implements TaskHandler<AdActivity>, View.OnClickListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener, CompoundButton
-        .OnCheckedChangeListener {
+public class AdActivity extends AppCompatActivity implements
+        TaskHandler<AdActivity>, View.OnClickListener,
+        AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener,
+        CompoundButton.OnCheckedChangeListener ,
+        GDTInterstitialAD.GDTInterstitialADListener {
 
     /**
      * 开
@@ -57,6 +60,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
      * 启
      */
     private CheckBox mCbOpen;
+    private CheckBox mCbMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         }
         isStartActivity = getIntent().getBooleanExtra(IS_START_ACTIVITY_KEY, false);
         mCbOpen = (CheckBox) findViewById(R.id.cb_open);
+        mCbMore = (CheckBox) findViewById(R.id.cb_more);
         if (isStartActivity){
             mCbOpen.setChecked(true);
             synchronized (this) {
@@ -85,6 +90,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             }
         }
         mCbOpen.setOnCheckedChangeListener(this);
+        mCbMore.setOnCheckedChangeListener(this);
         rg_.setOnCheckedChangeListener(this);
     }
 
@@ -327,6 +333,12 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
 
     @Override
     protected void onDestroy() {
+        if (mapGDTInterstitialAD != null){
+            for (String s : mapGDTInterstitialAD.keySet()) {
+                GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+                gdtInterstitialAD.onDestroy();
+            }
+        }
         doCloseBanner();
         doCloseIMvBannerAdBanner();
         list.clear();
@@ -349,38 +361,92 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         return iad;
     }
 
-    private synchronized void showAD() {
-        getIAD().setADListener(new AbstractInterstitialADListener() {
-            @Override
-            public void onNoAD(AdError error) {
-                Log.i("AD_DEMO", String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
-                        error.getErrorCode(), error.getErrorMsg()));
-            }
-
-            @Override
-            public void onADReceive() {
-                Log.i("AD_DEMO", "onADReceive");
-                iad.show();
-            }
-        });
-        iad.loadAD();
-    }
+//    private synchronized void showAD() {
+//        getIAD().setADListener(new AbstractInterstitialADListener() {
+//            @Override
+//            public void onNoAD(AdError error) {
+//                Log.i("AD_DEMO", String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
+//                        error.getErrorCode(), error.getErrorMsg()));
+//            }
+//
+//            @Override
+//            public void onADReceive() {
+//                Log.i("AD_DEMO", "onADReceive");
+//                iad.show();
+//            }
+//        });
+//        iad.loadAD();
+//    }
 
     private Map<String,GDTInterstitialAD> mapGDTInterstitialAD = null;
+//    private List<GDTInterstitialAD> listGDTInterstitialAD = null;
+    private List<String> listString = null;
 
-    private synchronized void showAsPopup() {
+    private synchronized void createGDTInterstitialADAsPopup() {
         if (mapGDTInterstitialAD == null){
             mapGDTInterstitialAD = new HashMap<>();
-            GDTInterstitialAD gdtInterstitialAD = new GDTInterstitialAD(this, Constants.InterteristalPosID);
-            mapGDTInterstitialAD.put(gdtInterstitialAD.getInterteristalPosID(),gdtInterstitialAD);
+            listString = new ArrayList<>();
+
+            putGDTInterstitialAD();
+        }else {
+            listString.clear();
+            for (String s : mapGDTInterstitialAD.keySet()) {
+                GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+                gdtInterstitialAD.onDestroy();
+            }
+
+            putGDTInterstitialAD();
         }
+
+        for (String s : mapGDTInterstitialAD.keySet()) {
+            GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+            gdtInterstitialAD.loadAD();
+        }
+        timerShow();
+    }
+
+    private void putGDTInterstitialAD() {
+
+        mapGDTInterstitialAD.clear();
+
+        GDTInterstitialAD gdtInterstitialAD = new GDTInterstitialAD(this, Constants.InterteristalPosID,this);
+        mapGDTInterstitialAD.put(gdtInterstitialAD.getInterteristalPosID(),gdtInterstitialAD);
+
+        GDTInterstitialAD gdtInterstitialAD1 = new GDTInterstitialAD(this, Constants.InterteristalPosID1,this);
+        mapGDTInterstitialAD.put(gdtInterstitialAD1.getInterteristalPosID(),gdtInterstitialAD1);
+
+        GDTInterstitialAD gdtInterstitialAD2 = new GDTInterstitialAD(this, Constants.InterteristalPosID2,this);
+        mapGDTInterstitialAD.put(gdtInterstitialAD2.getInterteristalPosID(),gdtInterstitialAD2);
+    }
+
+    private void closeGDTInterstitialAD(){
+        for (String s : mapGDTInterstitialAD.keySet()) {
+            GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+            gdtInterstitialAD.closeAsPopup();
+        }
+    }
+
+    /**
+     * 定时
+     */
+    private synchronized void timerShow(){
+        mHandler.removeMessages(TIMER_CLOSE);
+        mHandler.removeMessages(TIMER_SHOW);
+        mHandler.sendEmptyMessageDelayed(TIMER_SHOW,5*1000);
+    }
+    private synchronized void timerClose(){
+        mHandler.removeMessages(TIMER_SHOW);
+        mHandler.removeMessages(TIMER_CLOSE);
+        mHandler.sendEmptyMessageDelayed(TIMER_CLOSE,5*1000);
+    }
+
+    private synchronized void showAsPopup() {
 
         getIAD().setADListener(new AbstractInterstitialADListener() {
             @Override
             public void onNoAD(AdError error) {
-                Log.i("AD_DEMO", String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
-                        error.getErrorCode(), error.getErrorMsg()));
                 removeCloseShow();
+                if (isMore)return;
                 if (!isBrush) {
                     mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
                 } else {
@@ -392,6 +458,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             public void onADReceive() {
                 iad.showAsPopupWindow();
                 removeCloseShow();
+                if (isMore)return;
                 if (!isBrush) {
                     mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 50 * 1000);
                 } else {
@@ -402,6 +469,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
             @Override
             public void onADClosed() {
                 removeCloseShow();
+                if (isMore)return;
                 if (!isBrush) {
                     mHandler.sendEmptyMessageDelayed(SHOW_IAD, 10 * 1000);
                 } else {
@@ -432,16 +500,7 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
     }
 
 
-    public static final int CLOSE_IAD = 1;
-    public static final int SHOW_IAD = 2;
 
-
-    public static final int START_ACTIVITY = 3;
-
-    public static final int START_AD_ACTIVITY = 4;
-
-    //    public static final int START_AD_ACTIVITY_TIME = 60 * 1000;
-    public static final int START_AD_ACTIVITY_TIME = 10 * 60 * 1000;
 
     @Override
     protected void onResume() {
@@ -456,6 +515,24 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
         isOnPause = true;
         super.onPause();
     }
+
+    public static final int CLOSE_IAD = 1;
+    public static final int SHOW_IAD = 2;
+
+    public static final int GDTInterstitialAD_CLOSE_IAD = 11;
+    public static final int GDTInterstitialAD_SHOW_IAD = 22;
+
+    public static final int GDTInterstitialAD_LOADAD_IAD = 44;
+    public static final int TIMER_SHOW = 33;
+    public static final int TIMER_CLOSE = 55;
+
+
+    public static final int START_ACTIVITY = 3;
+
+    public static final int START_AD_ACTIVITY = 4;
+
+    //    public static final int START_AD_ACTIVITY_TIME = 60 * 1000;
+    public static final int START_AD_ACTIVITY_TIME = 10 * 60 * 1000;
 
     @Override
     public void handleMessage(WeakReference<AdActivity> weakReference, Message msg) {
@@ -485,14 +562,49 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
                 mHandler.removeMessages(START_AD_ACTIVITY);
                 mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, 10 * 1000);
             } else {
-//                Intent intent = new Intent(this, AdActivity.class);
-//                intent.putExtra(START_AD_ACTIVITY_KEY,true);
-//                startActivity(intent);
                 Intent intent = new Intent();
                 intent.putExtra(IS_BRUSH_KEY,isBrush);
                 intent.putExtra(IS_START_ACTIVITY_KEY,isStartActivity);
                 setResult(100,intent);
                 onBackPressed();
+            }
+        }else if(GDTInterstitialAD_LOADAD_IAD == msg.what){
+            createGDTInterstitialADAsPopup();
+        }else if(GDTInterstitialAD_CLOSE_IAD == msg.what){
+            for (String s : mapGDTInterstitialAD.keySet()) {
+                GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+                gdtInterstitialAD.mHandler.removeCallbacksAndMessages(null);
+            }
+            closeGDTInterstitialAD();
+        }else if(TIMER_SHOW == msg.what){
+            if (listString != null && listString.size() != 0){
+                String s = removeString0();
+                if (!TextUtils.isEmpty(s)){
+                    GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+                    gdtInterstitialAD.showAsPopupWindow();
+                    String interteristalPosID = gdtInterstitialAD.getInterteristalPosID();
+                    ToastUtil.toastSome(this,"显示：\t"+interteristalPosID);
+                }
+            }
+            timerClose();
+        }else if(TIMER_CLOSE == msg.what){
+            for (String s : mapGDTInterstitialAD.keySet()) {
+                GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+                if (gdtInterstitialAD.getADState() == GDTInterstitialAD.ADState.show){
+                    gdtInterstitialAD.closeAsPopup();
+                }
+            }
+            if (listString != null && listString.size() != 0){
+                String s = removeString0();
+                if (!TextUtils.isEmpty(s)){
+                    GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+                    gdtInterstitialAD.showAsPopupWindow();
+                    String interteristalPosID = gdtInterstitialAD.getInterteristalPosID();
+                    ToastUtil.toastSome(this,"显示：\t"+interteristalPosID);
+                }
+                timerClose();
+            }else{
+                timerShow();
             }
         }
     }
@@ -574,6 +686,8 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
 
     private boolean isStartActivity = false;
 
+    private boolean isMore = false;
+
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         if (checkedId == R.id.rbOpen) {
@@ -596,20 +710,90 @@ public class AdActivity extends AppCompatActivity implements TaskHandler<AdActiv
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        this.isStartActivity = isChecked;
-        if (isChecked){
-            ToastUtil.toastSome(this, (START_AD_ACTIVITY_TIME/1000)+"秒后重新启动");
-            if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
-                synchronized (this) {
-                    if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
-                        mHandler.removeMessages(START_AD_ACTIVITY);
-                        mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, START_AD_ACTIVITY_TIME);
+        if (buttonView.getId() == R.id.cb_open){
+            this.isStartActivity = isChecked;
+            if (isChecked){
+                ToastUtil.toastSome(this, (START_AD_ACTIVITY_TIME/1000)+"秒后重新启动");
+                if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
+                    synchronized (this) {
+                        if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
+                            mHandler.removeMessages(START_AD_ACTIVITY);
+                            mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, START_AD_ACTIVITY_TIME);
+                        }
                     }
                 }
+            }else {
+                ToastUtil.toastSome(this, "关闭重新启动");
+                mHandler.removeMessages(START_AD_ACTIVITY);
             }
-        }else {
-            ToastUtil.toastSome(this, "关闭重新启动");
-            mHandler.removeMessages(START_AD_ACTIVITY);
+        }else if (buttonView.getId() == R.id.cb_more){
+            isMore = isChecked;
+            if (isChecked){
+                closeAsPopup();
+                removeCloseShow();
+                ToastUtil.toastSome(this,"3 秒后多插屏开始");
+                mHandler.removeMessages(GDTInterstitialAD_LOADAD_IAD);
+                mHandler.sendEmptyMessageDelayed(GDTInterstitialAD_LOADAD_IAD,3 * 1000);
+            }else {
+                mHandler.removeMessages(TIMER_CLOSE);
+                mHandler.removeMessages(TIMER_SHOW);
+                mHandler.removeMessages(GDTInterstitialAD_LOADAD_IAD);
+                mHandler.removeMessages(GDTInterstitialAD_CLOSE_IAD);
+                removeCloseShow();
+                ToastUtil.toastSome(this,"5 秒后开始显示");
+                mHandler.sendEmptyMessageDelayed(GDTInterstitialAD_CLOSE_IAD,500);
+                mHandler.sendEmptyMessageDelayed(SHOW_IAD,5 * 1000);
+            }
         }
+    }
+
+    private void removeString(String gDTInterstitialAD){
+        synchronized (listString){
+            listString.remove(gDTInterstitialAD);
+        }
+    }
+    private String removeString0(){
+        synchronized (listString){
+            if (listString.size() != 0){
+               return listString.remove(0);
+            }else return null;
+        }
+    }
+
+    private void addString(String gDTInterstitialAD){
+        synchronized (listString){
+            listString.remove(gDTInterstitialAD);
+            listString.add(gDTInterstitialAD);
+        }
+    }
+//    private void removeGDTInterstitialAD(GDTInterstitialAD gDTInterstitialAD){
+//        synchronized (listGDTInterstitialAD){
+//            listGDTInterstitialAD.remove(gDTInterstitialAD);
+//        }
+//    }
+//
+//    private void addGDTInterstitialAD(GDTInterstitialAD gDTInterstitialAD){
+//        synchronized (listGDTInterstitialAD){
+//            listGDTInterstitialAD.remove(gDTInterstitialAD);
+//            listGDTInterstitialAD.add(gDTInterstitialAD);
+//        }
+//    }
+
+
+    @Override
+    public void CallBack(GDTInterstitialAD gDTInterstitialAD, GDTInterstitialAD.ADState aDState, String interteristalPosID) {
+       if (aDState ==  GDTInterstitialAD.ADState.onADReceive){
+           ToastUtil.toastSome(this,interteristalPosID+"\t  广告获取成功");
+           addString(interteristalPosID);
+       }else {
+           ToastUtil.toastSome(this,interteristalPosID+"\t  "+aDState);
+           removeString(interteristalPosID);
+           if (aDState == GDTInterstitialAD.ADState.onADClosed){
+               gDTInterstitialAD.sendEmptyMessageDelayed(GDTInterstitialAD.LOAD_AD_IAD,10*1000);
+           }else if (aDState == GDTInterstitialAD.ADState.onNoAD){
+               ToastUtil.toastSome(this,interteristalPosID+"\t  没有获取到广告");
+               gDTInterstitialAD.sendEmptyMessageDelayed(GDTInterstitialAD.LOAD_AD_IAD,10*1000);
+           }
+       }
     }
 }

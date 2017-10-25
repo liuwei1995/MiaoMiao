@@ -1,18 +1,26 @@
 package com.zhaoyao.miaomiao.util.ad.gdt;
 
 import android.app.Activity;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 
 import com.qq.e.ads.interstitial.InterstitialAD;
 import com.qq.e.ads.interstitial.InterstitialADListener;
 import com.qq.e.comm.util.AdError;
+import com.zhaoyao.miaomiao.handler.TaskHandler;
+import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
 import com.zhaoyao.miaomiao.util.Constants;
+import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.util.ToastUtil;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by liuwei on 2017/10/20 17:07
  */
 
-public class GDTInterstitialAD implements InterstitialADListener {
+public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GDTInterstitialAD> {
+
 
 
     public interface GDTInterstitialADListener{
@@ -54,15 +62,21 @@ public class GDTInterstitialAD implements InterstitialADListener {
         return iad;
     }
 
-    public void loadAD(){
-        iad.loadAD();
+    public synchronized void loadAD(){
+        if (mADState != ADState.show && mADState != ADState.loadAD && mADState != ADState.onADReceive){
+            ToastUtil.toastSome(mActivity,"loadAD:\t"+getInterteristalPosID());
+            iad.loadAD();
+        }else {
+            ToastUtil.toastSome(mActivity,"ADState:\t"+mADState);
+        }
     }
 
-    public void show(){
-        iad.show();
+    public void showAsPopupWindow(){
+        setADState(ADState.show);
+        iad.showAsPopupWindow();
     }
 
-    public void destroy(){
+    private void destroy(){
         iad.destroy();
     }
 
@@ -73,14 +87,55 @@ public class GDTInterstitialAD implements InterstitialADListener {
     public void closeAsPopup() {
         if (iad != null) {
             iad.closePopupWindow();
-            iad.destroy();
+        }
+    }
+
+    public Handler mHandler = new TaskHandlerImpl<>(this);
+
+    public static final int CLOSE_IAD = 1;
+    public static final int SHOW_IAD = 2;
+
+    public static final int LOAD_AD_IAD = 3;
+
+    public static final int ON_AD_RECEIVE = 4;
+
+    public static final int ON_NO_AD = 5;
+
+    public static final int ON_AD_CLOSED = 6;
+
+    public void sendEmptyMessageDelayed(int what, long delayMillis) {
+        mHandler.removeMessages(what);
+        mHandler.sendEmptyMessageDelayed(what,delayMillis);
+    }
+
+    @Override
+    public void handleMessage(WeakReference<GDTInterstitialAD> weakReference, Message msg) {
+        if (LOAD_AD_IAD == msg.what){
+            loadAD();
+        }else if (ON_AD_RECEIVE == msg.what){
+            if (mGDTInterstitialADListener != null)
+                mGDTInterstitialADListener.CallBack(this, ADState.onADReceive, interteristalPosID);
+        }else if (ON_NO_AD == msg.what){
+            if (mGDTInterstitialADListener != null)
+                mGDTInterstitialADListener.CallBack(this, ADState.onNoAD, interteristalPosID);
+        }else if (ON_AD_CLOSED == msg.what){
+            if (mGDTInterstitialADListener != null)
+                mGDTInterstitialADListener.CallBack(this, ADState.onADClosed, interteristalPosID);
         }
     }
 
 
-    enum ADState{
-        onADReceive,onNoAD,onADClosed
+
+    public synchronized void onDestroy() {
+        mHandler.removeCallbacksAndMessages(null);
+        mGDTInterstitialADListener = null;
+        closeAsPopup();
+        destroy();
     }
+
+   public enum ADState{
+        onADReceive,onNoAD,onADClosed,loadAD,show
+   }
 
     private ADState mADState = ADState.onNoAD;
 
@@ -100,28 +155,26 @@ public class GDTInterstitialAD implements InterstitialADListener {
 
     @Override
     public void onADReceive() {
-        Log.i("AD_DEMO", "onADReceive");
         setADState(ADState.onADReceive);
-        if (mGDTInterstitialADListener != null)
-        mGDTInterstitialADListener.CallBack(this, ADState.onADReceive, interteristalPosID);
-//        iad.show();
+        mHandler.removeMessages(ON_AD_RECEIVE);
+        mHandler.sendEmptyMessageDelayed(ON_AD_RECEIVE,1000);
     }
 
     @Override
     public void onNoAD(AdError error) {
         setADState(ADState.onNoAD);
-        if (mGDTInterstitialADListener != null)
-        mGDTInterstitialADListener.CallBack(this, ADState.onNoAD, interteristalPosID);
+        mHandler.removeMessages(ON_NO_AD);
+        mHandler.sendEmptyMessageDelayed(ON_NO_AD,1000);
     }
 
     @Override
     public void onADOpened() {
-
+        LogUtils.d("onADOpened");
     }
 
     @Override
     public void onADExposure() {
-
+        LogUtils.d("onADExposure");
     }
 
     @Override
@@ -137,7 +190,7 @@ public class GDTInterstitialAD implements InterstitialADListener {
     @Override
     public void onADClosed() {
         setADState(ADState.onADClosed);
-        if (mGDTInterstitialADListener != null)
-        mGDTInterstitialADListener.CallBack(this, ADState.onADClosed, interteristalPosID);
+        mHandler.removeMessages(ON_AD_CLOSED);
+        mHandler.sendEmptyMessageDelayed(ON_AD_CLOSED,1000);
     }
 }
