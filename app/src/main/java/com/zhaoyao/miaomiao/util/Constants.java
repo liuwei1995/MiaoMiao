@@ -37,6 +37,7 @@ public class Constants {
     public static final String InterteristalPosID = "9070203977656264";//插屏广告
     public static final String InterteristalPosID1 = "4010927665090372";//插屏广告
     public static final String InterteristalPosID2 = "3020023618143725";//插屏广告
+    public static final String InterteristalPosID3 = "8000528730998550";//插屏广告
 
 //    public static final String SplashPosID = "3090609977255233";//开屏广告
 

@@ -379,6 +379,8 @@ public class AdActivity extends AppCompatActivity implements
 //    }
 
     private Map<String,GDTInterstitialAD> mapGDTInterstitialAD = null;
+    private GDTInterstitialAD mGDTInterstitialAD;
+
 //    private List<GDTInterstitialAD> listGDTInterstitialAD = null;
     private List<String> listString = null;
 
@@ -417,14 +419,11 @@ public class AdActivity extends AppCompatActivity implements
 
         GDTInterstitialAD gdtInterstitialAD2 = new GDTInterstitialAD(this, Constants.InterteristalPosID2,this);
         mapGDTInterstitialAD.put(gdtInterstitialAD2.getInterteristalPosID(),gdtInterstitialAD2);
+
+        GDTInterstitialAD gdtInterstitialAD3 = new GDTInterstitialAD(this, Constants.InterteristalPosID3,this);
+        mapGDTInterstitialAD.put(gdtInterstitialAD3.getInterteristalPosID(),gdtInterstitialAD3);
     }
 
-    private void closeGDTInterstitialAD(){
-        for (String s : mapGDTInterstitialAD.keySet()) {
-            GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
-            gdtInterstitialAD.closeAsPopup();
-        }
-    }
 
     /**
      * 定时
@@ -573,14 +572,20 @@ public class AdActivity extends AppCompatActivity implements
         }else if(GDTInterstitialAD_CLOSE_IAD == msg.what){
             for (String s : mapGDTInterstitialAD.keySet()) {
                 GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
-                gdtInterstitialAD.mHandler.removeCallbacksAndMessages(null);
+                gdtInterstitialAD.onDestroy();
             }
-            closeGDTInterstitialAD();
         }else if(TIMER_SHOW == msg.what){
             if (listString != null && listString.size() != 0){
+                if (isOnPause){
+                    mHandler.removeMessages(TIMER_CLOSE);
+                    mHandler.removeMessages(TIMER_SHOW);
+                    mHandler.sendEmptyMessageDelayed(TIMER_SHOW, 5 * 1000);
+                    return;
+                }
                 String s = removeString0();
                 if (!TextUtils.isEmpty(s)){
                     GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
+                    mGDTInterstitialAD =  gdtInterstitialAD;
                     gdtInterstitialAD.showAsPopupWindow();
                     String interteristalPosID = gdtInterstitialAD.getInterteristalPosID();
                     ToastUtil.toastSome(this,"显示：\t"+interteristalPosID);
@@ -588,21 +593,11 @@ public class AdActivity extends AppCompatActivity implements
             }
             timerClose();
         }else if(TIMER_CLOSE == msg.what){
-            for (String s : mapGDTInterstitialAD.keySet()) {
-                GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
-                if (gdtInterstitialAD.getADState() == GDTInterstitialAD.ADState.show){
-                    gdtInterstitialAD.closeAsPopup();
-                }
-            }
+            if (mGDTInterstitialAD != null)mGDTInterstitialAD.closeAsPopup();
             if (listString != null && listString.size() != 0){
-                String s = removeString0();
-                if (!TextUtils.isEmpty(s)){
-                    GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
-                    gdtInterstitialAD.showAsPopupWindow();
-                    String interteristalPosID = gdtInterstitialAD.getInterteristalPosID();
-                    ToastUtil.toastSome(this,"显示：\t"+interteristalPosID);
-                }
-                timerClose();
+                mHandler.removeMessages(TIMER_CLOSE);
+                mHandler.removeMessages(TIMER_SHOW);
+                mHandler.sendEmptyMessageDelayed(TIMER_SHOW,1000);
             }else{
                 timerShow();
             }
@@ -766,18 +761,6 @@ public class AdActivity extends AppCompatActivity implements
             listString.add(gDTInterstitialAD);
         }
     }
-//    private void removeGDTInterstitialAD(GDTInterstitialAD gDTInterstitialAD){
-//        synchronized (listGDTInterstitialAD){
-//            listGDTInterstitialAD.remove(gDTInterstitialAD);
-//        }
-//    }
-//
-//    private void addGDTInterstitialAD(GDTInterstitialAD gDTInterstitialAD){
-//        synchronized (listGDTInterstitialAD){
-//            listGDTInterstitialAD.remove(gDTInterstitialAD);
-//            listGDTInterstitialAD.add(gDTInterstitialAD);
-//        }
-//    }
 
 
     @Override
@@ -786,14 +769,8 @@ public class AdActivity extends AppCompatActivity implements
            ToastUtil.toastSome(this,interteristalPosID+"\t  广告获取成功");
            addString(interteristalPosID);
        }else {
-           ToastUtil.toastSome(this,interteristalPosID+"\t  "+aDState);
+           ToastUtil.toastSome(this,interteristalPosID+"\t ====== "+aDState);
            removeString(interteristalPosID);
-           if (aDState == GDTInterstitialAD.ADState.onADClosed){
-               gDTInterstitialAD.sendEmptyMessageDelayed(GDTInterstitialAD.LOAD_AD_IAD,10*1000);
-           }else if (aDState == GDTInterstitialAD.ADState.onNoAD){
-               ToastUtil.toastSome(this,interteristalPosID+"\t  没有获取到广告");
-               gDTInterstitialAD.sendEmptyMessageDelayed(GDTInterstitialAD.LOAD_AD_IAD,10*1000);
-           }
        }
     }
 }

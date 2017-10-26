@@ -63,12 +63,19 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
     }
 
     public synchronized void loadAD(){
-        if (mADState != ADState.show && mADState != ADState.loadAD && mADState != ADState.onADReceive){
-            ToastUtil.toastSome(mActivity,"loadAD:\t"+getInterteristalPosID());
-            iad.loadAD();
-        }else {
-            ToastUtil.toastSome(mActivity,"ADState:\t"+mADState);
+        if (isDestroy)return;
+        if (mADState == ADState.onADReceive){
+            ToastUtil.toastSome(mActivity,"不用重复  loadAD:\t"+getInterteristalPosID());
+            return;
         }
+        ToastUtil.toastSome(mActivity,"loadAD:\t"+getInterteristalPosID());
+        iad.loadAD();
+//        if (mADState != ADState.show && mADState != ADState.loadAD && mADState != ADState.onADReceive){
+//            ToastUtil.toastSome(mActivity,"loadAD:\t"+getInterteristalPosID());
+//            iad.loadAD();
+//        }else {
+//            ToastUtil.toastSome(mActivity,"ADState:\t"+mADState);
+//        }
     }
 
     public void showAsPopupWindow(){
@@ -110,6 +117,11 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
 
     @Override
     public void handleMessage(WeakReference<GDTInterstitialAD> weakReference, Message msg) {
+        if (isDestroy)
+        {
+            mHandler.removeCallbacksAndMessages(null);
+            return;
+        }
         if (LOAD_AD_IAD == msg.what){
             loadAD();
         }else if (ON_AD_RECEIVE == msg.what){
@@ -118,15 +130,22 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
         }else if (ON_NO_AD == msg.what){
             if (mGDTInterstitialADListener != null)
                 mGDTInterstitialADListener.CallBack(this, ADState.onNoAD, interteristalPosID);
+            if(!isDestroy)
+                sendEmptyMessageDelayed(LOAD_AD_IAD, 5 * 1000);
         }else if (ON_AD_CLOSED == msg.what){
-            if (mGDTInterstitialADListener != null)
-                mGDTInterstitialADListener.CallBack(this, ADState.onADClosed, interteristalPosID);
+            if(!isDestroy)
+                sendEmptyMessageDelayed(LOAD_AD_IAD, 2000);
+
+//            if (mGDTInterstitialADListener != null)
+//                mGDTInterstitialADListener.CallBack(this, ADState.onADClosed, interteristalPosID);
         }
     }
 
 
+    private boolean isDestroy = false;
 
     public synchronized void onDestroy() {
+        isDestroy = true;
         mHandler.removeCallbacksAndMessages(null);
         mGDTInterstitialADListener = null;
         closeAsPopup();
@@ -156,6 +175,7 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
     @Override
     public void onADReceive() {
         setADState(ADState.onADReceive);
+        if (isDestroy)return;
         mHandler.removeMessages(ON_AD_RECEIVE);
         mHandler.sendEmptyMessageDelayed(ON_AD_RECEIVE,1000);
     }
@@ -163,6 +183,7 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
     @Override
     public void onNoAD(AdError error) {
         setADState(ADState.onNoAD);
+        if (isDestroy)return;
         mHandler.removeMessages(ON_NO_AD);
         mHandler.sendEmptyMessageDelayed(ON_NO_AD,1000);
     }
@@ -190,6 +211,7 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
     @Override
     public void onADClosed() {
         setADState(ADState.onADClosed);
+        if (isDestroy)return;
         mHandler.removeMessages(ON_AD_CLOSED);
         mHandler.sendEmptyMessageDelayed(ON_AD_CLOSED,1000);
     }
