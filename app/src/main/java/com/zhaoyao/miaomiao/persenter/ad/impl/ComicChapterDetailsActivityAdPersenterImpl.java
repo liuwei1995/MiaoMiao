@@ -1,6 +1,7 @@
 package com.zhaoyao.miaomiao.persenter.ad.impl;
 
 import android.app.Activity;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.qq.e.ads.banner.ADSize;
@@ -10,6 +11,9 @@ import com.qq.e.comm.util.AdError;
 import com.zhaoyao.miaomiao.persenter.ad.util.ChangPersenterUtils;
 import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.LogUtils;
+
+import net.youmi.android.nm.bn.BannerManager;
+import net.youmi.android.nm.bn.BannerViewListener;
 
 import java.io.Serializable;
 
@@ -24,7 +28,7 @@ public class ComicChapterDetailsActivityAdPersenterImpl extends AdPersenterImpl<
 
     public enum AdType{
 
-        GDT,A360,chance
+        GDT,A360,chance,YouMi
 
     }
 
@@ -49,6 +53,9 @@ public class ComicChapterDetailsActivityAdPersenterImpl extends AdPersenterImpl<
             if (mChangPersenter != null)mChangPersenter.onDestroy();
         }else if (mAdType == AdType.GDT){
             doCloseBanner();
+        }else if (mAdType == AdType.YouMi){
+            // 展示广告条窗口的 onDestroy() 回调方法中调用
+            BannerManager.getInstance(mActivity).onDestroy();
         }
     }
 
@@ -100,6 +107,27 @@ public class ComicChapterDetailsActivityAdPersenterImpl extends AdPersenterImpl<
             mChangPersenter.Chang(mViewGroup);
         }else if (mAdType == AdType.GDT){
             doRefreshBanner();
+        }else if (mAdType == AdType.YouMi){
+// 获取广告条
+            View bannerView = BannerManager.getInstance(mActivity)
+                    .getBannerView(mActivity, new BannerViewListener() {
+                        @Override
+                        public void onRequestSuccess() {
+
+                        }
+
+                        @Override
+                        public void onSwitchBanner() {
+
+                        }
+
+                        @Override
+                        public void onRequestFailed() {
+
+                        }
+                    });
+// 将广告条加入到布局中
+            mViewGroup.addView(bannerView);
         }
     }
 }

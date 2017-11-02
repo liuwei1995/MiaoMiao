@@ -42,6 +42,8 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
 //        这个是禁止滑动
 //        DrawerLayout mDrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mDrawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+
 //        initSlidingMenu(savedInstanceState);
     }
 
@@ -142,8 +144,12 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
             if (msg.obj != null && msg.obj instanceof Intent){
                 Intent o = (Intent) msg.obj;
                 Intent intent = new Intent(this, AdActivity.class);
-                intent.putExtra(AdActivity.IS_START_ACTIVITY_KEY,o.getBooleanExtra(AdActivity.IS_START_ACTIVITY_KEY,false));
-                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
+                Bundle extras = o.getExtras();
+                intent.putExtras(extras);
+//                intent.putExtra(AdActivity.IS_START_ACTIVITY_KEY,o.getBooleanExtra(AdActivity.IS_START_ACTIVITY_KEY,false));
+//                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
+//                intent.putExtra(AdActivity.IS_Restart_KEY,o.getStringExtra(AdActivity.IS_Restart_KEY));
+//                intent.putExtra(AdActivity.IS_isMore_KEY,o.getBooleanExtra(AdActivity.IS_isMore_KEY,false));
                 startActivityForResult(intent,100);
             }
         }

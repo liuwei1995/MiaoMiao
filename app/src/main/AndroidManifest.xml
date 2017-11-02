@@ -90,16 +90,27 @@
         <!-- ==============================gdt===================================== -->
 
 
+        <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值 -->
+        <!--<provider-->
+        <!--android:name="android.support.v4.content.FileProvider"-->
+        <!--android:authorities="${applicationId}.fileprovider"-->
+        <!--android:exported="false"-->
+        <!--android:grantUriPermissions="true">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+        <!--android:resource="@xml/gdt_file_path" />-->
+        <!--</provider>-->
+
         <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值，例如本例中applicationId为"com.qq.e.union.demo"。 -->
-        <!-- <provider -->
-        <!-- android:name="android.support.v4.content.FileProvider" -->
-        <!-- android:authorities="com.qq.e.union.demo.fileprovider" -->
-        <!-- android:exported="false" -->
-        <!-- android:grantUriPermissions="true"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
-        <!-- android:resource="@xml/gdt_file_path" /> -->
-        <!-- </provider> -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.zhaoyao.miaomiao.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/gdt_file_path"/>
+        </provider>
 
 
         <!-- 声明SDK所需要的组件 -->
@@ -114,8 +125,10 @@
 
         <activity
             android:name=".activity.AdActivity"
+            android:process=":AdActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
         <activity android:name=".activity.GoogleAdActivity">
         </activity>
         <activity
@@ -126,20 +139,30 @@
         </activity>
 
 
-        <service android:name="com.mediav.ads.sdk.service.MvService" android:enabled="true" android:exported="false" >
+        <service
+            android:name="com.mediav.ads.sdk.service.MvService"
+            android:enabled="true"
+            android:exported="false">
         </service>
 
         <!---->
 
-        <service android:name="com.chance.engine.AdService"
-                 android:process="com.chance.AdService"
-                 android:exported="true">
+        <service
+            android:name="com.chance.engine.AdService"
+            android:exported="true"
+            android:process="com.chance.AdService">
             <intent-filter>
                 <action android:name="com.chance.service"/>
             </intent-filter>
         </service>
-        <meta-data android:name="chukong_publisherid" android:value="878620156-A01A9F-D3E8-D523-5FC09D3BC"/>
-        <meta-data android:name="chance_publisherid" android:value="878620156-A01A9F-D3E8-D523-5FC09D3BC"/>
+
+        <meta-data
+            android:name="chukong_publisherid"
+            android:value="878620156-A01A9F-D3E8-D523-5FC09D3BC"/>
+        <meta-data
+            android:name="chance_publisherid"
+            android:value="878620156-A01A9F-D3E8-D523-5FC09D3BC"/>
+
         <activity android:name="com.chance.ads.AdActivity">
 
         </activity>
@@ -149,12 +172,12 @@
 
     <!--=========================================360======================================-->
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <!--=========================================360======================================-->
 

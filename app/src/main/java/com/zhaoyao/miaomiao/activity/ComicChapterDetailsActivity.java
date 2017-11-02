@@ -66,6 +66,9 @@ public class ComicChapterDetailsActivity extends BaseNewActivity implements
         mRecyclerView = (RecyclerView) findViewById(R.id.rlv_activity_cartoon_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         LinearLayout  llAd = (LinearLayout) findViewById(R.id.ll_ad);
+
+//            AdManager.getInstance(this).init("f161dac540e757b4", "6ccca0aa77e4cb3f", true);
+//        mAdPersenter = new ComicChapterDetailsActivityAdPersenterImpl(this, ComicChapterDetailsActivityAdPersenterImpl.AdType.YouMi);
         mAdPersenter = new ComicChapterDetailsActivityAdPersenterImpl(this, ComicChapterDetailsActivityAdPersenterImpl.AdType.GDT);
         mAdPersenter.initAd(llAd);
         mAdPersenter.showAd();

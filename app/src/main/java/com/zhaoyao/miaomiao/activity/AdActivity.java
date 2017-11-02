@@ -56,16 +56,28 @@ public class AdActivity extends AppCompatActivity implements
      * 开
      */
     private TextView mTvBrushInterstitialSwitch;
+    private TextView mTvRestart;
     /**
      * 启
      */
     private CheckBox mCbOpen;
     private CheckBox mCbMore;
+    private CheckBox mCb360;
+    private CheckBox mCbGoogle;
+    private CheckBox mCbPause;
+    private CheckBox mCbBrush;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
+
+        mCbOpen = (CheckBox) findViewById(R.id.cb_open);
+        mCbMore = (CheckBox) findViewById(R.id.cb_more);
+        mCb360 = (CheckBox) findViewById(R.id.cb_360);
+        mCbGoogle = (CheckBox) findViewById(R.id.cb_google);
+        mCbPause = (CheckBox) findViewById(R.id.cb_pause);
+        mCbBrush = (CheckBox) findViewById(R.id.cb_brush);
 
         initView();
 //        showAD();
@@ -78,8 +90,9 @@ public class AdActivity extends AppCompatActivity implements
             rg_.check(R.id.rbOpen);
         }
         isStartActivity = getIntent().getBooleanExtra(IS_START_ACTIVITY_KEY, false);
-        mCbOpen = (CheckBox) findViewById(R.id.cb_open);
-        mCbMore = (CheckBox) findViewById(R.id.cb_more);
+        String stringExtra = getIntent().getStringExtra(IS_Restart_KEY);
+        ToastUtil.toastSome(this,TextUtils.isEmpty(stringExtra) || "null".equals(stringExtra) ? "新界面" : stringExtra);
+
         if (isStartActivity){
             mCbOpen.setChecked(true);
             synchronized (this) {
@@ -91,44 +104,43 @@ public class AdActivity extends AppCompatActivity implements
         }
         mCbOpen.setOnCheckedChangeListener(this);
         mCbMore.setOnCheckedChangeListener(this);
+        mCb360.setOnCheckedChangeListener(this);
+        mCbGoogle.setOnCheckedChangeListener(this);
+        mCbPause.setOnCheckedChangeListener(this);
+        mCbBrush.setOnCheckedChangeListener(this);
         rg_.setOnCheckedChangeListener(this);
     }
 
     private void initView() {
-        list.clear();
-        listAdView.clear();
+        listAdViewGoogle.clear();
 
+        addGdtBannerView();
 
-        addAdView1();
-        addAdView2();
-        for (BannerView bannerView : list) {
-            bannerView.loadAD();
-        }
         MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
 
         LinearLayout ll_google = (LinearLayout) findViewById(R.id.ll_google);
         for (int i = 0; i < ll_google.getChildCount(); i++) {
             View childAt = ll_google.getChildAt(i);
             if (childAt instanceof AdView) {
-                listAdView.add((AdView) childAt);
+                listAdViewGoogle.add((AdView) childAt);
             }
         }
         LinearLayout ll_google2 = (LinearLayout) findViewById(R.id.ll_google2);
         for (int i = 0; i < ll_google2.getChildCount(); i++) {
             View childAt = ll_google2.getChildAt(i);
             if (childAt instanceof AdView) {
-                listAdView.add((AdView) childAt);
+                listAdViewGoogle.add((AdView) childAt);
             }
         }
 
-        for (AdView adView : listAdView) {
+        for (AdView adView : listAdViewGoogle) {
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
             adView.loadAd(adRequest);
         }
 
         Add360Ad1();
-        for (IMvBannerAd iMvBannerAd : listIMvBannerAd) {
+        for (IMvBannerAd iMvBannerAd : listIMvBannerAd360) {
             iMvBannerAd.setAdEventListener(new IMvAdEventListener() {
                 @Override
                 public void onAdviewGotAdSucceed() {
@@ -171,11 +183,25 @@ public class AdActivity extends AppCompatActivity implements
 
         mTvBrushInterstitialSwitch = (TextView) findViewById(R.id.tvBrushInterstitialSwitch);
         mTvBrushInterstitialSwitch.setOnClickListener(this);
+        mTvRestart = (TextView) findViewById(R.id.tvRestart);
+        mTvRestart.setOnClickListener(this);
+
         AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spinner);
         spinner.setSelection(0);
         spinner.setOnItemSelectedListener(this);
 
 
+    }
+
+    private synchronized void addGdtBannerView() {
+        doCloseBanner();
+        listAdGdt.clear();
+        addAdView1();
+        addAdView2();
+        for (BannerView bannerView : listAdGdt) {
+            bannerView.loadAD();
+        }
+        mCbBrush.setChecked(false);
     }
 
     private void addAdView1() {
@@ -209,10 +235,10 @@ public class AdActivity extends AppCompatActivity implements
                 if (bannerView != null) {
                     view.removeAllViews();
                     view.addView(bannerView);
-                    list.add(bannerView);
+                    listAdGdt.add(bannerView);
                 }
             } else if (childAt instanceof AdView) {
-                listAdView.add((AdView) childAt);
+                listAdViewGoogle.add((AdView) childAt);
             }
         }
     }
@@ -248,10 +274,10 @@ public class AdActivity extends AppCompatActivity implements
                 if (bannerView != null) {
                     view.removeAllViews();
                     view.addView(bannerView);
-                    list.add(bannerView);
+                    listAdGdt.add(bannerView);
                 }
             } else if (childAt instanceof AdView) {
-                listAdView.add((AdView) childAt);
+                listAdViewGoogle.add((AdView) childAt);
             }
         }
     }
@@ -284,14 +310,14 @@ public class AdActivity extends AppCompatActivity implements
                     bannerad = Mvad.showBanner((ViewGroup) childAt, this, Constants.Banner360ID10, false);
                 }
                 if (bannerad != null)
-                    listIMvBannerAd.add(bannerad);
+                    listIMvBannerAd360.add(bannerad);
             }
         }
     }
 
-    private List<BannerView> list = new ArrayList<>();
-    private List<AdView> listAdView = new ArrayList<>();
-    private List<IMvBannerAd> listIMvBannerAd = new ArrayList<>();
+    private List<BannerView> listAdGdt = new ArrayList<>();
+    private List<AdView> listAdViewGoogle = new ArrayList<>();
+    private List<IMvBannerAd> listIMvBannerAd360 = new ArrayList<>();
 
     private BannerView initBanner(String BannerPosID) {
         BannerView mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, BannerPosID);
@@ -312,7 +338,8 @@ public class AdActivity extends AppCompatActivity implements
 
 
     private void doCloseBanner() {
-        for (BannerView bannerView : list) {
+        ToastUtil.toastSome(this,"正在关闭广点通");
+        for (BannerView bannerView : listAdGdt) {
             ViewParent parent = bannerView.getParent();
             if (parent instanceof LinearLayout) {
                 LinearLayout view = (LinearLayout) parent;
@@ -326,7 +353,7 @@ public class AdActivity extends AppCompatActivity implements
      * 360横幅关闭
      */
     private void doCloseIMvBannerAdBanner() {
-        for (IMvBannerAd bannerView : listIMvBannerAd) {
+        for (IMvBannerAd bannerView : listIMvBannerAd360) {
             bannerView.closeAds();
         }
     }
@@ -341,11 +368,12 @@ public class AdActivity extends AppCompatActivity implements
         }
         doCloseBanner();
         doCloseIMvBannerAdBanner();
-        list.clear();
+        listAdGdt.clear();
         closeAsPopup();
         mHandler.removeCallbacksAndMessages(null);
         Mvad.activityDestroy(this);
         super.onDestroy();
+        System.exit(0);
     }
 
     private InterstitialAD iad;
@@ -361,27 +389,10 @@ public class AdActivity extends AppCompatActivity implements
         return iad;
     }
 
-//    private synchronized void showAD() {
-//        getIAD().setADListener(new AbstractInterstitialADListener() {
-//            @Override
-//            public void onNoAD(AdError error) {
-//                Log.i("AD_DEMO", String.format("LoadInterstitialAd Fail, error code: %d, error msg: %s",
-//                        error.getErrorCode(), error.getErrorMsg()));
-//            }
-//
-//            @Override
-//            public void onADReceive() {
-//                Log.i("AD_DEMO", "onADReceive");
-//                iad.show();
-//            }
-//        });
-//        iad.loadAD();
-//    }
 
     private Map<String,GDTInterstitialAD> mapGDTInterstitialAD = null;
     private GDTInterstitialAD mGDTInterstitialAD;
 
-//    private List<GDTInterstitialAD> listGDTInterstitialAD = null;
     private List<String> listString = null;
 
     private synchronized void createGDTInterstitialADAsPopup() {
@@ -519,11 +530,12 @@ public class AdActivity extends AppCompatActivity implements
     public static final int SHOW_IAD = 2;
 
     public static final int GDTInterstitialAD_CLOSE_IAD = 11;
-    public static final int GDTInterstitialAD_SHOW_IAD = 22;
 
     public static final int GDTInterstitialAD_LOADAD_IAD = 44;
     public static final int TIMER_SHOW = 33;
     public static final int TIMER_CLOSE = 55;
+
+    public static final int ADD_GDT_BANNER_VIEW = 66;
 
 
     public static final int START_ACTIVITY = 3;
@@ -561,11 +573,7 @@ public class AdActivity extends AppCompatActivity implements
                 mHandler.removeMessages(START_AD_ACTIVITY);
                 mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, 10 * 1000);
             } else {
-                Intent intent = new Intent();
-                intent.putExtra(IS_BRUSH_KEY,isBrush);
-                intent.putExtra(IS_START_ACTIVITY_KEY,isStartActivity);
-                setResult(100,intent);
-                onBackPressed();
+                restartActivity();
             }
         }else if(GDTInterstitialAD_LOADAD_IAD == msg.what){
             createGDTInterstitialADAsPopup();
@@ -593,6 +601,11 @@ public class AdActivity extends AppCompatActivity implements
             }
             timerClose();
         }else if(TIMER_CLOSE == msg.what){
+            if (isMorePause){
+                timerClose();
+                return;
+            }
+
             if (mGDTInterstitialAD != null)mGDTInterstitialAD.closeAsPopup();
             if (listString != null && listString.size() != 0){
                 mHandler.removeMessages(TIMER_CLOSE);
@@ -601,10 +614,17 @@ public class AdActivity extends AppCompatActivity implements
             }else{
                 timerShow();
             }
+        }else if(ADD_GDT_BANNER_VIEW == msg.what){
+            ToastUtil.toastSome(this,"开始刷新广点通广告条");
+            addGdtBannerView();
         }
     }
 
     public static final String IS_START_ACTIVITY_KEY = "IS_START_ACTIVITY_KEY";
+
+    public static final String IS_isMore_KEY = "IS_isMore_KEY";
+
+    public static final String IS_Restart_KEY = "IS_Restart_KEY";
 
     public static final String IS_BRUSH_KEY = "IS_BRUSH_KEY";
 
@@ -632,7 +652,24 @@ public class AdActivity extends AppCompatActivity implements
                     }
                 }
                 break;
+            case R.id.tvRestart:
+                if (v instanceof TextView) {
+                    synchronized (this) {
+                        restartActivity();
+                    }
+                }
+                break;
         }
+    }
+
+    private void restartActivity() {
+        Intent intent = new Intent();
+        intent.putExtra(IS_BRUSH_KEY,isBrush);
+        intent.putExtra(IS_START_ACTIVITY_KEY,isStartActivity);
+        intent.putExtra(IS_Restart_KEY,"重启的");
+        intent.putExtra(IS_isMore_KEY,isMore);
+        setResult(100,intent);
+        onBackPressed();
     }
 
     @Override
@@ -682,6 +719,12 @@ public class AdActivity extends AppCompatActivity implements
     private boolean isStartActivity = false;
 
     private boolean isMore = false;
+
+    private boolean isMorePause = false;
+
+    private boolean isShow360 = false;
+
+    private boolean isShowGoogle = false;
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -738,6 +781,40 @@ public class AdActivity extends AppCompatActivity implements
                 ToastUtil.toastSome(this,"5 秒后开始显示");
                 mHandler.sendEmptyMessageDelayed(GDTInterstitialAD_CLOSE_IAD,500);
                 mHandler.sendEmptyMessageDelayed(SHOW_IAD,5 * 1000);
+            }
+        }else if (buttonView.getId() == R.id.cb_360){
+            isShow360 = isChecked;
+            if (isChecked){
+
+            }else {
+
+            }
+        }else if (buttonView.getId() == R.id.cb_google){
+            isShowGoogle = isChecked;
+            if (isChecked){
+
+            }else {
+
+            }
+        }else if (buttonView.getId() == R.id.cb_pause){
+            isMorePause = isChecked;
+            if (isChecked){
+                ToastUtil.toastSome(this,"暂停消失插屏");
+            }else {
+                ToastUtil.toastSome(this,"插屏取消暂停");
+            }
+        }else if(buttonView.getId() == R.id.cb_brush){
+            if (isChecked){
+                if (!mHandler.hasMessages(ADD_GDT_BANNER_VIEW)){
+                    ToastUtil.toastSome(this,"5 秒后刷新广点通广告条");
+                    mHandler.removeMessages(ADD_GDT_BANNER_VIEW);
+                    mHandler.sendEmptyMessageDelayed(ADD_GDT_BANNER_VIEW,5 * 1000);
+                }else {
+                    buttonView.setChecked(false);
+                }
+            }else {
+                ToastUtil.toastSome(this,"刷新广点通广告条\t完成");
+                mHandler.removeMessages(ADD_GDT_BANNER_VIEW);
             }
         }
     }

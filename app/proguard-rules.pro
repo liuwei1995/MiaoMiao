@@ -251,3 +251,6 @@ public static <fields>;
 # 请开发者根据自己实际情况给第三方库的添加相应的混淆设置
 -dontwarn com.androidquery.**
 -keep class com.androidquery.** { *;}
+
+
+-keep public class com.mi.adtracker.MiAdTracker{ *; }

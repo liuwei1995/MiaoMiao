@@ -74,7 +74,7 @@ android {
             zipAlignEnabled false
             shrinkResources false
             minifyEnabled false
-            versionNameSuffix "_debug"
+//            versionNameSuffix "_debug"
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -108,6 +108,9 @@ android {
         }
         chance {
             manifestPlaceholders = [CHANNEL_VALUE: "chance"]
+        }
+        youmi {
+            manifestPlaceholders = [CHANNEL_VALUE: "youmi"]
         }
     }
     //针对很多渠道

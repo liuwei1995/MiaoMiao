@@ -21,18 +21,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chance.ads.AdRequest;
-import com.chance.ads.AdView;
-import com.chance.exception.PBException;
-import com.chance.listener.AdListener;
-import com.qq.e.ads.banner.ADSize;
-import com.qq.e.ads.banner.AbstractBannerADListener;
-import com.qq.e.ads.banner.BannerView;
-import com.qq.e.comm.util.AdError;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.adapter.ReadComicActivityAdapter;
 import com.zhaoyao.miaomiao.entity.ComicChapterDetailsEntity;
-import com.zhaoyao.miaomiao.util.Constants;
+import com.zhaoyao.miaomiao.persenter.ad.AdPersenter;
+import com.zhaoyao.miaomiao.persenter.ad.impl.ComicChapterDetailsActivityAdPersenterImpl;
 import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.NetWorkUtils;
 import com.zhaoyao.miaomiao.util.image.GlideUtils;
@@ -151,83 +144,22 @@ public class ReadComicActivity extends BaseNewActivity {
         ReadComicActivityAdapter readComicActivityAdapter = new ReadComicActivityAdapter(list, R.layout.item_activity_read_comic);
         mRecyclerView.setAdapter(readComicActivityAdapter);
     }
-    LinearLayout llAd = null;
-    private BannerView mBannerView;
+
+    private AdPersenter<LinearLayout> mAdPersenter;
+
     private void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.rlv_ReadComicActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        llAd = (LinearLayout) findViewById(R.id.ll_ad);
+        LinearLayout  llAd = (LinearLayout) findViewById(R.id.ll_ad);
 
-        //        TODO  畅思
-        Chang();
+
+//        mAdPersenter = new ComicChapterDetailsActivityAdPersenterImpl(this, ComicChapterDetailsActivityAdPersenterImpl.AdType.YouMi);
+        mAdPersenter = new ComicChapterDetailsActivityAdPersenterImpl(this, ComicChapterDetailsActivityAdPersenterImpl.AdType.GDT);
+        mAdPersenter.initAd(llAd);
+        mAdPersenter.showAd();
+
 //        TODO  广点通
 //        doRefreshBanner();
-    }
-    private AdView adView;
-    private void Chang(){
-        // 创建 adView, 如果不传入placementID，可以用另一个构造函数AdView(context)
-        adView = new AdView(this, "878620156oxqpvu");
-        llAd.removeAllViews();
-        // 在其中添加 adView
-        llAd.addView(adView);
-//    addContentView(adView, params);
-        // 启动一般性请求并在其中加载广告
-        adView.loadAd(new AdRequest());
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onReceiveAd() {
-
-            }
-
-            @Override
-            public void onFailedToReceiveAd(PBException e) {
-
-            }
-
-            @Override
-            public void onPresentScreen() {
-
-            }
-
-            @Override
-            public void onDismissScreen() {
-
-            }
-        });
-    }
-
-
-    private void initBanner() {
-        mBannerView = new BannerView(this, ADSize.BANNER, Constants.APPID, Constants.BannerPosID);
-        mBannerView.setRefresh(30);
-        llAd.removeAllViews();
-        mBannerView.setADListener(new AbstractBannerADListener() {
-            @Override
-            public void onNoAD(AdError adError) {
-                LogUtils.a(adError);
-            }
-
-            @Override
-            public void onADReceiv() {
-                LogUtils.a("onADReceiv");
-            }
-        });
-        llAd.addView(mBannerView);
-    }
-
-    private void doRefreshBanner() {
-        if (mBannerView == null) {
-            initBanner();
-        }
-        mBannerView.loadAD();
-    }
-
-    private void doCloseBanner() {
-        llAd.removeAllViews();
-        if (mBannerView != null) {
-            mBannerView.destroy();
-            mBannerView = null;
-        }
     }
 
     @Override
@@ -299,10 +231,8 @@ public class ReadComicActivity extends BaseNewActivity {
 
     @Override
     protected void onDestroy() {
-//        TODO  畅思
-        if (adView != null)adView.destroy();
+        mAdPersenter.onDestroy();
 
-        doCloseBanner();
         GlideUtils.newInstance().resume();
         if (mDialog != null)mDialog.dismiss();
         if (mNetworkConnectChangedReceiver != null)
