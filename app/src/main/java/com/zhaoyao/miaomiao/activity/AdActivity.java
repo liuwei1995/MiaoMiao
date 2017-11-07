@@ -73,26 +73,29 @@ public class AdActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_ad);
 
         mCbOpen = (CheckBox) findViewById(R.id.cb_open);
+
         mCbMore = (CheckBox) findViewById(R.id.cb_more);
         mCb360 = (CheckBox) findViewById(R.id.cb_360);
         mCbGoogle = (CheckBox) findViewById(R.id.cb_google);
         mCbPause = (CheckBox) findViewById(R.id.cb_pause);
         mCbBrush = (CheckBox) findViewById(R.id.cb_brush);
 
+        isMore = getIntent().getBooleanExtra(IS_isMore_KEY,false);
+        mCbMore.setChecked(isMore);
+
         initView();
-//        showAD();
-        showAsPopup();
+
 
         RadioGroup rg_ = (RadioGroup) findViewById(R.id.rg);
-
         isBrush = getIntent().getBooleanExtra(IS_BRUSH_KEY, false);
         if (isBrush) {
             rg_.check(R.id.rbOpen);
         }
-        isStartActivity = getIntent().getBooleanExtra(IS_START_ACTIVITY_KEY, false);
+
         String stringExtra = getIntent().getStringExtra(IS_Restart_KEY);
         ToastUtil.toastSome(this,TextUtils.isEmpty(stringExtra) || "null".equals(stringExtra) ? "新界面" : stringExtra);
 
+        isStartActivity = getIntent().getBooleanExtra(IS_START_ACTIVITY_KEY, false);
         if (isStartActivity){
             mCbOpen.setChecked(true);
             synchronized (this) {
@@ -137,6 +140,7 @@ public class AdActivity extends AppCompatActivity implements
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
             adView.loadAd(adRequest);
+            adView.destroy();
         }
 
         Add360Ad1();
@@ -190,6 +194,13 @@ public class AdActivity extends AppCompatActivity implements
         spinner.setSelection(0);
         spinner.setOnItemSelectedListener(this);
 
+        if (!mCbMore.isChecked()){
+            showAsPopup();
+        }else{
+            ToastUtil.toastSome(this,"3 秒后多插屏开始");
+            mHandler.removeMessages(GDTInterstitialAD_LOADAD_IAD);
+            mHandler.sendEmptyMessageDelayed(GDTInterstitialAD_LOADAD_IAD,3 * 1000);
+        }
 
     }
 
@@ -472,7 +483,7 @@ public class AdActivity extends AppCompatActivity implements
                 if (!isBrush) {
                     mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 50 * 1000);
                 } else {
-                    mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 10 * 1000);
+                    mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 5 * 1000);
                 }
             }
 
@@ -542,12 +553,17 @@ public class AdActivity extends AppCompatActivity implements
 
     public static final int START_AD_ACTIVITY = 4;
 
-    //    public static final int START_AD_ACTIVITY_TIME = 60 * 1000;
+//        public static final int START_AD_ACTIVITY_TIME = 3 * 60 * 1000;
     public static final int START_AD_ACTIVITY_TIME = 10 * 60 * 1000;
 
     @Override
     public void handleMessage(WeakReference<AdActivity> weakReference, Message msg) {
         if (msg.what == CLOSE_IAD) {
+            if (isMorePause){
+                removeCloseShow();
+                mHandler.sendEmptyMessageDelayed(CLOSE_IAD, 5 * 1000);
+                return;
+            }
             closeAsPopup();
         } else if (msg.what == SHOW_IAD) {
             if (isOnPause) {
@@ -622,6 +638,8 @@ public class AdActivity extends AppCompatActivity implements
 
     public static final String IS_START_ACTIVITY_KEY = "IS_START_ACTIVITY_KEY";
 
+//    public static final String Is_MorePause_KEY = "Is_MorePause_KEY";
+
     public static final String IS_isMore_KEY = "IS_isMore_KEY";
 
     public static final String IS_Restart_KEY = "IS_Restart_KEY";
@@ -668,6 +686,7 @@ public class AdActivity extends AppCompatActivity implements
         intent.putExtra(IS_START_ACTIVITY_KEY,isStartActivity);
         intent.putExtra(IS_Restart_KEY,"重启的");
         intent.putExtra(IS_isMore_KEY,isMore);
+//        intent.putExtra(Is_MorePause_KEY,mCbPause.isChecked());
         setResult(100,intent);
         onBackPressed();
     }
