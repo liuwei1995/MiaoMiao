@@ -98,12 +98,18 @@
 
 
                 <CheckBox
-                    android:id="@+id/cb_open"
+                    android:id="@+id/cb_open10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
-                    android:text="启"/>
+                    android:text="启10"/>
 
+                <CheckBox
+                    android:id="@+id/cb_open5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="启5"/>
             </LinearLayout>
 
             <TextView

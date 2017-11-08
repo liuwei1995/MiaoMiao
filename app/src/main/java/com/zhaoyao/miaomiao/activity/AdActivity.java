@@ -60,7 +60,8 @@ public class AdActivity extends AppCompatActivity implements
     /**
      * 启
      */
-    private CheckBox mCbOpen;
+    private CheckBox mCbOpen10;
+    private CheckBox mCbOpen5;
     private CheckBox mCbMore;
     private CheckBox mCb360;
     private CheckBox mCbGoogle;
@@ -72,7 +73,8 @@ public class AdActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
 
-        mCbOpen = (CheckBox) findViewById(R.id.cb_open);
+        mCbOpen10 = (CheckBox) findViewById(R.id.cb_open10);
+        mCbOpen5 = (CheckBox) findViewById(R.id.cb_open5);
 
         mCbMore = (CheckBox) findViewById(R.id.cb_more);
         mCb360 = (CheckBox) findViewById(R.id.cb_360);
@@ -95,17 +97,31 @@ public class AdActivity extends AppCompatActivity implements
         String stringExtra = getIntent().getStringExtra(IS_Restart_KEY);
         ToastUtil.toastSome(this,TextUtils.isEmpty(stringExtra) || "null".equals(stringExtra) ? "新界面" : stringExtra);
 
-        isStartActivity = getIntent().getBooleanExtra(IS_START_ACTIVITY_KEY, false);
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra(IS_START_ACTIVITY_5_KEY, false)){
+            mCbOpen5.setChecked(true);
+            mCbOpen10.setChecked(false);
+        }else {
+            if (intent.getBooleanExtra(IS_START_ACTIVITY_10_KEY, false)){
+                mCbOpen5.setChecked(false);
+                mCbOpen10.setChecked(true);
+            }else {
+                mCbOpen5.setChecked(false);
+                mCbOpen10.setChecked(false);
+            }
+        }
+       boolean isStartActivity = mCbOpen5.isChecked() || mCbOpen10.isChecked();
+
         if (isStartActivity){
-            mCbOpen.setChecked(true);
             synchronized (this) {
-                if (isStartActivity && !mHandler.hasMessages(START_AD_ACTIVITY)) {
+                if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
                     mHandler.removeMessages(START_AD_ACTIVITY);
-                    mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, START_AD_ACTIVITY_TIME);
+                    mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, mCbOpen5.isChecked() ? START_AD_ACTIVITY_TIME_5 : START_AD_ACTIVITY_TIME_10);
                 }
             }
         }
-        mCbOpen.setOnCheckedChangeListener(this);
+        mCbOpen5.setOnCheckedChangeListener(this);
+        mCbOpen10.setOnCheckedChangeListener(this);
         mCbMore.setOnCheckedChangeListener(this);
         mCb360.setOnCheckedChangeListener(this);
         mCbGoogle.setOnCheckedChangeListener(this);
@@ -390,14 +406,14 @@ public class AdActivity extends AppCompatActivity implements
     private InterstitialAD iad;
 
     private synchronized InterstitialAD getIAD() {
-        if (iad == null) {
+        if (iad != null) {
             synchronized (this) {
-                if (iad == null) {
-                    iad = new InterstitialAD(this, Constants.APPID, Constants.InterteristalPosID);
+                if (iad != null) {
+                    closeAsPopup();
                 }
             }
         }
-        return iad;
+        return iad = new InterstitialAD(this, Constants.APPID, Constants.InterteristalPosID);
     }
 
 
@@ -426,6 +442,7 @@ public class AdActivity extends AppCompatActivity implements
             GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
             gdtInterstitialAD.loadAD();
         }
+        closeAsPopup();
         timerShow();
     }
 
@@ -553,8 +570,8 @@ public class AdActivity extends AppCompatActivity implements
 
     public static final int START_AD_ACTIVITY = 4;
 
-//        public static final int START_AD_ACTIVITY_TIME = 3 * 60 * 1000;
-    public static final int START_AD_ACTIVITY_TIME = 10 * 60 * 1000;
+    public static final int START_AD_ACTIVITY_TIME_5 = 5 * 60 * 1000;
+    public static final int START_AD_ACTIVITY_TIME_10 = 10 * 60 * 1000;
 
     @Override
     public void handleMessage(WeakReference<AdActivity> weakReference, Message msg) {
@@ -585,7 +602,7 @@ public class AdActivity extends AppCompatActivity implements
                 removeStartActivity();
             }
         } else if (START_AD_ACTIVITY == msg.what) {
-            if (isOnPause) {
+            if (isOnPause || isMorePause) {
                 mHandler.removeMessages(START_AD_ACTIVITY);
                 mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, 10 * 1000);
             } else {
@@ -636,7 +653,8 @@ public class AdActivity extends AppCompatActivity implements
         }
     }
 
-    public static final String IS_START_ACTIVITY_KEY = "IS_START_ACTIVITY_KEY";
+    public static final String IS_START_ACTIVITY_10_KEY = "IS_START_ACTIVITY_10_KEY";
+    public static final String IS_START_ACTIVITY_5_KEY = "IS_START_ACTIVITY_5_KEY";
 
 //    public static final String Is_MorePause_KEY = "Is_MorePause_KEY";
 
@@ -683,10 +701,11 @@ public class AdActivity extends AppCompatActivity implements
     private void restartActivity() {
         Intent intent = new Intent();
         intent.putExtra(IS_BRUSH_KEY,isBrush);
-        intent.putExtra(IS_START_ACTIVITY_KEY,isStartActivity);
+        intent.putExtra(IS_START_ACTIVITY_5_KEY,mCbOpen5.isChecked());
+        intent.putExtra(IS_START_ACTIVITY_10_KEY,mCbOpen10.isChecked());
+
         intent.putExtra(IS_Restart_KEY,"重启的");
         intent.putExtra(IS_isMore_KEY,isMore);
-//        intent.putExtra(Is_MorePause_KEY,mCbPause.isChecked());
         setResult(100,intent);
         onBackPressed();
     }
@@ -735,8 +754,6 @@ public class AdActivity extends AppCompatActivity implements
 
     private boolean isBrush = false;
 
-    private boolean isStartActivity = false;
-
     private boolean isMore = false;
 
     private boolean isMorePause = false;
@@ -767,20 +784,34 @@ public class AdActivity extends AppCompatActivity implements
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (buttonView.getId() == R.id.cb_open){
-            this.isStartActivity = isChecked;
+        if (buttonView.getId() == R.id.cb_open10 || buttonView.getId() == R.id.cb_open5){
             if (isChecked){
-                ToastUtil.toastSome(this, (START_AD_ACTIVITY_TIME/1000)+"秒后重新启动");
-                if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
-                    synchronized (this) {
-                        if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
-                            mHandler.removeMessages(START_AD_ACTIVITY);
-                            mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, START_AD_ACTIVITY_TIME);
-                        }
+                if (mCbOpen5.isChecked() && mCbOpen10.isChecked()){
+                    buttonView.setChecked(false);
+                    ToastUtil.toastSome(this, "定时启动只能选择\t5s\t或\t10s");
+                    return;
+                }
+                if (buttonView.getId() == R.id.cb_open10 && mCbOpen5.isChecked()){
+                    buttonView.setChecked(false);
+                    return;
+                }
+                if (buttonView.getId() == R.id.cb_open5 && mCbOpen10.isChecked()){
+                    buttonView.setChecked(false);
+                    return;
+                }
+
+                ToastUtil.toastSome(this, ((mCbOpen5.isChecked() ? START_AD_ACTIVITY_TIME_5 : START_AD_ACTIVITY_TIME_10)/1000)+"秒后重新启动");
+                synchronized (this) {
+                    if (!mHandler.hasMessages(START_AD_ACTIVITY)) {
+                        mHandler.removeMessages(START_AD_ACTIVITY);
+                        mHandler.sendEmptyMessageDelayed(START_AD_ACTIVITY, mCbOpen5.isChecked() ? START_AD_ACTIVITY_TIME_5 : START_AD_ACTIVITY_TIME_10);
                     }
                 }
             }else {
-                ToastUtil.toastSome(this, "关闭重新启动");
+                if (mCbOpen5.isChecked() || mCbOpen10.isChecked()){
+                    return;
+                }
+                ToastUtil.toastSome(this, "关闭定时启动");
                 mHandler.removeMessages(START_AD_ACTIVITY);
             }
         }else if (buttonView.getId() == R.id.cb_more){
@@ -799,6 +830,9 @@ public class AdActivity extends AppCompatActivity implements
                 removeCloseShow();
                 ToastUtil.toastSome(this,"5 秒后开始显示");
                 mHandler.sendEmptyMessageDelayed(GDTInterstitialAD_CLOSE_IAD,500);
+
+                mHandler.removeMessages(CLOSE_IAD);
+                mHandler.removeMessages(SHOW_IAD);
                 mHandler.sendEmptyMessageDelayed(SHOW_IAD,5 * 1000);
             }
         }else if (buttonView.getId() == R.id.cb_360){
