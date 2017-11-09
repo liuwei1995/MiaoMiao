@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.MobileAds;
 import com.sohuvideo.ui_plugin.fragment.SohuVideoFragment;
 import com.zhaoyao.miaomiao.activity.AdActivity;
 import com.zhaoyao.miaomiao.activity.BaseNewActivity;
@@ -38,6 +39,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
         initView();
 //        这个是禁止滑动
 //        DrawerLayout mDrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -134,7 +136,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
             Message message = mHandler.obtainMessage();
             message.what = 100;
             message.obj = data;
-            mHandler.sendMessageDelayed(message,2*1000);
+            mHandler.sendMessageDelayed(message,3 * 1000);
         }
     }
 

@@ -8,6 +8,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -21,7 +22,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.mediav.ads.sdk.adcore.Mvad;
 import com.mediav.ads.sdk.interfaces.IMvAdEventListener;
 import com.mediav.ads.sdk.interfaces.IMvBannerAd;
@@ -135,7 +135,7 @@ public class AdActivity extends AppCompatActivity implements
 
         addGdtBannerView();
 
-        MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
+//        MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
 
         LinearLayout ll_google = (LinearLayout) findViewById(R.id.ll_google);
         for (int i = 0; i < ll_google.getChildCount(); i++) {
@@ -386,6 +386,14 @@ public class AdActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onDestroy() {
         if (mapGDTInterstitialAD != null){
             for (String s : mapGDTInterstitialAD.keySet()) {
@@ -400,7 +408,7 @@ public class AdActivity extends AppCompatActivity implements
         mHandler.removeCallbacksAndMessages(null);
         Mvad.activityDestroy(this);
         super.onDestroy();
-        System.exit(0);
+//        System.exit(0);
     }
 
     private InterstitialAD iad;

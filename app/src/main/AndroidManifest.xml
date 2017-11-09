@@ -123,9 +123,10 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
         <!-- ==============================gdt===================================== -->
 
+        <!--android:process=":AdActivity"-->
         <activity
             android:name=".activity.AdActivity"
-            android:process=":AdActivity"
+
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
