@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.mediav.ads.sdk.adcore.Mvad;
 import com.mediav.ads.sdk.interfaces.IMvAdEventListener;
 import com.mediav.ads.sdk.interfaces.IMvBannerAd;
@@ -35,6 +36,7 @@ import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
 import com.zhaoyao.miaomiao.listener.GoogleAdListener;
+import com.zhaoyao.miaomiao.util.AdActivitySharedPreferences;
 import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.ToastUtil;
@@ -135,7 +137,7 @@ public class AdActivity extends AppCompatActivity implements
 
         addGdtBannerView();
 
-//        MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
+        MobileAds.initialize(this, "ca-app-pub-2850046637182646~7046734019");
 
         LinearLayout ll_google = (LinearLayout) findViewById(R.id.ll_google);
         for (int i = 0; i < ll_google.getChildCount(); i++) {
@@ -156,7 +158,6 @@ public class AdActivity extends AppCompatActivity implements
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.setAdListener(new GoogleAdListener(adView.getAdUnitId()));
             adView.loadAd(adRequest);
-            adView.destroy();
         }
 
         Add360Ad1();
@@ -393,6 +394,29 @@ public class AdActivity extends AppCompatActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
+    private void restartActivity() {
+        mHandler.removeCallbacksAndMessages(null);
+
+        Intent intent = new Intent();
+        intent.putExtra(IS_BRUSH_KEY,isBrush);
+        intent.putExtra(IS_START_ACTIVITY_5_KEY,mCbOpen5.isChecked());
+        intent.putExtra(IS_START_ACTIVITY_10_KEY,mCbOpen10.isChecked());
+
+        intent.putExtra(IS_Restart_KEY,"重启的");
+        intent.putExtra(IS_isMore_KEY,isMore);
+        setResult(100,intent);
+        onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (isOpenSwitch && requestCode == 100) {
+            removeStartActivity();
+            mHandler.sendEmptyMessageDelayed(START_ACTIVITY, 60 * 1000);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         if (mapGDTInterstitialAD != null){
@@ -408,7 +432,7 @@ public class AdActivity extends AppCompatActivity implements
         mHandler.removeCallbacksAndMessages(null);
         Mvad.activityDestroy(this);
         super.onDestroy();
-//        System.exit(0);
+        System.exit(0);
     }
 
     private InterstitialAD iad;
@@ -552,6 +576,7 @@ public class AdActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         isOnPause = false;
+        AdActivitySharedPreferences.newInstance().clear(this);
     }
 
     private boolean isOnPause = false;
@@ -703,27 +728,6 @@ public class AdActivity extends AppCompatActivity implements
                     }
                 }
                 break;
-        }
-    }
-
-    private void restartActivity() {
-        Intent intent = new Intent();
-        intent.putExtra(IS_BRUSH_KEY,isBrush);
-        intent.putExtra(IS_START_ACTIVITY_5_KEY,mCbOpen5.isChecked());
-        intent.putExtra(IS_START_ACTIVITY_10_KEY,mCbOpen10.isChecked());
-
-        intent.putExtra(IS_Restart_KEY,"重启的");
-        intent.putExtra(IS_isMore_KEY,isMore);
-        setResult(100,intent);
-        onBackPressed();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (isOpenSwitch && requestCode == 100) {
-            removeStartActivity();
-            mHandler.sendEmptyMessageDelayed(START_ACTIVITY, 60 * 1000);
         }
     }
 

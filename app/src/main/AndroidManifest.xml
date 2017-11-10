@@ -32,6 +32,17 @@
         android:name="CHANNEL"
         android:value="${CHANNEL_VALUE}"/>
 
+    <!-- =========================================360====================================== -->
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <!-- =========================================360====================================== -->
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -44,15 +55,12 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
             android:name=".util.permission.PermissionActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"
-            >
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden">
         </activity>
-
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -91,15 +99,16 @@
 
 
         <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值 -->
-        <!--<provider-->
-        <!--android:name="android.support.v4.content.FileProvider"-->
-        <!--android:authorities="${applicationId}.fileprovider"-->
-        <!--android:exported="false"-->
-        <!--android:grantUriPermissions="true">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--android:resource="@xml/gdt_file_path" />-->
-        <!--</provider>-->
+        <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="${applicationId}.fileprovider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/gdt_file_path" /> -->
+        <!-- </provider> -->
+
 
         <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值，例如本例中applicationId为"com.qq.e.union.demo"。 -->
         <provider
@@ -112,7 +121,6 @@
                 android:resource="@xml/gdt_file_path"/>
         </provider>
 
-
         <!-- 声明SDK所需要的组件 -->
         <service
             android:name="com.qq.e.comm.DownloadService"
@@ -123,15 +131,24 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
         <!-- ==============================gdt===================================== -->
 
-        <!--android:process=":AdActivity"-->
+
+        <!-- android:process=":AdActivity" -->
         <activity
             android:name=".activity.AdActivity"
-
+            android:process=":AdActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-        <activity android:name=".activity.GoogleAdActivity">
+        <activity android:name=".activity.GoogleAdActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
+
+        <activity android:name=".activity.Ad360Activity"
+                  android:theme="@style/AppTheme.NoActionBar"
+            >
+        </activity>
+
+
         <activity
             android:name=".activity.BrushInterstitialActivity"
             android:launchMode="singleTask">
@@ -139,14 +156,13 @@
         <activity android:name=".activity.ImageRecognitionActivity">
         </activity>
 
-
         <service
             android:name="com.mediav.ads.sdk.service.MvService"
             android:enabled="true"
             android:exported="false">
         </service>
 
-        <!---->
+        <!--  -->
 
         <service
             android:name="com.chance.engine.AdService"
@@ -165,22 +181,8 @@
             android:value="878620156-A01A9F-D3E8-D523-5FC09D3BC"/>
 
         <activity android:name="com.chance.ads.AdActivity">
-
         </activity>
 
-
     </application>
-
-    <!--=========================================360======================================-->
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <!--=========================================360======================================-->
-
 
 </manifest>

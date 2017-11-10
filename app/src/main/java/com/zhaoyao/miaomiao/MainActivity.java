@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.MobileAds;
 import com.sohuvideo.ui_plugin.fragment.SohuVideoFragment;
+import com.zhaoyao.miaomiao.activity.Ad360Activity;
 import com.zhaoyao.miaomiao.activity.AdActivity;
 import com.zhaoyao.miaomiao.activity.BaseNewActivity;
 import com.zhaoyao.miaomiao.activity.GoogleAdActivity;
@@ -22,10 +24,12 @@ import com.zhaoyao.miaomiao.adapter.TabFragmentAdapter;
 import com.zhaoyao.miaomiao.fragment.CartoonRecommendFragment;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
+import com.zhaoyao.miaomiao.util.AdActivitySharedPreferences;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseNewActivity implements View.OnClickListener,TaskHandler<MainActivity> {
 
@@ -82,6 +86,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
         mTvAd = (TextView) findViewById(R.id.tv_ad);
         mTvAd.setOnClickListener(this);
         findViewById(R.id.tv_google_ad).setOnClickListener(this);
+        findViewById(R.id.tv_360_ad).setOnClickListener(this);
         findViewById(R.id.tv_image_recognition).setOnClickListener(this);
     }
 
@@ -121,6 +126,9 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
             case R.id.tv_google_ad:
                 startActivity(new Intent(this,GoogleAdActivity.class));
                 break;
+            case R.id.tv_360_ad:
+                startActivity(new Intent(this,Ad360Activity.class));
+                break;
             case R.id.tv_image_recognition:
                 startActivity(new Intent(this,ImageRecognitionActivity.class));
                 break;
@@ -129,9 +137,14 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
 
     private Handler mHandler = new TaskHandlerImpl<>(this);
 
+    private boolean isResult = false;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100 && resultCode == 100){
+            isResult = true;
+            AdActivitySharedPreferences.newInstance().apply(this,data);
+
             mHandler.removeMessages(100);
             Message message = mHandler.obtainMessage();
             message.what = 100;
@@ -140,21 +153,92 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
         }
     }
 
+    private boolean isOnPause = false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOnPause = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOnPause = true;
+    }
+
     @Override
     public void handleMessage(WeakReference<MainActivity> weakReference, Message msg) {
         if(msg.what == 100){
             if (msg.obj != null && msg.obj instanceof Intent){
                 Intent o = (Intent) msg.obj;
-                Intent intent = new Intent(this, AdActivity.class);
-                Bundle extras = o.getExtras();
-                intent.putExtras(extras);
+                if (isOnPause){
+                    mHandler.removeMessages(100);
+                    mHandler.removeMessages(101);
+
+                    Message message = mHandler.obtainMessage();
+                    message.what = 100;
+                    message.obj = o;
+                    mHandler.sendMessageDelayed(message,3 * 1000);
+                }else {
+                    Intent intent = new Intent(this, AdActivity.class);
+                    Bundle extras = o.getExtras();
+                    intent.putExtras(extras);
 //                intent.putExtra(AdActivity.IS_START_ACTIVITY_KEY,o.getBooleanExtra(AdActivity.IS_START_ACTIVITY_KEY,false));
 //                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
 //                intent.putExtra(AdActivity.IS_Restart_KEY,o.getStringExtra(AdActivity.IS_Restart_KEY));
 //                intent.putExtra(AdActivity.IS_isMore_KEY,o.getBooleanExtra(AdActivity.IS_isMore_KEY,false));
-                startActivityForResult(intent,100);
+                    startActivityForResult(intent,100);
+
+                    mHandler.removeMessages(100);
+                    mHandler.removeMessages(101);
+                    Message message = mHandler.obtainMessage();
+                    message.what = 101;
+                    message.obj = 1;
+                    mHandler.sendMessageDelayed(message,10 * 1000);
+                }
+            }
+        }else if(msg.what == 101){
+            mHandler.removeMessages(100);
+            mHandler.removeMessages(101);
+            Map<String, Object> all = AdActivitySharedPreferences.newInstance().getAll(this);
+            boolean isJump = Boolean.parseBoolean(all.get("isJump").toString());
+            if (isJump){
+                if (isOnPause){
+                    Message message = mHandler.obtainMessage();
+                    message.what = 101;
+                    message.obj = 2;
+                    mHandler.sendMessageDelayed(message,10 * 1000);
+                }else {
+                    Intent intent = new Intent(this, AdActivity.class);
+                    Bundle extras = new Bundle();
+                    for (String s : all.keySet()) {
+                        Object o = all.get(s);
+                        if (o instanceof Boolean){
+                            extras.putBoolean(s,Boolean.parseBoolean(o.toString()));
+                        }else if (o instanceof String){
+                            extras.putString(s,o.toString());
+                        }
+                    }
+                    intent.putExtras(extras);
+//                intent.putExtra(AdActivity.IS_START_ACTIVITY_KEY,o.getBooleanExtra(AdActivity.IS_START_ACTIVITY_KEY,false));
+//                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
+//                intent.putExtra(AdActivity.IS_Restart_KEY,o.getStringExtra(AdActivity.IS_Restart_KEY));
+//                intent.putExtra(AdActivity.IS_isMore_KEY,o.getBooleanExtra(AdActivity.IS_isMore_KEY,false));
+                    startActivityForResult(intent,100);
+                }
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
