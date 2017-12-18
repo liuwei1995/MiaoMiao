@@ -42,7 +42,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AdService.startService(this, null);
+        AdService.startService(this, 1);
         MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
         initView();
 //        这个是禁止滑动

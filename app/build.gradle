@@ -176,5 +176,6 @@ dependencies {
 
 
 def releaseTime() {
-    return new Date().format("yyyy-MM-dd HH-mm-ss", TimeZone.getTimeZone("GMT+8"))
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("GMT+8"))
+//    return new Date().format("yyyy-MM-dd HH-mm-ss", TimeZone.getTimeZone("GMT+8"))
 }

@@ -25,6 +25,9 @@ public class DataAccessSharedPreferencesUtils {
     }
     private Context mContext;
 
+    public synchronized Context getContext(){
+        return mContext;
+    }
     public synchronized SharedPreferences getSharedPreferences(Context con,String name){
         if (con == null)throw new NullPointerException("Context == null");
         if (con.getApplicationContext() != null)return con.getApplicationContext().getSharedPreferences(name, Context.MODE_PRIVATE);

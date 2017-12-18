@@ -91,6 +91,7 @@ public class AdService extends Service implements TaskHandler {
 
     public synchronized static void saveData(Bundle extras) {
         if (extras != null) {
+            ToastUtil.toastSome(DataAccessSharedPreferencesUtils.newInstance().getContext(), "saveData");
             SharedPreferences preferences = DataAccessSharedPreferencesUtils.newInstance().getSharedPreferences(AD_ACTIVITY_NAME);
             SharedPreferences.Editor edit = preferences.edit();
             for (String s : extras.keySet()) {
@@ -147,6 +148,7 @@ public class AdService extends Service implements TaskHandler {
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }else {
+                        ToastUtil.toastSome(DataAccessSharedPreferencesUtils.newInstance().getContext(), "removeData");
                         removeData();
                     }
                 }
@@ -182,11 +184,14 @@ public class AdService extends Service implements TaskHandler {
             if (ACTION_ON_CREATE.equals(intent.getAction())) {
                 isCreate = true;
                 handler.removeMessages(EMPTY_MESSAGE_DELAYED_2);
+                ToastUtil.toastSome(DataAccessSharedPreferencesUtils.newInstance().getContext(), "取消");
             } else if (ACTION_ON_DESTROY.equals(intent.getAction())) {
                 isCreate = false;
+                ToastUtil.toastSome(DataAccessSharedPreferencesUtils.newInstance().getContext(), "ACTION_ON_DESTROY");
                 sendEmptyMessageDelayed();
             }else if (ACTION_ON_KEY_DOWN.equals(intent.getAction())){
                 handler.removeMessages(EMPTY_MESSAGE_DELAYED_2);
+                ToastUtil.toastSome(DataAccessSharedPreferencesUtils.newInstance().getContext(), "ACTION_ON_KEY_DOWN");
                 removeData();
             }
         }
