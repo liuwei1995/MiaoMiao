@@ -1,9 +1,7 @@
 package com.zhaoyao.miaomiao.util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 
 import com.zhaoyao.miaomiao.activity.AdActivity;
 
@@ -29,25 +27,25 @@ public class AdActivitySharedPreferences {
         return mAdActivitySharedPreferences;
     }
 
-    public synchronized void apply(Context mContext, Intent data){
-        SharedPreferences preferences = mContext.getSharedPreferences(AdActivity.class.getSimpleName(), Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = preferences.edit();
-        Bundle extras = null;
-        if (data != null && (extras  = data.getExtras()) != null){
-            for (String s : extras.keySet()) {
-                Object o = extras.get(s);
-                if (o != null){
-                    if (o instanceof Boolean){
-                        edit.putBoolean(s,Boolean.valueOf(o.toString()));
-                    }else if (o instanceof String){
-                        edit.putString(s,o.toString());
-                    }
-                }
-            }
-        }
-        edit.putBoolean("isJump",true);
-        edit.apply();
-    }
+//    public synchronized void apply(Context mContext, Intent data){
+//        SharedPreferences preferences = mContext.getSharedPreferences(AdActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+//        SharedPreferences.Editor edit = preferences.edit();
+//        Bundle extras = null;
+//        if (data != null && (extras  = data.getExtras()) != null){
+//            for (String s : extras.keySet()) {
+//                Object o = extras.get(s);
+//                if (o != null){
+//                    if (o instanceof Boolean){
+//                        edit.putBoolean(s,Boolean.valueOf(o.toString()));
+//                    }else if (o instanceof String){
+//                        edit.putString(s,o.toString());
+//                    }
+//                }
+//            }
+//        }
+//        edit.putBoolean("isJump",true);
+//        edit.apply();
+//    }
 
     /**
      *

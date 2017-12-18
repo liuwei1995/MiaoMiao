@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  * Created by liuwei on 2017/10/20 17:07
  */
 
-public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GDTInterstitialAD> {
+public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler {
 
 
 
@@ -97,7 +97,7 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
         }
     }
 
-    public Handler mHandler = new TaskHandlerImpl<>(this);
+    public Handler mHandler = new TaskHandlerImpl(this);
 
     public static final int CLOSE_IAD = 1;
     public static final int SHOW_IAD = 2;
@@ -116,7 +116,7 @@ public class GDTInterstitialAD implements InterstitialADListener ,TaskHandler<GD
     }
 
     @Override
-    public void handleMessage(WeakReference<GDTInterstitialAD> weakReference, Message msg) {
+    public void handleMessage(WeakReference weakReference, Message msg) {
         if (isDestroy)
         {
             mHandler.removeCallbacksAndMessages(null);

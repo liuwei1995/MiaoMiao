@@ -33,6 +33,7 @@ import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
 import com.zhaoyao.miaomiao.listener.GoogleAdListener;
+import com.zhaoyao.miaomiao.service.AdService;
 import com.zhaoyao.miaomiao.util.AdActivitySharedPreferences;
 import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.LogUtils;
@@ -46,39 +47,31 @@ import java.util.List;
 import java.util.Map;
 
 public class AdActivity extends AppCompatActivity implements
-        TaskHandler<AdActivity>, View.OnClickListener,
+        TaskHandler, View.OnClickListener,
         AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener,
         CompoundButton.OnCheckedChangeListener ,
         GDTInterstitialAD.GDTInterstitialADListener {
 
-    /**
-     * 开
-     */
-    private TextView mTvBrushInterstitialSwitch;
-    private TextView mTvRestart;
     /**
      * 启
      */
     private CheckBox mCbOpen10;
     private CheckBox mCbOpen5;
     private CheckBox mCbMore;
-    private CheckBox mCb360;
-    private CheckBox mCbGoogle;
-    private CheckBox mCbPause;
     private CheckBox mCbBrush;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
-
+        sendBroadcast(new Intent(AdService.ACTION_ON_CREATE));
         mCbOpen10 = (CheckBox) findViewById(R.id.cb_open10);
         mCbOpen5 = (CheckBox) findViewById(R.id.cb_open5);
 
         mCbMore = (CheckBox) findViewById(R.id.cb_more);
-        mCb360 = (CheckBox) findViewById(R.id.cb_360);
-        mCbGoogle = (CheckBox) findViewById(R.id.cb_google);
-        mCbPause = (CheckBox) findViewById(R.id.cb_pause);
+        CheckBox  mCb360 = (CheckBox) findViewById(R.id.cb_360);
+        CheckBox  mCbGoogle = (CheckBox) findViewById(R.id.cb_google);
+        CheckBox  mCbPause = (CheckBox) findViewById(R.id.cb_pause);
         mCbBrush = (CheckBox) findViewById(R.id.cb_brush);
 
         isMore = getIntent().getBooleanExtra(IS_isMore_KEY,false);
@@ -127,6 +120,13 @@ public class AdActivity extends AppCompatActivity implements
         mCbPause.setOnCheckedChangeListener(this);
         mCbBrush.setOnCheckedChangeListener(this);
         rg_.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        sendBroadcast(new Intent(AdService.ACTION_ON_CREATE));
+        ToastUtil.toastSome(this, "onNewIntent");
     }
 
     private void initView() {
@@ -199,9 +199,9 @@ public class AdActivity extends AppCompatActivity implements
 //        }
 
 
-        mTvBrushInterstitialSwitch = (TextView) findViewById(R.id.tvBrushInterstitialSwitch);
+        TextView  mTvBrushInterstitialSwitch = (TextView) findViewById(R.id.tvBrushInterstitialSwitch);
         mTvBrushInterstitialSwitch.setOnClickListener(this);
-        mTvRestart = (TextView) findViewById(R.id.tvRestart);
+        TextView mTvRestart = (TextView) findViewById(R.id.tvRestart);
         mTvRestart.setOnClickListener(this);
 
         AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spinner);
@@ -383,25 +383,34 @@ public class AdActivity extends AppCompatActivity implements
 //        }
 //    }
 
+    private long mKeyDownTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-
+            long time = System.currentTimeMillis() - mKeyDownTime;
+            mKeyDownTime = System.currentTimeMillis();
+            if (time > 2 * 1000){
+                ToastUtil.toastSome(this, "再次返回退出");
+                return true;
+            }else {
+              sendBroadcast(new Intent(AdService.ACTION_ON_KEY_DOWN));
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
 
     private void restartActivity() {
         mHandler.removeCallbacksAndMessages(null);
-
         Intent intent = new Intent();
-        intent.putExtra(IS_BRUSH_KEY,isBrush);
+        intent.putExtra(IS_BRUSH_KEY, isBrush);
         intent.putExtra(IS_START_ACTIVITY_5_KEY,mCbOpen5.isChecked());
         intent.putExtra(IS_START_ACTIVITY_10_KEY,mCbOpen10.isChecked());
 
         intent.putExtra(IS_Restart_KEY,"重启的");
         intent.putExtra(IS_isMore_KEY,isMore);
-        setResult(100,intent);
+        AdService.saveData(intent.getExtras());
+        setResult(100, intent);
         onBackPressed();
     }
 
@@ -428,6 +437,7 @@ public class AdActivity extends AppCompatActivity implements
         closeAsPopup();
         mHandler.removeCallbacksAndMessages(null);
         Mvad.activityDestroy(this);
+        sendBroadcast(new Intent(AdService.ACTION_ON_DESTROY));
         super.onDestroy();
         System.exit(0);
     }
@@ -555,7 +565,7 @@ public class AdActivity extends AppCompatActivity implements
     }
 
 
-    private Handler mHandler = new TaskHandlerImpl<>(this);
+    private Handler mHandler = new TaskHandlerImpl(this);
 
     public void removeCloseShow() {
         mHandler.removeMessages(CLOSE_IAD);
@@ -604,7 +614,7 @@ public class AdActivity extends AppCompatActivity implements
     public static final int START_AD_ACTIVITY_TIME_10 = 10 * 60 * 1000;
 
     @Override
-    public void handleMessage(WeakReference<AdActivity> weakReference, Message msg) {
+    public void handleMessage(WeakReference weakReference, Message msg) {
         if (msg.what == CLOSE_IAD) {
             if (isMorePause){
                 removeCloseShow();

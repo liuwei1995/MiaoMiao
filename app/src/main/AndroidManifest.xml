@@ -41,8 +41,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
-    <!-- =========================================360====================================== -->
 
+    <!-- =========================================360====================================== -->
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -136,19 +136,17 @@
         <activity
             android:name=".activity.AdActivity"
             android:process=":AdActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activity.GoogleAdActivity"
-                  android:theme="@style/AppTheme.NoActionBar"
-            >
+        <activity
+            android:name=".activity.GoogleAdActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-        <activity android:name=".activity.Ad360Activity"
-                  android:theme="@style/AppTheme.NoActionBar"
-            >
+        <activity
+            android:name=".activity.Ad360Activity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-
         <activity
             android:name=".activity.BrushInterstitialActivity"
             android:launchMode="singleTask">
@@ -183,6 +181,11 @@
         <activity android:name="com.chance.ads.AdActivity">
         </activity>
 
+        <service
+            android:name=".service.AdService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>

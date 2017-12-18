@@ -24,14 +24,13 @@ import com.zhaoyao.miaomiao.adapter.TabFragmentAdapter;
 import com.zhaoyao.miaomiao.fragment.CartoonRecommendFragment;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
-import com.zhaoyao.miaomiao.util.AdActivitySharedPreferences;
+import com.zhaoyao.miaomiao.service.AdService;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class MainActivity extends BaseNewActivity implements View.OnClickListener,TaskHandler<MainActivity> {
+public class MainActivity extends BaseNewActivity implements View.OnClickListener, TaskHandler {
 
     private CartoonRecommendFragment mContent;
     /**
@@ -43,6 +42,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AdService.startService(this, null);
         MobileAds.initialize(this.getApplicationContext(), "ca-app-pub-2850046637182646~7046734019");
         initView();
 //        这个是禁止滑动
@@ -121,35 +121,29 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_ad:
-                startActivityForResult(new Intent(this,AdActivity.class),100);
+                startActivityForResult(new Intent(this, AdActivity.class), 100);
                 break;
             case R.id.tv_google_ad:
-                startActivity(new Intent(this,GoogleAdActivity.class));
+                startActivity(new Intent(this, GoogleAdActivity.class));
                 break;
             case R.id.tv_360_ad:
-                startActivity(new Intent(this,Ad360Activity.class));
+                startActivity(new Intent(this, Ad360Activity.class));
                 break;
             case R.id.tv_image_recognition:
-                startActivity(new Intent(this,ImageRecognitionActivity.class));
+                startActivity(new Intent(this, ImageRecognitionActivity.class));
                 break;
         }
     }
 
-    private Handler mHandler = new TaskHandlerImpl<>(this);
-
-    private boolean isResult = false;
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100 && resultCode == 100){
-            isResult = true;
-            AdActivitySharedPreferences.newInstance().apply(this,data);
+        if (requestCode == 100 && resultCode == 100) {
 
             mHandler.removeMessages(100);
             Message message = mHandler.obtainMessage();
             message.what = 100;
             message.obj = data;
-            mHandler.sendMessageDelayed(message,3 * 1000);
+            mHandler.sendMessageDelayed(message, 3 * 1000);
         }
     }
 
@@ -167,20 +161,20 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
         isOnPause = true;
     }
 
-    @Override
-    public void handleMessage(WeakReference<MainActivity> weakReference, Message msg) {
-        if(msg.what == 100){
-            if (msg.obj != null && msg.obj instanceof Intent){
-                Intent o = (Intent) msg.obj;
-                if (isOnPause){
-                    mHandler.removeMessages(100);
-                    mHandler.removeMessages(101);
+    private Handler mHandler = new TaskHandlerImpl(this);
 
+    @Override
+    public void handleMessage(WeakReference weakReference, Message msg) {
+        if (msg.what == 100) {
+            if (msg.obj != null && msg.obj instanceof Intent) {
+                Intent o = (Intent) msg.obj;
+                if (isOnPause) {
+                    mHandler.removeMessages(100);
                     Message message = mHandler.obtainMessage();
                     message.what = 100;
                     message.obj = o;
-                    mHandler.sendMessageDelayed(message,3 * 1000);
-                }else {
+                    mHandler.sendMessageDelayed(message, 3 * 1000);
+                } else {
                     Intent intent = new Intent(this, AdActivity.class);
                     Bundle extras = o.getExtras();
                     intent.putExtras(extras);
@@ -188,44 +182,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
 //                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
 //                intent.putExtra(AdActivity.IS_Restart_KEY,o.getStringExtra(AdActivity.IS_Restart_KEY));
 //                intent.putExtra(AdActivity.IS_isMore_KEY,o.getBooleanExtra(AdActivity.IS_isMore_KEY,false));
-                    startActivityForResult(intent,100);
-
-                    mHandler.removeMessages(100);
-                    mHandler.removeMessages(101);
-                    Message message = mHandler.obtainMessage();
-                    message.what = 101;
-                    message.obj = 1;
-                    mHandler.sendMessageDelayed(message,10 * 1000);
-                }
-            }
-        }else if(msg.what == 101){
-            mHandler.removeMessages(100);
-            mHandler.removeMessages(101);
-            Map<String, Object> all = AdActivitySharedPreferences.newInstance().getAll(this);
-            boolean isJump = Boolean.parseBoolean(all.get("isJump").toString());
-            if (isJump){
-                if (isOnPause){
-                    Message message = mHandler.obtainMessage();
-                    message.what = 101;
-                    message.obj = 2;
-                    mHandler.sendMessageDelayed(message,10 * 1000);
-                }else {
-                    Intent intent = new Intent(this, AdActivity.class);
-                    Bundle extras = new Bundle();
-                    for (String s : all.keySet()) {
-                        Object o = all.get(s);
-                        if (o instanceof Boolean){
-                            extras.putBoolean(s,Boolean.parseBoolean(o.toString()));
-                        }else if (o instanceof String){
-                            extras.putString(s,o.toString());
-                        }
-                    }
-                    intent.putExtras(extras);
-//                intent.putExtra(AdActivity.IS_START_ACTIVITY_KEY,o.getBooleanExtra(AdActivity.IS_START_ACTIVITY_KEY,false));
-//                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
-//                intent.putExtra(AdActivity.IS_Restart_KEY,o.getStringExtra(AdActivity.IS_Restart_KEY));
-//                intent.putExtra(AdActivity.IS_isMore_KEY,o.getBooleanExtra(AdActivity.IS_isMore_KEY,false));
-                    startActivityForResult(intent,100);
+                    startActivityForResult(intent, 100);
                 }
             }
         }
@@ -244,6 +201,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         mHandler.removeCallbacksAndMessages(null);
+        AdService.stopService(this);
         super.onDestroy();
     }
 }

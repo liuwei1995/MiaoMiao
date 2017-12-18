@@ -12,6 +12,7 @@ import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.NetWorkUtils;
 import com.zhaoyao.miaomiao.util.image.GildePresenterImpl;
 import com.zhaoyao.miaomiao.util.image.util.ImageHelper;
+import com.zhaoyao.miaomiao.util.preferences.DataAccessSharedPreferencesUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,14 +52,7 @@ public class BaseApplication extends Application{
 //        ImageHelper.init(ImageLoaderPresenterImpl.newInstance(this));
         ImageHelper.init(GildePresenterImpl.newInstance(this));
         UiPluginInit.init(this);
-//        try
-//        {
-//            setCertificates(getAssets().open("srca.cer"));
-//        } catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-
+        DataAccessSharedPreferencesUtils.newInstance().init(this);
     }
     @Override
     protected void attachBaseContext(Context base) {

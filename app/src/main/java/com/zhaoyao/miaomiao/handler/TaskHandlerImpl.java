@@ -9,12 +9,12 @@ import java.lang.ref.WeakReference;
  *  Handler 所有
  * Created by liuwei on 2017/6/30 14:11
  */
-public class TaskHandlerImpl<T extends TaskHandler<T>> extends Handler {
+public class TaskHandlerImpl extends Handler {
 
 
-   private WeakReference<T> weakReference;
+   private WeakReference<TaskHandler> weakReference;
 
-    public TaskHandlerImpl(T object) {
+    public TaskHandlerImpl(TaskHandler object) {
         weakReference = new WeakReference<>(object);
     }
 
@@ -23,9 +23,9 @@ public class TaskHandlerImpl<T extends TaskHandler<T>> extends Handler {
      */
     @Override
     public void handleMessage(Message msg) {
-        T object = weakReference.get();
-        if (object != null) {
-            object.handleMessage(weakReference,msg);
+        TaskHandler object;
+        if (weakReference != null && (object = weakReference.get()) != null) {
+            object.handleMessage(weakReference, msg);
         }
     }
 }
