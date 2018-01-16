@@ -48,7 +48,7 @@ public class AdService extends Service implements TaskHandler {
         return null;
     }
 
-    private int time = 2;
+    private int time = 1;
 
     private static final String TIME_KEY = "TIME_KEY";
 
@@ -69,7 +69,7 @@ public class AdService extends Service implements TaskHandler {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            int anInt = bundle.getInt(TIME_KEY, 2);
+            int anInt = bundle.getInt(TIME_KEY, time);
             time = anInt >= 1 ? anInt : 2;
         }
         return super.onStartCommand(intent, flags, startId);

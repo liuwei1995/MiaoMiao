@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="ad_spinner">
+        <item>广点通1</item>
+        <item>广点通2</item>
+        <item>广点通3</item>
+    </string-array>
+    <string-array name="ad_gdt_google_spinner">
         <item>广点通</item>
         <item>广点通2</item>
         <item>AdMob</item>

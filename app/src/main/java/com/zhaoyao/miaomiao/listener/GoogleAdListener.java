@@ -28,6 +28,9 @@ public class GoogleAdListener extends AdListener {
     @Override
     public void onAdLoaded() {
         // Code to be executed when an ad finishes loading.
+        if ("ca-app-pub-2850046637182646/8523467219".equals(adUnitId)){
+            LogUtils.i("Ads", "onAdLoaded:\t"+adUnitId);
+        }else
         LogUtils.i("Ads", "onAdLoaded:\t"+adUnitId);
         if (mOnAdListener != null)mOnAdListener.onAdLoaded();
     }

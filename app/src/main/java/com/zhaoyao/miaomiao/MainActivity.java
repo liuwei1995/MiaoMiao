@@ -178,10 +178,6 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
                     Intent intent = new Intent(this, AdActivity.class);
                     Bundle extras = o.getExtras();
                     intent.putExtras(extras);
-//                intent.putExtra(AdActivity.IS_START_ACTIVITY_KEY,o.getBooleanExtra(AdActivity.IS_START_ACTIVITY_KEY,false));
-//                intent.putExtra(AdActivity.IS_BRUSH_KEY,o.getBooleanExtra(AdActivity.IS_BRUSH_KEY,false));
-//                intent.putExtra(AdActivity.IS_Restart_KEY,o.getStringExtra(AdActivity.IS_Restart_KEY));
-//                intent.putExtra(AdActivity.IS_isMore_KEY,o.getBooleanExtra(AdActivity.IS_isMore_KEY,false));
                     startActivityForResult(intent, 100);
                 }
             }

@@ -33,6 +33,18 @@ public class Constants {
     public static final String BannerPosID20 = "4060428645102201";//
 
 
+    public static final String BannerPosID21 = "3060524953975595";//
+    public static final String BannerPosID22 = "3060721923676517";//
+    public static final String BannerPosID23 = "8040328933276548";//
+    public static final String BannerPosID24 = "6010328913476692";//
+    public static final String BannerPosID25 = "4010721923070625";//
+    public static final String BannerPosID26 = "2040725923170606";//
+    public static final String BannerPosID27 = "6030322903473687";//
+    public static final String BannerPosID28 = "2090726923076619";//
+    public static final String BannerPosID29 = "2040420983372700";//
+    public static final String BannerPosID30 = "8050723913679781";//
+
+
     public static final String APPWallPosID = "7000208917055259";//应用墙
     public static final String InterteristalPosID = "9070203977656264";//插屏广告
     public static final String InterteristalPosID1 = "4010927665090372";//插屏广告
