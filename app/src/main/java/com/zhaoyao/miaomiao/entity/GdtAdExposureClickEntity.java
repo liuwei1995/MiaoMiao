@@ -8,8 +8,6 @@ import com.tgb.lk.ahibernate.annotation.Column;
 import com.tgb.lk.ahibernate.annotation.Id;
 import com.tgb.lk.ahibernate.annotation.Table;
 
-import java.util.Date;
-
 /**
  * Created by liuwei on 2018/1/12 17:46
  */
@@ -21,13 +19,13 @@ public class GdtAdExposureClickEntity implements Parcelable {
     private int Id;//账号id
 
     @Column(name = "exposureNumber")
-    private Integer exposureNumber;
+    private Integer exposureNumber = 0;//曝光 数
 
     @Column(name = "clickNumber")
-    private Integer clickNumber;
+    private Integer clickNumber = 0;//点击数量
 
     @Column(name = "createTime")
-    private Date createTime = new Date();
+    private String createTime;
 
 
     @Column(name = "androidVersion")
@@ -44,7 +42,6 @@ public class GdtAdExposureClickEntity implements Parcelable {
 
     @Column(name = "androidID")
     private  String androidID =  "";//获取设备AndroidID
-
 
     public int getId() {
         return Id;
@@ -70,11 +67,11 @@ public class GdtAdExposureClickEntity implements Parcelable {
         this.clickNumber = clickNumber;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -129,7 +126,7 @@ public class GdtAdExposureClickEntity implements Parcelable {
         dest.writeInt(this.Id);
         dest.writeValue(this.exposureNumber);
         dest.writeValue(this.clickNumber);
-        dest.writeLong(this.createTime != null ? this.createTime.getTime() : -1);
+        dest.writeString(this.createTime);
         dest.writeInt(this.androidSDK);
         dest.writeString(this.androidVersion);
         dest.writeString(this.buildModel);
@@ -144,8 +141,7 @@ public class GdtAdExposureClickEntity implements Parcelable {
         this.Id = in.readInt();
         this.exposureNumber = (Integer) in.readValue(Integer.class.getClassLoader());
         this.clickNumber = (Integer) in.readValue(Integer.class.getClassLoader());
-        long tmpCreateTime = in.readLong();
-        this.createTime = tmpCreateTime == -1 ? null : new Date(tmpCreateTime);
+        this.createTime = in.readString();
         this.androidSDK = in.readInt();
         this.androidVersion = in.readString();
         this.buildModel = in.readString();
@@ -153,7 +149,7 @@ public class GdtAdExposureClickEntity implements Parcelable {
         this.androidID = in.readString();
     }
 
-    public static final Parcelable.Creator<GdtAdExposureClickEntity> CREATOR = new Parcelable.Creator<GdtAdExposureClickEntity>() {
+    public static final Creator<GdtAdExposureClickEntity> CREATOR = new Creator<GdtAdExposureClickEntity>() {
         @Override
         public GdtAdExposureClickEntity createFromParcel(Parcel source) {
             return new GdtAdExposureClickEntity(source);
@@ -171,7 +167,7 @@ public class GdtAdExposureClickEntity implements Parcelable {
                 "Id=" + Id +
                 ", exposureNumber=" + exposureNumber +
                 ", clickNumber=" + clickNumber +
-                ", createTime=" + createTime +
+                ", createTime='" + createTime + '\'' +
                 ", androidSDK=" + androidSDK +
                 ", androidVersion='" + androidVersion + '\'' +
                 ", buildModel='" + buildModel + '\'' +

@@ -1,6 +1,9 @@
 package com.zhaoyao.miaomiao.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,12 +32,13 @@ import com.qq.e.comm.util.AdError;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
+import com.zhaoyao.miaomiao.receiver.GdtAdExposureClickReceiver;
 import com.zhaoyao.miaomiao.service.AdService;
 import com.zhaoyao.miaomiao.util.AdActivitySharedPreferences;
 import com.zhaoyao.miaomiao.util.Constants;
-import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.ToastUtil;
 import com.zhaoyao.miaomiao.util.ad.gdt.GDTInterstitialAD;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -60,6 +64,9 @@ public class AdActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
+        mAdActivityReceiver = new AdActivityReceiver();
+        IntentFilter filter = new IntentFilter(ACTION_GDT_AD_EXPOSURE_CLICK_ENTITY);
+        registerReceiver(mAdActivityReceiver, filter);
         sendBroadcast(new Intent(AdService.ACTION_ON_CREATE));
         mCbOpen10 = (CheckBox) findViewById(R.id.cb_open10);
         mCbOpen5 = (CheckBox) findViewById(R.id.cb_open5);
@@ -125,7 +132,10 @@ public class AdActivity extends AppCompatActivity implements
         ToastUtil.toastSome(this, "onNewIntent");
     }
 
+    private TextView mTvExposure;
+
     private void initView() {
+        mTvExposure = (TextView) findViewById(R.id.tvExposure);
         addGdtBannerView();
         TextView mTvBrushInterstitialSwitch = (TextView) findViewById(R.id.tvBrushInterstitialSwitch);
         mTvBrushInterstitialSwitch.setOnClickListener(this);
@@ -278,12 +288,12 @@ public class AdActivity extends AppCompatActivity implements
 
             @Override
             public void onADExposure() {
-
+                sendBroadcast(new Intent(GdtAdExposureClickReceiver.ACTION_UPDATE_EXPOSURE_NUMBER));
             }
 
             @Override
             public void onADClicked() {
-
+                sendBroadcast(new Intent(GdtAdExposureClickReceiver.ACTION_UPDATE_CLICK_NUMBER));
             }
 
             @Override
@@ -353,8 +363,13 @@ public class AdActivity extends AppCompatActivity implements
         }
     }
 
+    private AdActivityReceiver mAdActivityReceiver;
+
     @Override
     protected void onDestroy() {
+        if (mAdActivityReceiver != null){
+            unregisterReceiver(mAdActivityReceiver);
+        }
         if (mapGDTInterstitialAD != null) {
             for (String s : mapGDTInterstitialAD.keySet()) {
                 GDTInterstitialAD gdtInterstitialAD = mapGDTInterstitialAD.get(s);
@@ -848,4 +863,20 @@ public class AdActivity extends AppCompatActivity implements
             removeString(interteristalPosID);
         }
     }
+
+
+    public static String ACTION_GDT_AD_EXPOSURE_CLICK_ENTITY = "miaomiao.receiver.action.GDT_AD_EXPOSURE_CLICK_ENTITY";
+
+    public class AdActivityReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_GDT_AD_EXPOSURE_CLICK_ENTITY.equals(intent.getAction())) {
+                String exposureNumber = intent.getStringExtra("exposureNumber");
+                String clickNumber = intent.getStringExtra("clickNumber");
+                mTvExposure.setText("" + exposureNumber + "  :  " + clickNumber +"");
+            }
+        }
+    }
+
 }

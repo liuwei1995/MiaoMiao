@@ -8,8 +8,8 @@ import android.support.multidex.MultiDex;
 import com.sohuvideo.ui_plugin.api.UiPluginInit;
 import com.zhaoyao.miaomiao.http.OkHttpPresenterImpl;
 import com.zhaoyao.miaomiao.http.util.HttpHelper;
-import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.NetWorkUtils;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 import com.zhaoyao.miaomiao.util.image.GildePresenterImpl;
 import com.zhaoyao.miaomiao.util.image.util.ImageHelper;
 import com.zhaoyao.miaomiao.util.preferences.DataAccessSharedPreferencesUtils;
@@ -49,7 +49,6 @@ public class BaseApplication extends Application{
         HttpHelper.newInstance().init(OkHttpPresenterImpl.newInstance().init(this));
 
         new LogUtils.Builder(this).setLogSwitch(true);
-//        ImageHelper.init(ImageLoaderPresenterImpl.newInstance(this));
         ImageHelper.init(GildePresenterImpl.newInstance(this));
         UiPluginInit.init(this);
         DataAccessSharedPreferencesUtils.newInstance().init(this);

@@ -14,8 +14,8 @@ import android.os.Message;
 import com.zhaoyao.miaomiao.activity.AdActivity;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
-import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.ToastUtil;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 import com.zhaoyao.miaomiao.util.preferences.DataAccessSharedPreferencesUtils;
 
 import java.lang.ref.WeakReference;

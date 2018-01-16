@@ -16,7 +16,7 @@ import com.zhaoyao.miaomiao.adapter.base.HealthyMultipleViewHolder;
 import com.zhaoyao.miaomiao.adapter.base.HealthyViewHolder;
 import com.zhaoyao.miaomiao.entity.ComicChapterDetailsEntity;
 import com.zhaoyao.miaomiao.util.GridSpacingItemDecoration;
-import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 import java.util.List;
 

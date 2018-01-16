@@ -36,9 +36,9 @@ import com.zhaoyao.miaomiao.listener.GoogleAdListener;
 import com.zhaoyao.miaomiao.service.AdService;
 import com.zhaoyao.miaomiao.util.AdActivitySharedPreferences;
 import com.zhaoyao.miaomiao.util.Constants;
-import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.ToastUtil;
 import com.zhaoyao.miaomiao.util.ad.gdt.GDTInterstitialAD;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

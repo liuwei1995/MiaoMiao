@@ -12,7 +12,7 @@ import com.mediav.ads.sdk.interfaces.IMvBannerAd;
 import com.mediav.ads.sdk.interfaces.IMvInterstitialAd;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.util.Constants;
-import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;

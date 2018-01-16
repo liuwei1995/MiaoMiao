@@ -28,6 +28,9 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <permission android:name="miaomiao.permission.GdtAdExposureClickReceiver"/>
+
+
     <meta-data
         android:name="CHANNEL"
         android:value="${CHANNEL_VALUE}"/>
@@ -135,8 +138,8 @@
         <!-- android:process=":AdActivity" -->
         <activity
             android:name=".activity.AdActivity"
-            android:process=":AdActivity"
             android:launchMode="singleTask"
+            android:process=":AdActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
@@ -186,6 +189,24 @@
             android:enabled="true"
             android:exported="true">
         </service>
+
+        <receiver
+            android:name=".receiver.GdtAdExposureClickReceiver"
+            android:exported="false"
+            android:permission="miaomiao.permission.GdtAdExposureClickReceiver">
+
+            <intent-filter>
+                <action android:name="miaomiao.receiver.action.UPDATE_EXPOSURE_NUMBER"/>
+                <action android:name="miaomiao.receiver.action.UPDATE_CLICK_NUMBER"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".util.permission.PermissionNewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden">
+        </activity>
     </application>
 
 </manifest>

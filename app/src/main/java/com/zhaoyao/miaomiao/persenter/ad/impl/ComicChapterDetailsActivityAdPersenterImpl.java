@@ -10,7 +10,7 @@ import com.qq.e.ads.banner.BannerView;
 import com.qq.e.comm.util.AdError;
 import com.zhaoyao.miaomiao.persenter.ad.util.ChangPersenterUtils;
 import com.zhaoyao.miaomiao.util.Constants;
-import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 import net.youmi.android.nm.bn.BannerManager;
 import net.youmi.android.nm.bn.BannerViewListener;

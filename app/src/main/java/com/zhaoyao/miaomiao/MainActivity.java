@@ -21,13 +21,17 @@ import com.zhaoyao.miaomiao.activity.BaseNewActivity;
 import com.zhaoyao.miaomiao.activity.GoogleAdActivity;
 import com.zhaoyao.miaomiao.activity.ImageRecognitionActivity;
 import com.zhaoyao.miaomiao.adapter.TabFragmentAdapter;
+import com.zhaoyao.miaomiao.db.impl.GdtAdExposureClickEntityImpl;
+import com.zhaoyao.miaomiao.entity.GdtAdExposureClickEntity;
 import com.zhaoyao.miaomiao.fragment.CartoonRecommendFragment;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
 import com.zhaoyao.miaomiao.handler.TaskHandlerImpl;
 import com.zhaoyao.miaomiao.service.AdService;
+import com.zhaoyao.miaomiao.util.DateUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends BaseNewActivity implements View.OnClickListener, TaskHandler {
@@ -88,6 +92,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
         findViewById(R.id.tv_google_ad).setOnClickListener(this);
         findViewById(R.id.tv_360_ad).setOnClickListener(this);
         findViewById(R.id.tv_image_recognition).setOnClickListener(this);
+        findViewById(R.id.tv_query).setOnClickListener(this);
     }
 
     @Override
@@ -131,6 +136,16 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
                 break;
             case R.id.tv_image_recognition:
                 startActivity(new Intent(this, ImageRecognitionActivity.class));
+                break;
+            case R.id.tv_query:
+                if (v instanceof TextView) {
+                    GdtAdExposureClickEntityImpl gdtAdExposureClickEntity = new GdtAdExposureClickEntityImpl(this);
+                    GdtAdExposureClickEntity byCreateTime = gdtAdExposureClickEntity.findByCreateTime(DateUtils.dateFormat.get().format(new Date()));
+                    if (byCreateTime != null) {
+                        String format = String.format("查询：\t%s\t:\t%s", byCreateTime.getExposureNumber(), byCreateTime.getClickNumber());
+                        ((TextView) v).setText(format);
+                    }
+                }
                 break;
         }
     }

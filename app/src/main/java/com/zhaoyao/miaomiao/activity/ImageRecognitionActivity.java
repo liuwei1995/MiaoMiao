@@ -1,14 +1,12 @@
 package com.zhaoyao.miaomiao.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,20 +14,17 @@ import android.widget.TextView;
 
 import com.baidu.aip.imageclassify.AipImageClassify;
 import com.zhaoyao.miaomiao.R;
-import com.zhaoyao.miaomiao.util.LogUtils;
-import com.zhaoyao.miaomiao.util.permission.AndPermission;
-import com.zhaoyao.miaomiao.util.permission.PermissionListener;
-import com.zhaoyao.miaomiao.util.permission.RationaleListener;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
+import com.zhaoyao.miaomiao.util.permission.PermissionNewActivity;
 
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.zhaoyao.miaomiao.R.id.iv;
 
-public class ImageRecognitionActivity extends AppCompatActivity implements View.OnClickListener {
+public class ImageRecognitionActivity extends AppCompatActivity implements View.OnClickListener, PermissionNewActivity.PermissionNewActivityCallBack {
 
     /**
      * 拍照
@@ -77,34 +72,12 @@ public class ImageRecognitionActivity extends AppCompatActivity implements View.
         mIv = (ImageView) findViewById(iv);
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_open:
-                AndPermission.with(this).setPermission(Manifest.permission.CAMERA).setCallback(new PermissionListener() {
-                    @Override
-                    protected void onSucceed(Context context, int requestCode, @NonNull List<String> grantPermissions) {
-                        start();
-                    }
-
-                    @Override
-                    protected void onFailed(@NonNull Context context, int requestCode, List<String> deniedPermissionsList, List<String> deniedDontRemindList, RationaleListener rationale) {
-                        rationale.showSettingDialog(context,rationale,deniedDontRemindList == null || deniedDontRemindList.size() == 0 ? deniedPermissionsList : deniedDontRemindList);
-                    }
-
-                    @Override
-                    protected void onCancel(Context context, int requestCode, List<String> deniedPermissionsList, List<String> deniedDontRemindList) {
-                       finish();
-                    }
-
-                    @Override
-                    protected void settingDialogCallBack(Context context, boolean isAgreement, String[] deniedDontRemindList) {
-                       if (isAgreement){
-                           start();
-                       }else
-                           finish();
-                    }
-                }).start();
+                PermissionNewActivity.startActivityForResult(this, null, 100, 100, this, Manifest.permission.CAMERA);
                 break;
         }
     }
@@ -132,41 +105,21 @@ public class ImageRecognitionActivity extends AppCompatActivity implements View.
         if (resultCode == RESULT_OK) {
             if (requestCode == 9) {
                 Bundle extras = data.getExtras();
-                if (extras == null)return;
+                if (extras == null) return;
                 for (String s : extras.keySet()) {
                     Object o = extras.get(s);
-                    LogUtils.d(o+"=="+s);
+                    LogUtils.d(o + "==" + s);
                 }
                 Bitmap bb = extras.getParcelable("data");
                 mIv.setImageBitmap(bb);
-//                File bb = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "临时.jpg");
-//                Uri uri = data.getData();
-//                File fos = null;
-//                try {
-//                    fos = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "临时.jpg");
-//                    Intent intent = new Intent("com.android.camera.action.CROP");
-//                    intent.setDataAndType(uri, "image/*");
-//                    intent.putExtra("crop", "true");//可裁剪
-//                    intent.putExtra("aspectX", 1);
-//                    intent.putExtra("aspectY", 1);
-//                    intent.putExtra("outputX", 500);
-//                    intent.putExtra("outputY", 500);
-//                    intent.putExtra("scale", true);
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse(fos.toString()));//输出到指定的uri中
-//                    intent.putExtra("return-data", false);//若为false则表示不返回数据
-//                    intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-//                    intent.putExtra("noFaceDetection", true);
-//                    startActivityForResult(intent, 7);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
 //
             }
-//
-//            if (requestCode == 7) {
-//                Bitmap bb = data.getParcelableExtra("data");
-//                mIv.setImageBitmap(bb);
-//            }
+        }
+        if (requestCode == 100) {
+            if (resultCode == 100) {
+                start();
+            } else
+                finish();
         }
     }
 
@@ -175,7 +128,8 @@ public class ImageRecognitionActivity extends AppCompatActivity implements View.
 //        String urlCode = "HTTPS://QR.ALIPAY.COM/FKX04537VQKNGHMX6FVA9D";
 ////        String urlCode = "HTTPS://QR.ALIPAY.COM/FKX075476OWJIOKFOLHUBD";
 ////        String urlCode = "HTTPS://QR.ALIPAY.COM/FKX085560HFWCPRCVOPHE3";
-//        startAlipayActivity("intent://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode="+urlCode+"&_t=1472443966571#Intent;scheme=alipayqr;package=com.eg.android.AlipayGphone;end");
+//        startAlipayActivity("intent://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode="+urlCode+"&_t=1472443966571#Intent;scheme=alipayqr;package=com.eg.android.AlipayGphone;
+// end");
 
         LogUtils.d("alipay", "startUp");
         Intent intent;
@@ -192,4 +146,11 @@ public class ImageRecognitionActivity extends AppCompatActivity implements View.
         }
     }
 
+    @Override
+    public void callBackResult(boolean agreement) {
+        if (agreement) {
+            start();
+        } else
+            finish();
+    }
 }

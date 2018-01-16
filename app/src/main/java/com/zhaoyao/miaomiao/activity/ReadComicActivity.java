@@ -26,8 +26,8 @@ import com.zhaoyao.miaomiao.adapter.ReadComicActivityAdapter;
 import com.zhaoyao.miaomiao.entity.ComicChapterDetailsEntity;
 import com.zhaoyao.miaomiao.persenter.ad.AdPersenter;
 import com.zhaoyao.miaomiao.persenter.ad.impl.ComicChapterDetailsActivityAdPersenterImpl;
-import com.zhaoyao.miaomiao.util.LogUtils;
 import com.zhaoyao.miaomiao.util.NetWorkUtils;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 import com.zhaoyao.miaomiao.util.image.GlideUtils;
 
 import java.util.ArrayList;

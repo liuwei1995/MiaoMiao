@@ -1,7 +1,7 @@
 package com.zhaoyao.miaomiao.listener;
 
 import com.google.android.gms.ads.AdListener;
-import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 /**
  * Created by liuwei on 2017/9/22 09:39

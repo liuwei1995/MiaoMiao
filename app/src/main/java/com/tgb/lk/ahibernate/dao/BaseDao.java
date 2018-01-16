@@ -7,33 +7,35 @@ import java.util.Map;
 
 public interface BaseDao<T> {
 
-	public SQLiteOpenHelper getDbHelper();
+    SQLiteOpenHelper getDbHelper();
 
-	public abstract long insert(T entity);
+    long insert(T entity);
 
-	public abstract long insert(T entity, boolean flag);
+    long insert(T entity, boolean flag);
 
-	public abstract int delete(int id);
+    int delete(int id);
 
-	public abstract void delete(Integer... ids);
+    void delete(Integer... ids);
 
-	public abstract void update(T entity);
+    void update(T entity);
 
-	public abstract T get(int id);
+    T get(int id);
 
-	public abstract List<T> rawQuery(String sql, String... selectionArgs);
+    T findBySql(String sql, String... selectionArgs);
 
-	public abstract List<T> find();
+    List<T> findBySql2List(String sql, String... selectionArgs);
 
-	public abstract List<T> find(String[] columns, String selection,
-                                 String[] selectionArgs, String groupBy, String having,
-                                 String orderBy, String limit);
+    List<T> find();
 
-	public abstract boolean isExist(String sql, String... selectionArgs);
+    List<T> find(String[] columns, String selection,
+                 String[] selectionArgs, String groupBy, String having,
+                 String orderBy, String limit);
 
-	public List<Map<String, String>> query2MapList(String sql,
-                                                   String[] selectionArgs);
+    boolean isExist(String sql, String... selectionArgs);
 
-	public void execSql(String sql, Object... selectionArgs);
+    List<Map<String, String>> query2MapList(String sql,
+                                            String[] selectionArgs);
+
+    void execSql(String sql, Object... selectionArgs);
 
 }

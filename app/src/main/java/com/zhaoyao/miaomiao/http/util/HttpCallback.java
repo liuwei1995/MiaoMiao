@@ -2,7 +2,7 @@ package com.zhaoyao.miaomiao.http.util;
 
 
 import com.alibaba.fastjson.JSON;
-import com.zhaoyao.miaomiao.util.LogUtils;
+import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
