@@ -1,5 +1,6 @@
 package com.zhaoyao.miaomiao;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,13 +11,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.MobileAds;
 import com.sohuvideo.ui_plugin.fragment.SohuVideoFragment;
 import com.zhaoyao.miaomiao.activity.Ad360Activity;
 import com.zhaoyao.miaomiao.activity.AdActivity;
+import com.zhaoyao.miaomiao.activity.AdGdtClickActivity;
 import com.zhaoyao.miaomiao.activity.BaseNewActivity;
 import com.zhaoyao.miaomiao.activity.GoogleAdActivity;
 import com.zhaoyao.miaomiao.activity.ImageRecognitionActivity;
@@ -89,6 +95,7 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
 
         mTvAd = (TextView) findViewById(R.id.tv_ad);
         mTvAd.setOnClickListener(this);
+        findViewById(R.id.tv_ad_click).setOnClickListener(this);
         findViewById(R.id.tv_google_ad).setOnClickListener(this);
         findViewById(R.id.tv_360_ad).setOnClickListener(this);
         findViewById(R.id.tv_image_recognition).setOnClickListener(this);
@@ -130,6 +137,28 @@ public class MainActivity extends BaseNewActivity implements View.OnClickListene
                 break;
             case R.id.tv_google_ad:
                 startActivity(new Intent(this, GoogleAdActivity.class));
+                break;
+            case R.id.tv_ad_click:
+                final View inflate = LayoutInflater.from(this).inflate(R.layout.alert_dialog_goud, null);
+                final RadioGroup mRadioGroup = (RadioGroup) inflate.findViewById(R.id.rgp);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("选择广告组")
+//                        .setMessage("message")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                RadioButton rb = (RadioButton)inflate.findViewById(mRadioGroup.getCheckedRadioButtonId());
+                                String trim = rb.getText().toString().trim();
+                                Intent intent = new Intent(MainActivity.this, AdGdtClickActivity.class);
+                                intent.putExtra("AD_GROUP", Integer.parseInt(trim));
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }).setView(inflate);
+                builder.show();
                 break;
             case R.id.tv_360_ad:
                 startActivity(new Intent(this, Ad360Activity.class));

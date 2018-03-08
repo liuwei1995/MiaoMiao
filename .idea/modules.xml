@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/MiaoMiao.iml" filepath="$PROJECT_DIR$/MiaoMiao.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bdintegrationsdk_libproject/bdintegrationsdk_libproject.iml" filepath="$PROJECT_DIR$/bdintegrationsdk_libproject/bdintegrationsdk_libproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openCVLibrary340/openCVLibrary340.iml" filepath="$PROJECT_DIR$/openCVLibrary340/openCVLibrary340.iml" />
       <module fileurl="file://$PROJECT_DIR$/ui_plugin/ui_plugin.iml" filepath="$PROJECT_DIR$/ui_plugin/ui_plugin.iml" />
     </modules>
   </component>

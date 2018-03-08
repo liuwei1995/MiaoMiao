@@ -102,6 +102,24 @@
                 android:background="@mipmap/biz_pc_account_line"/>
 
             <TextView
+                android:id="@+id/tv_ad_click"
+                android:layout_width="match_parent"
+                android:layout_height="50.0dip"
+                android:clickable="true"
+                android:drawablePadding="1.0dip"
+                android:gravity="center_vertical"
+                android:paddingLeft="15.0dip"
+                android:paddingRight="10.0dip"
+                android:text="广告点击"
+                android:textColor="@color/white"
+                android:textSize="16.0sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.0dip"
+                android:background="@mipmap/biz_pc_account_line"/>
+
+            <TextView
                 android:id="@+id/tv_google_ad"
                 android:layout_width="match_parent"
                 android:layout_height="50.0dip"

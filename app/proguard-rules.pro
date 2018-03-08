@@ -223,6 +223,9 @@ public static <fields>;
 -dontwarn com.mediav.ads.sdk.**
 -keep class com.mediav.ads.sdk.**{*;}
 
+-dontwarn org.opencv.**
+-keep class org.opencv.**{*;}
+
 -dontskipnonpubliclibraryclassmembers
 
 

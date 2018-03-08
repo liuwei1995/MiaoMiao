@@ -67,6 +67,7 @@ public class AdService extends Service implements TaskHandler {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) return super.onStartCommand(intent, flags, startId);
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             int anInt = bundle.getInt(TIME_KEY, time);

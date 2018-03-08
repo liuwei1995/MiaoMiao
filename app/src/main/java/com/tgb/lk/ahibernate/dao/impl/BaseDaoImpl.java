@@ -337,6 +337,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
             }
             Log.d(TAG, "[insert]: insert into " + this.tableName + " " + sql);
             long row = db.insert(this.tableName, null, cv);
+//            insertWithOnConflict
             return row;
         } catch (Exception e) {
             Log.d(this.TAG, "[insert] into DB Exception.");

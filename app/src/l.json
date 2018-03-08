@@ -1,0 +1,463 @@
+[{
+    "appName": "Android 系统",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53711b60",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "android"
+  },
+  {
+    "appName": "com.android.backupconfirm",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53931ac0",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.backupconfirm"
+  },
+  {
+    "appName": "浏览器",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53933f04",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.browser"
+  },
+  {
+    "appName": "证书安装程序",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535b6010",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.certinstaller"
+  },
+  {
+    "appName": "联系人",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535a73b8",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.contacts"
+  },
+  {
+    "appName": "应用包访问权限帮助程序",
+    "appimage": "android.graphics.drawable.BitmapDrawable@5355a07c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.defcontainer"
+  },
+  {
+    "appName": "相机",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53added4",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.gallery"
+  },
+  {
+    "appName": "HTML 查看程序",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ac82f8",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.htmlviewer"
+  },
+  {
+    "appName": "Input Devices",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53711b0c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.inputdevices"
+  },
+  {
+    "appName": "Android 键盘 (AOSP)",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53925d1c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.inputmethod.latin"
+  },
+  {
+    "appName": "Key Chain",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53abb2f8",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.keychain"
+  },
+  {
+    "appName": "Launcher",
+    "appimage": "android.graphics.drawable.BitmapDrawable@539285a8",
+    "versionCode": 371,
+    "versionName": "3.0.2",
+    "packageName": "com.android.launcher"
+  },
+  {
+    "appName": "Fused Location",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53931d2c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.location.fused"
+  },
+  {
+    "appName": "魔幻烟雾壁纸",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53712458",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.magicsmoke"
+  },
+  {
+    "appName": "音乐可视化壁纸",
+    "appimage": "android.graphics.drawable.BitmapDrawable@539f9408",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.musicvis"
+  },
+  {
+    "appName": "泡泡",
+    "appimage": "android.graphics.drawable.BitmapDrawable@537044dc",
+    "versionCode": 1,
+    "versionName": "1.0",
+    "packageName": "com.android.noisefield"
+  },
+  {
+    "appName": "应用包安装程序",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53704670",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.packageinstaller"
+  },
+  {
+    "appName": "镭光",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53aefb48",
+    "versionCode": 1,
+    "versionName": "1.0",
+    "packageName": "com.android.phasebeam"
+  },
+  {
+    "appName": "手机",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53a700ec",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.phone"
+  },
+  {
+    "appName": "搜索应用提供程序",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53a702d4",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.applications"
+  },
+  {
+    "appName": "联系人存储",
+    "appimage": "android.graphics.drawable.BitmapDrawable@537128f4",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.contacts"
+  },
+  {
+    "appName": "下载管理程序",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535f7f70",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.downloads"
+  },
+  {
+    "appName": "下载",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53b0aa5c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.downloads.ui"
+  },
+  {
+    "appName": "DRM 保护内容存储",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53b0ab74",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.drm"
+  },
+  {
+    "appName": "媒体存储",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53abc9fc",
+    "versionCode": 511,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.media"
+  },
+  {
+    "appName": "设置存储",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ae5a50",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.settings"
+  },
+  {
+    "appName": "电话\/短信存储",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535a428c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.telephony"
+  },
+  {
+    "appName": "User Dictionary",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53710940",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.providers.userdictionary"
+  },
+  {
+    "appName": "com.android.provision",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53995998",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.provision"
+  },
+  {
+    "appName": "设置",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53716da8",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.settings"
+  },
+  {
+    "appName": "com.android.sharedstoragebackup",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535a4a98",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.sharedstoragebackup"
+  },
+  {
+    "appName": "com.android.smspush",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535beb4c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.smspush"
+  },
+  {
+    "appName": "录音机",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53922068",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.soundrecorder"
+  },
+  {
+    "appName": "系统用户界面",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53b457a8",
+    "versionCode": 17,
+    "versionName": "0.9.17.0426",
+    "packageName": "com.android.systemui"
+  },
+  {
+    "appName": "com.android.systemui.tests",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53a76400",
+    "versionCode": 19,
+    "versionName": "4.4.2-0.0.2",
+    "packageName": "com.android.systemui.tests"
+  },
+  {
+    "appName": "Google Play 商店",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53af7a58",
+    "versionCode": 80230011,
+    "versionName": "4.3.11",
+    "packageName": "com.android.vending"
+  },
+  {
+    "appName": "VpnDialogs",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53af7c1c",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.vpndialogs"
+  },
+  {
+    "appName": "Android 动态壁纸",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53b1e8d8",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.wallpaper"
+  },
+  {
+    "appName": "com.android.wallpaper.holospiral",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53b1ea90",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.wallpaper.holospiral"
+  },
+  {
+    "appName": "Live Wallpaper Picker",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ad8e94",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.android.wallpaper.livepicker"
+  },
+  {
+    "appName": "百度极速版",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53994b9c",
+    "versionCode": 19399936,
+    "versionName": "2.8.0.10",
+    "packageName": "com.baidu.searchbox.lite"
+  },
+  {
+    "appName": "文件管理器",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53b462f0",
+    "versionCode": 101,
+    "versionName": "1.0.1",
+    "packageName": "com.cyanogenmod.filemanager"
+  },
+  {
+    "appName": "Example Wallpapers",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53adfff4",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.example.android.livecubes"
+  },
+  {
+    "appName": "Droid4X输入法",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ae01b4",
+    "versionCode": 17,
+    "versionName": "4.2.2-eng.work.20170426.153421",
+    "packageName": "com.example.android.softkeyboard"
+  },
+  {
+    "appName": "Google Play 服务",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535ef760",
+    "versionCode": 3027105,
+    "versionName": "3.0.27 (599131-05)",
+    "packageName": "com.google.android.gms"
+  },
+  {
+    "appName": "Google 服务框架",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535ef924",
+    "versionCode": 17,
+    "versionName": "4.2.2-573038",
+    "packageName": "com.google.android.gsf"
+  },
+  {
+    "appName": "Google 帐户管理程序",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535efe28",
+    "versionCode": 17,
+    "versionName": "4.2.2-573038",
+    "packageName": "com.google.android.gsf.login"
+  },
+  {
+    "appName": "网络位置",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ab1560",
+    "versionCode": 1110,
+    "versionName": "1.1.10",
+    "packageName": "com.google.android.location"
+  },
+  {
+    "appName": "Google 通讯录同步",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53a0222c",
+    "versionCode": 17,
+    "versionName": "4.2.2-612687",
+    "packageName": "com.google.android.syncadapters.contacts"
+  },
+  {
+    "appName": "海马玩",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ae7970",
+    "versionCode": 1,
+    "versionName": "1.0",
+    "packageName": "com.haimawan.push"
+  },
+  {
+    "appName": "CCtalk",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ae8010",
+    "versionCode": 1286,
+    "versionName": "7.0.7",
+    "packageName": "com.hujiang.cctalk"
+  },
+  {
+    "appName": "MOMO陌陌",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53dccf78",
+    "versionCode": 1830,
+    "versionName": "8.7.2",
+    "packageName": "com.immomo.momo"
+  },
+  {
+    "appName": "360清理大师",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535a9e5c",
+    "versionCode": 61,
+    "versionName": "6.2.5",
+    "packageName": "com.qihoo.cleandroid_cn"
+  },
+  {
+    "appName": "书旗小说",
+    "appimage": "android.graphics.drawable.BitmapDrawable@5392c07c",
+    "versionCode": 148,
+    "versionName": "10.6.6.63",
+    "packageName": "com.shuqi.controller"
+  },
+  {
+    "appName": "快手",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535f7428",
+    "versionCode": 5820,
+    "versionName": "5.5.4.5820",
+    "packageName": "com.smile.gifmaker"
+  },
+  {
+    "appName": "今日头条",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535fab58",
+    "versionCode": 628,
+    "versionName": "6.2.8",
+    "packageName": "com.ss.android.article.lite"
+  },
+  {
+    "appName": "西瓜视频",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53aa9980",
+    "versionCode": 242,
+    "versionName": "2.4.2",
+    "packageName": "com.ss.android.article.video"
+  },
+  {
+    "appName": "Pico TTS",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53aa9ac8",
+    "versionCode": 1,
+    "versionName": "1.0",
+    "packageName": "com.svox.pico"
+  },
+  {
+    "appName": "binlaia",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53aaa064",
+    "versionCode": 7,
+    "versionName": "1.6.5.1",
+    "packageName": "com.tech.binlaia"
+  },
+  {
+    "appName": "updateService",
+    "appimage": "android.graphics.drawable.BitmapDrawable@537119a4",
+    "versionCode": 1,
+    "versionName": "1.0",
+    "packageName": "com.tech.updateservice"
+  },
+  {
+    "appName": "绝地求生 全军出击",
+    "appimage": "android.graphics.drawable.BitmapDrawable@5392404c",
+    "versionCode": 106,
+    "versionName": "1.0.3.1.0",
+    "packageName": "com.tencent.tmgp.pubgm"
+  },
+  {
+    "appName": "肯德基",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ad754c",
+    "versionCode": 4000,
+    "versionName": "4.0",
+    "packageName": "com.yek.android.kfc.activitys"
+  },
+  {
+    "appName": "妙妙",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535f0710",
+    "versionCode": 1,
+    "versionName": "1.0",
+    "packageName": "com.zhaoyao.miaomiao"
+  },
+  {
+    "appName": "SuperSU",
+    "appimage": "android.graphics.drawable.BitmapDrawable@535f20a0",
+    "versionCode": 97,
+    "versionName": "0.97",
+    "packageName": "eu.chainfire.supersu"
+  },
+  {
+    "appName": "应用中心",
+    "appimage": "android.graphics.drawable.BitmapDrawable@53ae774c",
+    "versionCode": 161,
+    "versionName": "1.6.0",
+    "packageName": "me.haima.androidassist"
+  },
+  {
+    "appName": "Droid4X 帮助",
+    "appimage": "android.graphics.drawable.BitmapDrawable@5392f8e4",
+    "versionCode": 113,
+    "versionName": "1.1.3",
+    "packageName": "me.haima.helpcenter"
+  }
+]
