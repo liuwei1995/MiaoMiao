@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qq.e.ads.banner.BannerView;
+import com.qq.e.comm.util.FileUtil;
 import com.zhaoyao.miaomiao.BaseApplication;
 import com.zhaoyao.miaomiao.R;
 import com.zhaoyao.miaomiao.handler.TaskHandler;
@@ -38,6 +39,7 @@ import com.zhaoyao.miaomiao.service.InstallerAccessibilityService;
 import com.zhaoyao.miaomiao.util.Constants;
 import com.zhaoyao.miaomiao.util.OpencvUtils;
 import com.zhaoyao.miaomiao.util.ToastUtil;
+import com.zhaoyao.miaomiao.util.commonly.FileUtils;
 import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 import com.zhaoyao.miaomiao.util.permission.PermissionNewActivity;
 import com.zhaoyao.miaomiao.util.preferences.DataAccessSharedPreferencesUtils;
@@ -50,11 +52,17 @@ import org.opencv.android.InstallCallbackInterface;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,7 +95,7 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
         initView(currentGroup);
         PermissionNewActivity.startActivityForResult(this, null, null, null, this
                 , Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , "android.permission.INJECT_EVENTS"
+//                , "android.permission.INJECT_EVENTS"
         );
     }
 
@@ -260,6 +268,7 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
         findViewById(R.id.btnStart).setOnClickListener(this);
         findViewById(R.id.btnFilter).setOnClickListener(this);
         findViewById(R.id.btnObtain).setOnClickListener(this);
+        findViewById(R.id.btnDisplay).setOnClickListener(this);
 
         FrameLayout fl_ad = (FrameLayout) findViewById(R.id.fl_ad);
         String[] stringArray = getResources().getStringArray(R.array.ad_spinner);
@@ -289,28 +298,28 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
                 LinearLayout childAtFilter = null;
                 if (currentGroup == 0) {
                     childAtFilter = (LinearLayout) ((LinearLayout) findViewById(R.id.ll_gdt)).getChildAt(Integer.parseInt(mEtSrc.getText().toString().trim()));
-                }else if (currentGroup == 1){
+                } else if (currentGroup == 1) {
                     childAtFilter = (LinearLayout) ((LinearLayout) findViewById(R.id.ll_gdt2)).getChildAt(Integer.parseInt(mEtSrc.getText().toString().trim()));
-                }else if (currentGroup == 2){
+                } else if (currentGroup == 2) {
                     childAtFilter = (LinearLayout) ((LinearLayout) findViewById(R.id.ll_gdt3)).getChildAt(Integer.parseInt(mEtSrc.getText().toString().trim()));
                 }
-                if (childAtFilter == null)return;
+                if (childAtFilter == null) return;
 
                 BannerViewClick bannerViewFilter = (BannerViewClick) childAtFilter.getChildAt(0);
-                if (bannerViewFilter == null)return;
-                long l = System.currentTimeMillis() - bannerViewFilter.getTime();
-                if (l > 20 * 1000) {
-                    LogUtils.d("System.currentTimeMillis() - bannerViewFilter.getTime()=\t" + l);
-                    return;
-                }
+                if (bannerViewFilter == null) return;
+//                long l = System.currentTimeMillis() - bannerViewFilter.getTime();
+//                if (l > 20 * 1000) {
+//                    LogUtils.d("System.currentTimeMillis() - bannerViewFilter.getTime()=\t" + l);
+//                    return;
+//                }
                 ToastUtil.toastSome(this, "过滤成功");
                 new SaveBitmapAsyncTask(this).execute(bannerViewFilter);
                 break;
             case R.id.btnDisplay:
+                new MyAsyncTask(this).execute();
                 break;
             case R.id.btnObtain:
-
-//                new MyAsyncTask(this).execute();
+                new DownloadAsyncTask(this).execute();
                 break;
             case R.id.btnStart:
                 boolean b = InstallerAccessibilityService.startActivitySettings(this);
@@ -323,12 +332,12 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
                         msg.obj = true;
                         button.setText("停止");
                         ToastUtil.toastSome(this, "5 秒后 开始");
-                        mHandler.sendMessage(msg);
+                        mHandler.sendMessageDelayed(msg, 5 * 1000);
                     } else if ("停止".equals(button.getText().toString().trim())) {
                         button.setText("开始");
                         ToastUtil.toastSome(this, " 停止");
                         msg.obj = false;
-                        mHandler.sendMessageDelayed(msg, 5 * 1000);
+                        mHandler.sendMessage(msg);
                     }
                 }
                 break;
@@ -389,6 +398,10 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
         if (msg.what == MSG_START) {
             try {
                 isStart = Boolean.parseBoolean(msg.obj.toString());
+                if (!isStart) {
+                    mExecutorService.shutdownNow();
+                    ToastUtil.toastSome(this, "停止了点击");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -413,7 +426,6 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        LogUtils.d("onNewIntent");
     }
 
 
@@ -431,6 +443,7 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
             return res.activityInfo.packageName;
         }
     }
+
 
     @Override
     protected void onDestroy() {
@@ -533,6 +546,7 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
 
     @Override
     public void onADClicked(BannerView bannerView) {
+        isClick = true;
         String bannerPosID = ((BannerViewClick) bannerView).getBannerPosID();
         Integer integer = BaseApplication.map.get(bannerPosID);
         LogUtils.d(bannerPosID + "\t:\t" + integer);
@@ -574,7 +588,7 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
                             e.printStackTrace();
                         }
                         long time = bannerViewClick.getTime();
-                        if (System.currentTimeMillis() - time >= 10 * 1000) {
+                        if (System.currentTimeMillis() - time >= 25 * 1000) {
                             return;
                         }
                         Bitmap bitmap_src = getCacheBitmapFromView(bannerViewClick);
@@ -598,7 +612,7 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
                                 if (compareSimilarity >= 0.5) {
                                     bitmap_des.recycle();
                                     LogUtils.d("compareSimilarity >= 0.5\t:\t" + compareSimilarity);
-                                    return;
+                                    break;
                                 }
 
                                 if (i == fileList.size() - 1) {
@@ -730,12 +744,143 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
 
         @Override
         protected JSONArray doInBackground(Void... voids) {
+            Intent intent = new Intent();
+            intent.setType("application/vnd.android.package-archive");
+            PackageManager packageManager = context.getPackageManager();
+            List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent,
+                    PackageManager.MATCH_DEFAULT_ONLY);
+            if (resolveInfo != null) {
+                JSONArray jsonArray = new JSONArray();
+                for (ResolveInfo info : resolveInfo) {
+                    jsonArray.put(info.activityInfo.packageName);
+                }
+                LogUtils.d(jsonArray);
+            }
             return getItems2j(context);
         }
 
         @Override
         protected void onPostExecute(JSONArray hashMaps) {
             LogUtils.d("MyAsyncTask", hashMaps);
+        }
+    }
+
+    public class DownloadAsyncTask extends AsyncTask<String, Void, List<File>> {//下载
+        private Context context;
+
+        public DownloadAsyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected List<File> doInBackground(String... url) {
+            List<File> fileList = new ArrayList<>();
+            InputStream inputStream = null;
+            try {
+                HttpURLConnection con = (HttpURLConnection) new URL("http://p55p7zgj6.bkt.clouddn.com/gdt.json").openConnection();
+                con.setRequestMethod("GET");
+                con.setDoInput(true);
+                con.setDoOutput(true);
+                con.connect();
+                if (HttpURLConnection.HTTP_OK == con.getResponseCode()) {
+                    inputStream = con.getInputStream();
+                    File fileParent = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MiaoMiao/temp/");
+                    if (!fileParent.exists()) {
+                        boolean mkdirs = fileParent.mkdirs();
+                    }
+                    File tempFile = File.createTempFile("temp", ".json", fileParent);
+                    FileUtil.copyTo(inputStream, tempFile);
+                    String s = FileUtils.readFile(tempFile.getPath(), "UTF-8").toString();
+                    JSONArray jsonArray = new JSONArray(s);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String string = jsonArray.getString(i);
+                        File saveFile = saveFile(string);
+                        if (saveFile != null) {
+                            fileList.add(saveFile);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (null != inputStream)
+                        inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return fileList;
+        }
+
+        private File saveFile(String url) {
+            url = URLDecoder.decode(url);
+            String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/MiaoMiao/" + url.replace("http://p55p7zgj6.bkt.clouddn.com/", "");
+            File file = new File(dir);
+            if (file.exists() && file.isFile()) {
+                return file;
+            }
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            InputStream inputStream = null;
+            ByteArrayOutputStream output = null;
+            FileOutputStream fileOutputStream = null;
+            try {
+                HttpURLConnection con = (HttpURLConnection) new URL("http://p55p7zgj6.bkt.clouddn.com/" + URLEncoder.encode(url.replace("http://p55p7zgj6.bkt.clouddn.com/", ""))).openConnection();
+                con.setRequestMethod("GET");
+                con.setConnectTimeout(6000); //超时设置
+                if (HttpURLConnection.HTTP_OK == con.getResponseCode()) {
+                    inputStream = con.getInputStream();
+                    if (inputStream == null) return null;
+                    output = new ByteArrayOutputStream();
+                    fileOutputStream = new FileOutputStream(file);
+
+                    byte[] buffer = new byte[1024];
+                    int length;
+
+                    while ((length = inputStream.read(buffer)) > 0) {
+                        output.write(buffer, 0, length);
+                    }
+                    fileOutputStream.write(output.toByteArray());
+                    return file;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fileOutputStream != null)
+                        fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (output != null)
+                        output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (inputStream != null)
+                        inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<File> hashMaps) {
+            LogUtils.d("MyAsyncTask", hashMaps);
+            ToastUtil.toastSome(context, "新添加过滤文件：\t" + hashMaps.size());
+            for (File file : hashMaps) {
+                addFileList(file);
+            }
         }
     }
 
@@ -758,14 +903,6 @@ public class AdGdtClickActivity extends BaseNewActivity implements View.OnClickL
             }
         }
         return items;
-    }
-
-    public class BitmapAsyncTask extends AsyncTask<Void, Void, JSONArray> {
-
-        @Override
-        protected JSONArray doInBackground(Void... voids) {
-            return null;
-        }
     }
 
 

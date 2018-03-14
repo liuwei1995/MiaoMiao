@@ -39,14 +39,6 @@
                     android:gravity="center"
                     android:text="过滤"/>
 
-                <Button
-                    android:id="@+id/btnDisplay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:text="显示"
-                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/btnStart"
@@ -63,6 +55,15 @@
                     android:gravity="center"
                     android:text="获取"
                     android:visibility="visible"/>
+
+                <Button
+                    android:id="@+id/btnDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="显示"
+                    android:visibility="gone"/>
             </LinearLayout>
 
 

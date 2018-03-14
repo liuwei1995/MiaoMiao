@@ -11,6 +11,7 @@ import android.support.multidex.MultiDex;
 
 import com.qq.e.ads.ADActivity;
 import com.sohuvideo.ui_plugin.api.UiPluginInit;
+import com.zhaoyao.miaomiao.activity.AdGdtClickActivity;
 import com.zhaoyao.miaomiao.http.OkHttpPresenterImpl;
 import com.zhaoyao.miaomiao.http.util.HttpHelper;
 import com.zhaoyao.miaomiao.service.InstallerAccessibilityService;
@@ -87,13 +88,16 @@ public class BaseApplication extends Application implements Application.Activity
             activity.finish();
         }
     }
+    private boolean isADActivity = false;
+
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         ComponentName componentName = activity.getComponentName();
         if (ADActivity.class.getName().equals(componentName.getClassName())){
+            isADActivity = true;
             mapActivity.put(activity.getComponentName().getClassName(), activity);
             LogUtils.d("onActivityStarted\tADActivity", activity.getComponentName().getClassName());
-            activity.sendBroadcast(new Intent(InstallerAccessibilityService.ACTION_TO_AD_ACTIVITY));
+            sendBroadcast(new Intent(InstallerAccessibilityService.ACTION_TO_AD_ACTIVITY));
         }else {
             LogUtils.d("onActivityStarted", activity.getComponentName().getClassName());
         }
@@ -108,7 +112,9 @@ public class BaseApplication extends Application implements Application.Activity
 
     @Override
     public void onActivityResumed(Activity activity) {
-
+        if (!ADActivity.class.getName().equals(activity.getComponentName().getClassName())){
+            isADActivity = false;
+        }
     }
 
     public static boolean isOut = false;
@@ -116,9 +122,10 @@ public class BaseApplication extends Application implements Application.Activity
     @Override
     public void onActivityPaused(Activity activity) {//退出
         if (!isOut) {
-//            if (AdGdtClickActivity.class.getName().equals(activity.getComponentName().getClassName())){
-//                activity.sendBroadcast(new Intent(InstallerAccessibilityService.ACTION_ON_ACTIVITY_PAUSED));
-//            }
+            if (isADActivity)return;
+            if (AdGdtClickActivity.class.getName().equals(activity.getComponentName().getClassName())){
+                sendBroadcast(new Intent(InstallerAccessibilityService.ACTION_ON_ACTIVITY_PAUSED));
+            }
         }
     }
 
@@ -135,7 +142,9 @@ public class BaseApplication extends Application implements Application.Activity
     @Override
     public void onActivityDestroyed(Activity activity) {
         if (ADActivity.class.getName().equals(activity.getComponentName().getClassName())){
+            isADActivity = false;
             mapActivity.remove(activity.getComponentName().getClassName());
         }
+
     }
 }

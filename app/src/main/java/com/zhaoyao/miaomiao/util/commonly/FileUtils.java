@@ -698,9 +698,9 @@ public class FileUtils {
             reader = new BufferedReader(is);
             String line = null;
             while ((line = reader.readLine()) != null) {
-                if (!fileContent.toString().equals("")) {
-                    fileContent.append("\r\n");
-                }
+//                if (!fileContent.toString().equals("")) {
+//                    fileContent.append("\r\n");
+//                }
                 fileContent.append(line);
             }
             return fileContent;

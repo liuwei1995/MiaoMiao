@@ -177,6 +177,10 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:11.0.0'
     testCompile 'junit:junit:4.12'
     compile project(path: ':openCVLibrary340')
+
+    compile 'com.hzy:libp7zip:1.5.0'//文件解压
+
+
 }
 
 

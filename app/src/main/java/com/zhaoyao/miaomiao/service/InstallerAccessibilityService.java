@@ -8,6 +8,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +29,7 @@ import com.zhaoyao.miaomiao.util.ToastUtil;
 import com.zhaoyao.miaomiao.util.commonly.LogUtils;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,7 +69,7 @@ public class InstallerAccessibilityService extends AccessibilityService implemen
                 default:
                     break;
             }
-        }else if (browser.equals(event.getPackageName())){
+        } else if (browser.equals(event.getPackageName())) {
             switch (event.getEventType()) {
                 case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                     ToastUtil.toastSome(this, "现在在浏览器里  5 秒之后启动  AdGdtClickActivity 界面");
@@ -134,19 +137,18 @@ public class InstallerAccessibilityService extends AccessibilityService implemen
                 mHandler.removeMessages(MSG_START_ADGDT_CLICK_ACTIVITY);
                 mHandler.sendEmptyMessageDelayed(MSG_START_ADGDT_CLICK_ACTIVITY, 1000);
             }
-        }else if (msg.what == MSG_START_ADGDT_CLICK_ACTIVITY){
+        } else if (msg.what == MSG_START_ADGDT_CLICK_ACTIVITY) {
             Intent intent = new Intent();
             ComponentName cn = new ComponentName(getPackageName(), AdGdtClickActivity.class.getName());
             intent.setComponent(cn);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-        }
-        else if (msg.what == MSG_CLICK_XIA){
+        } else if (msg.what == MSG_CLICK_XIA) {
             AccessibilityNodeInfo rootInActiveWindow = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 rootInActiveWindow = this.getRootInActiveWindow();
             }
-            if (rootInActiveWindow  != null){
+            if (rootInActiveWindow != null) {
                 List<AccessibilityNodeInfo> 下一步 = rootInActiveWindow.findAccessibilityNodeInfosByText("下一步");
                 if (下一步 != null && 下一步.size() > 0) {
                     for (AccessibilityNodeInfo accessibilityNodeInfo : 下一步) {
@@ -160,17 +162,17 @@ public class InstallerAccessibilityService extends AccessibilityService implemen
                             mHandler.sendEmptyMessageDelayed(MSG_CLICK_XIA, 500);
                         }
                     }
-                }else {
+                } else {
                     mHandler.removeMessages(MSG_CLICK_AN);
                     mHandler.sendEmptyMessageDelayed(MSG_CLICK_AN, 500);
                 }
             }
-        }else if (msg.what == MSG_CLICK_AN){
+        } else if (msg.what == MSG_CLICK_AN) {
             AccessibilityNodeInfo rootInActiveWindow = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 rootInActiveWindow = this.getRootInActiveWindow();
             }
-            if (rootInActiveWindow  != null){
+            if (rootInActiveWindow != null) {
                 List<AccessibilityNodeInfo> 安装 = rootInActiveWindow.findAccessibilityNodeInfosByText("安装");
                 if (安装 != null && 安装.size() > 0) {
                     for (AccessibilityNodeInfo accessibilityNodeInfo : 安装) {
@@ -185,23 +187,62 @@ public class InstallerAccessibilityService extends AccessibilityService implemen
                     }
                 }
             }
-        }
-        else if (MSG_ACTION_TO_AD_ACTIVITY == msg.what){
+        } else if (MSG_ACTION_TO_AD_ACTIVITY == msg.what) {
             BaseApplication.finish(ADActivity.class.getName());
-        }
-        else if (MSG_ACTION_ON_ACTIVITY_PAUSED == msg.what){
+        } else if (MSG_ACTION_ON_ACTIVITY_PAUSED == msg.what) {
+            if (homeName == null) {
+                List<String> homes = getHomes();
+                if (homes.size() != 0) {
+                    homeName = homes.get(0);
+                }
+            }
             ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-            if (activityManager != null){
+            if (activityManager != null) {
                 ComponentName cn = activityManager.getRunningTasks(1).get(0).topActivity;
                 String packageName = cn.getPackageName();
-                if (!this.getPackageName().equals(packageName)){
+                if (!this.getPackageName().equals(packageName) && !"com.android.packageinstaller".equals(packageName) && !packageName.equals(homeName)) {
                     ToastUtil.toastSome(this, "重复点击  4秒后返回");
+                    LogUtils.d("MSG_ACTION_ON_ACTIVITY_PAUSED", packageName);
                     mHandler.removeMessages(MSG_ACTION_HOME);
                     mHandler.sendEmptyMessageDelayed(MSG_ACTION_HOME, 4 * 1000);
+                } else {
+                    LogUtils.d("MSG_ACTION_ON_ACTIVITY_PAUSED", packageName);
                 }
             }
         }
     }
+
+    private String homeName = null;
+
+    private synchronized String getHome() {
+        if (homeName == null) {
+            List<String> homes = getHomes();
+            if (homes.size() != 0) {
+                homeName = homes.get(0);
+            }
+        }
+        return homeName;
+    }
+    /**
+     * 获得属于桌面的应用的应用包名称
+     *
+     * @return 返回包含所有包名的字符串列表
+     */
+    private List<String> getHomes() {
+        List<String> names = new ArrayList<>();
+        PackageManager packageManager = this.getPackageManager();
+        //属性
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        for (ResolveInfo ri : resolveInfo) {
+            names.add(ri.activityInfo.packageName);
+        }
+        return names;
+    }
+
 
     private MyReceiver mMyReceiver;
 
@@ -219,18 +260,23 @@ public class InstallerAccessibilityService extends AccessibilityService implemen
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
                 }
-            }
-            else if (ACTION_PACKAGE_ADDED.equals(data.getAction())) {
+            } else if (ACTION_PACKAGE_ADDED.equals(data.getAction())) {
                 LogUtils.d("安装成功回到首页  5 秒之后启动  AdGdtClickActivity 界面");
                 mHandler.removeMessages(MSG_ACTION_HOME);
                 mHandler.sendEmptyMessageDelayed(MSG_ACTION_HOME, 4 * 1000);
-            }
-            else if (ACTION_TO_AD_ACTIVITY.equals(data.getAction())) {
+            } else if (ACTION_TO_AD_ACTIVITY.equals(data.getAction())) {
                 ToastUtil.toastSome(context, "10 秒后返回广告界面");
                 mHandler.removeMessages(MSG_ACTION_TO_AD_ACTIVITY);
                 mHandler.sendEmptyMessageDelayed(MSG_ACTION_TO_AD_ACTIVITY, 10 * 1000);
-            }
-            else if (ACTION_ON_ACTIVITY_PAUSED.equals(data.getAction())) {
+            } else if (ACTION_ON_ACTIVITY_PAUSED.equals(data.getAction())) {
+                ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                if (activityManager != null) {
+                    ComponentName cn = activityManager.getRunningTasks(1).get(0).topActivity;
+                    String packageName = cn.getPackageName();
+                    if (packageName.equals(getHome())){
+                        return;
+                    }
+                }
                 mHandler.removeMessages(MSG_ACTION_ON_ACTIVITY_PAUSED);
                 mHandler.sendEmptyMessageDelayed(MSG_ACTION_ON_ACTIVITY_PAUSED, 3 * 1000);
             }
